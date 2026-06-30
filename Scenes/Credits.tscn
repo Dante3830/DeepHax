@@ -1,0 +1,99 @@
+[gd_scene format=3 uid="uid://be1tosa7kpcx3"]
+
+[ext_resource type="FontFile" uid="uid://djx8toqe17ynx" path="res://Assets/Fonts/Michroma-Regular.ttf" id="1_i8h6y"]
+
+[node name="Credits" type="Control" unique_id=367809053]
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="Label" type="Label" parent="." unique_id=1558483367]
+layout_mode = 0
+offset_left = 263.0
+offset_top = 8.0
+offset_right = 857.0
+offset_bottom = 124.0
+theme_override_colors/font_color = Color(0, 1, 0, 1)
+theme_override_colors/font_outline_color = Color(0, 1, 0, 1)
+theme_override_constants/outline_size = 12
+theme_override_fonts/font = ExtResource("1_i8h6y")
+theme_override_font_sizes/font_size = 81
+text = "CRÉDITOS"
+horizontal_alignment = 1
+
+[node name="Label2" type="Label" parent="." unique_id=1993840675]
+layout_mode = 0
+offset_left = 263.0
+offset_top = 143.0
+offset_right = 857.0
+offset_bottom = 259.0
+theme_override_colors/font_color = Color(0, 1, 0, 1)
+theme_override_fonts/font = ExtResource("1_i8h6y")
+theme_override_font_sizes/font_size = 32
+text = "Diseñado y programado por"
+horizontal_alignment = 1
+
+[node name="Label3" type="Label" parent="." unique_id=355874864]
+layout_mode = 0
+offset_left = 403.0
+offset_top = 180.0
+offset_right = 707.0
+offset_bottom = 248.0
+theme_override_colors/font_color = Color(0, 1, 0, 1)
+theme_override_fonts/font = ExtResource("1_i8h6y")
+theme_override_font_sizes/font_size = 32
+text = "DANTE RIZZI"
+horizontal_alignment = 1
+
+[node name="Label6" type="Label" parent="." unique_id=295784569]
+layout_mode = 0
+offset_left = 263.0
+offset_top = 249.0
+offset_right = 857.0
+offset_bottom = 365.0
+theme_override_colors/font_color = Color(0, 1, 0, 1)
+theme_override_fonts/font = ExtResource("1_i8h6y")
+theme_override_font_sizes/font_size = 32
+text = "Música por"
+horizontal_alignment = 1
+
+[node name="Label7" type="Label" parent="." unique_id=326039592]
+layout_mode = 0
+offset_left = 403.0
+offset_top = 286.0
+offset_right = 707.0
+offset_bottom = 354.0
+theme_override_colors/font_color = Color(0, 1, 0, 1)
+theme_override_fonts/font = ExtResource("1_i8h6y")
+theme_override_font_sizes/font_size = 32
+text = "AXEL"
+horizontal_alignment = 1
+
+[node name="Label4" type="Label" parent="." unique_id=381080118]
+layout_mode = 0
+offset_left = 254.0
+offset_top = 360.0
+offset_right = 848.0
+offset_bottom = 476.0
+theme_override_colors/font_color = Color(0, 1, 0, 1)
+theme_override_fonts/font = ExtResource("1_i8h6y")
+theme_override_font_sizes/font_size = 32
+text = "Assets descargados en"
+horizontal_alignment = 1
+
+[node name="Label5" type="Label" parent="." unique_id=616331133]
+layout_mode = 0
+offset_left = 371.0
+offset_top = 402.0
+offset_right = 729.0
+offset_bottom = 497.0
+theme_override_colors/font_color = Color(0, 1, 0, 1)
+theme_override_constants/line_spacing = -14
+theme_override_fonts/font = ExtResource("1_i8h6y")
+theme_override_font_sizes/font_size = 32
+text = "GOOGLE FONTS
+KENNEY"
+horizontal_alignment = 1
