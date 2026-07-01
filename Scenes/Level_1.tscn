@@ -71,6 +71,44 @@ border_color = Color(0, 1, 0, 1)
 [sub_resource type="StyleBoxFlat" id="StyleBoxFlat_nw7js"]
 bg_color = Color(0, 1, 0, 1)
 
+[sub_resource type="Animation" id="Animation_vnunq"]
+length = 0.001
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("Lights:visible")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 1,
+"values": [true]
+}
+
+[sub_resource type="Animation" id="Animation_nw7js"]
+resource_name = "Victory"
+length = 2.4
+loop_mode = 1
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("Lights:visible")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0, 0.4, 0.8, 1.2, 1.6, 2),
+"transitions": PackedFloat32Array(1, 1, 1, 1, 1, 1),
+"update": 1,
+"values": [false, true, false, true, false, true]
+}
+
+[sub_resource type="AnimationLibrary" id="AnimationLibrary_nh7xm"]
+_data = {
+&"RESET": SubResource("Animation_vnunq"),
+&"Victory": SubResource("Animation_nw7js")
+}
+
 [node name="Level 1" type="Node" unique_id=742101328]
 script = ExtResource("1_oiua3")
 
@@ -192,5 +230,19 @@ offset_bottom = 134.0
 theme_override_colors/font_color = Color(1, 1, 1, 1)
 theme_override_font_sizes/font_size = 37
 text = "Victoria :D"
+
+[node name="Game Over" type="Label" parent="." unique_id=1526846980]
+visible = false
+offset_left = 473.0
+offset_top = 83.0
+offset_right = 1165.0
+offset_bottom = 134.0
+theme_override_colors/font_color = Color(1, 1, 1, 1)
+theme_override_font_sizes/font_size = 37
+text = "Perdiste UwU"
+
+[node name="AnimationPlayer" type="AnimationPlayer" parent="." unique_id=1090498134]
+libraries/ = SubResource("AnimationLibrary_nh7xm")
+speed_scale = 2.0
 
 [connection signal="timeout" from="Time" to="." method="_on_time_timeout"]

@@ -1,0 +1,206 @@
+[gd_scene format=3 uid="uid://ckyen1xvgrwjv"]
+
+[ext_resource type="Script" uid="uid://d1w5dwtik5d50" path="res://Scripts/transition_scene.gd" id="1_ml2rw"]
+[ext_resource type="Texture2D" uid="uid://6aghxvwe6hnn" path="res://Assets/kenney_game-icons/PNG/White/2x/up.png" id="2_rr8bd"]
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_sij6u"]
+bg_color = Color(0, 0, 0, 1)
+border_width_left = 1
+border_width_top = 1
+border_width_right = 1
+border_width_bottom = 1
+border_color = Color(1, 1, 1, 1)
+
+[sub_resource type="Animation" id="Animation_1l5q3"]
+length = 0.001
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("Indicator:position")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [Vector2(384, 160)]
+}
+
+[sub_resource type="Animation" id="Animation_mh0y2"]
+resource_name = "phase_1"
+loop_mode = 1
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("Indicator:position")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0, 0.5),
+"transitions": PackedFloat32Array(1, 1),
+"update": 1,
+"values": [Vector2(384, 160), Vector2(384, 184)]
+}
+
+[sub_resource type="Animation" id="Animation_274lt"]
+resource_name = "phase_2"
+loop_mode = 1
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("Indicator:position")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0, 0.5, 0.5000211),
+"transitions": PackedFloat32Array(1, 1, 1),
+"update": 1,
+"values": [Vector2(512, 160), Vector2(384, 184), Vector2(512, 184)]
+}
+
+[sub_resource type="Animation" id="Animation_1j856"]
+resource_name = "phase_3"
+loop_mode = 1
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("Indicator:position")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0, 0.5, 0.5000211),
+"transitions": PackedFloat32Array(1, 1, 1),
+"update": 1,
+"values": [Vector2(640, 160), Vector2(384, 184), Vector2(640, 184)]
+}
+
+[sub_resource type="Animation" id="Animation_n22mi"]
+resource_name = "phase_4"
+loop_mode = 1
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("Indicator:position")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0, 0.5, 0.5000211),
+"transitions": PackedFloat32Array(1, 1, 1),
+"update": 1,
+"values": [Vector2(768, 160), Vector2(384, 184), Vector2(768, 184)]
+}
+
+[sub_resource type="Animation" id="Animation_5f4v5"]
+resource_name = "transition_1"
+length = 0.5
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("Indicator:position")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0, 0.5),
+"transitions": PackedFloat32Array(1, 1.0000001),
+"update": 0,
+"values": [Vector2(384, 160), Vector2(512, 160)]
+}
+
+[sub_resource type="Animation" id="Animation_rr8bd"]
+resource_name = "transition_2"
+length = 0.5
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("Indicator:position")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0, 0.5),
+"transitions": PackedFloat32Array(1.0000001, 1),
+"update": 0,
+"values": [Vector2(512, 160), Vector2(640, 160)]
+}
+
+[sub_resource type="Animation" id="Animation_g0jo3"]
+resource_name = "transition_3"
+length = 0.5
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("Indicator:position")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0, 0.5),
+"transitions": PackedFloat32Array(1, 1),
+"update": 0,
+"values": [Vector2(640, 160), Vector2(768, 160)]
+}
+
+[sub_resource type="AnimationLibrary" id="AnimationLibrary_g0jo3"]
+_data = {
+&"RESET": SubResource("Animation_1l5q3"),
+&"phase_1": SubResource("Animation_mh0y2"),
+&"phase_2": SubResource("Animation_274lt"),
+&"phase_3": SubResource("Animation_1j856"),
+&"phase_4": SubResource("Animation_n22mi"),
+&"transition_1": SubResource("Animation_5f4v5"),
+&"transition_2": SubResource("Animation_rr8bd"),
+&"transition_3": SubResource("Animation_g0jo3")
+}
+
+[node name="Transition" type="Control" unique_id=2043806579]
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+script = ExtResource("1_ml2rw")
+
+[node name="Indicator" type="Sprite2D" parent="." unique_id=1245925353]
+modulate = Color(0, 1, 0, 1)
+position = Vector2(384, 160)
+texture = ExtResource("2_rr8bd")
+
+[node name="Lights" type="Control" parent="." unique_id=1191766793]
+anchors_preset = 0
+offset_left = 96.0
+offset_right = 136.0
+offset_bottom = 40.0
+
+[node name="Light1" type="Panel" parent="Lights" unique_id=241393461]
+layout_mode = 0
+offset_left = 256.0
+offset_top = 64.0
+offset_right = 320.0
+offset_bottom = 128.0
+theme_override_styles/panel = SubResource("StyleBoxFlat_sij6u")
+
+[node name="Light2" type="Panel" parent="Lights" unique_id=2114037600]
+layout_mode = 0
+offset_left = 384.0
+offset_top = 64.0
+offset_right = 448.0
+offset_bottom = 128.0
+theme_override_styles/panel = SubResource("StyleBoxFlat_sij6u")
+
+[node name="Light3" type="Panel" parent="Lights" unique_id=1279577682]
+layout_mode = 0
+offset_left = 512.0
+offset_top = 64.0
+offset_right = 576.0
+offset_bottom = 128.0
+theme_override_styles/panel = SubResource("StyleBoxFlat_sij6u")
+
+[node name="Light4" type="Panel" parent="Lights" unique_id=739186262]
+layout_mode = 0
+offset_left = 640.0
+offset_top = 64.0
+offset_right = 704.0
+offset_bottom = 128.0
+theme_override_styles/panel = SubResource("StyleBoxFlat_sij6u")
+
+[node name="AnimationPlayer" type="AnimationPlayer" parent="." unique_id=829209563]
+libraries/ = SubResource("AnimationLibrary_g0jo3")
