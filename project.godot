@@ -13,7 +13,7 @@ config_version=5
 config/name="Deep Hax"
 run/main_scene="uid://b2pxktbvxss5i"
 config/features=PackedStringArray("4.6", "Forward Plus")
-config/icon="uid://brjo6nln5rst5"
+config/icon="res://deephaxicon.ico"
 config/windows_native_icon="res://deephaxicon.ico"
 
 [display]
