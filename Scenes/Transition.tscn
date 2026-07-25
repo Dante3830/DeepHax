@@ -1,7 +1,7 @@
 [gd_scene format=3 uid="uid://ckyen1xvgrwjv"]
 
 [ext_resource type="Script" uid="uid://d1w5dwtik5d50" path="res://Scripts/transition_scene.gd" id="1_ml2rw"]
-[ext_resource type="Texture2D" uid="uid://6aghxvwe6hnn" path="res://Assets/kenney_game-icons/PNG/White/2x/up.png" id="2_rr8bd"]
+[ext_resource type="Texture2D" uid="uid://6aghxvwe6hnn" path="res://Assets/Kenney Game Icons/up.png" id="2_rr8bd"]
 
 [sub_resource type="StyleBoxFlat" id="StyleBoxFlat_sij6u"]
 bg_color = Color(0, 0, 0, 1)
