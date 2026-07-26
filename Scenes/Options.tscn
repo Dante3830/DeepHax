@@ -1,0 +1,91 @@
+[gd_scene format=3 uid="uid://drapoyl8ugrrk"]
+
+[ext_resource type="Script" uid="uid://drj5xy1j1k5yq" path="res://Scripts/options.gd" id="1_5hy3q"]
+[ext_resource type="FontFile" uid="uid://djx8toqe17ynx" path="res://Assets/Fonts/Michroma-Regular.ttf" id="2_cbhj7"]
+[ext_resource type="FontFile" uid="uid://2afyco5rkpvl" path="res://Assets/Fonts/Anta-Regular.ttf" id="3_q4at1"]
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_5hy3q"]
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_cbhj7"]
+bg_color = Color(1, 0.29710245, 0.5199176, 1)
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_q4at1"]
+bg_color = Color(0.76593155, 0.5616429, 3.85046e-07, 1)
+
+[node name="Options" type="Control" unique_id=367809053]
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+script = ExtResource("1_5hy3q")
+
+[node name="Label" type="Label" parent="." unique_id=1558483367]
+layout_mode = 0
+offset_left = 278.0
+offset_top = 54.0
+offset_right = 872.0
+offset_bottom = 170.0
+theme_override_colors/font_color = Color(0, 1, 0, 1)
+theme_override_colors/font_outline_color = Color(0, 1, 0, 1)
+theme_override_constants/outline_size = 12
+theme_override_fonts/font = ExtResource("2_cbhj7")
+theme_override_font_sizes/font_size = 81
+text = "OPCIONES"
+horizontal_alignment = 1
+
+[node name="VBoxContainer" type="VBoxContainer" parent="Label" unique_id=2045610184]
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -115.5
+offset_top = 112.0
+offset_right = 108.5
+offset_bottom = 273.0
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="Volume" type="HBoxContainer" parent="Label/VBoxContainer" unique_id=1217596621]
+layout_mode = 2
+alignment = 1
+
+[node name="Label" type="Label" parent="Label/VBoxContainer/Volume" unique_id=892738677]
+layout_mode = 2
+theme_override_fonts/font = ExtResource("3_q4at1")
+text = "Volúmen"
+
+[node name="HSlider" type="HSlider" parent="Label/VBoxContainer/Volume" unique_id=986135914]
+layout_mode = 2
+theme_override_styles/slider = SubResource("StyleBoxFlat_5hy3q")
+theme_override_styles/grabber_area = SubResource("StyleBoxFlat_cbhj7")
+theme_override_styles/grabber_area_highlight = SubResource("StyleBoxFlat_q4at1")
+
+[node name="Palette" type="HBoxContainer" parent="Label/VBoxContainer" unique_id=547543855]
+layout_mode = 2
+alignment = 1
+
+[node name="Label" type="Label" parent="Label/VBoxContainer/Palette" unique_id=1685563484]
+layout_mode = 2
+theme_override_fonts/font = ExtResource("3_q4at1")
+text = "Paleta de colores"
+
+[node name="OptionButton" type="OptionButton" parent="Label/VBoxContainer/Palette" unique_id=1771140187]
+layout_mode = 2
+theme_override_colors/font_color = Color(0.875, 0.875, 0.875, 1)
+theme_override_fonts/font = ExtResource("3_q4at1")
+selected = 0
+item_count = 1
+popup/item_0/text = "Original"
+popup/item_0/id = 0
+
+[node name="MenuButton" type="Button" parent="Label/VBoxContainer" unique_id=2087971708]
+layout_mode = 2
+theme_override_fonts/font = ExtResource("3_q4at1")
+theme_override_font_sizes/font_size = 19
+text = " VOLVER AL MENÚ "
+
+[connection signal="pressed" from="Label/VBoxContainer/MenuButton" to="." method="_on_menu_button_pressed"]

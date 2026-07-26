@@ -1,6 +1,7 @@
 [gd_scene format=3 uid="uid://pu0wqte217yi"]
 
 [ext_resource type="Script" uid="uid://d2jw671g08die" path="res://Scripts/main_menu.gd" id="1_tt5f1"]
+[ext_resource type="FontFile" uid="uid://2afyco5rkpvl" path="res://Assets/Fonts/Anta-Regular.ttf" id="2_853f1"]
 
 [node name="Main Menu" type="Control" unique_id=614336601]
 layout_mode = 3
@@ -28,14 +29,33 @@ offset_bottom = 221.5
 grow_horizontal = 2
 grow_vertical = 2
 
-[node name="Button" type="Button" parent="VBoxContainer" unique_id=1355415709]
+[node name="PlayButton" type="Button" parent="VBoxContainer" unique_id=1355415709]
 layout_mode = 2
+theme_override_fonts/font = ExtResource("2_853f1")
 text = " ¡A HACKEAR!"
 
-[node name="Button2" type="Button" parent="VBoxContainer" unique_id=237037577]
+[node name="StoryButton" type="Button" parent="VBoxContainer" unique_id=237037577]
 layout_mode = 2
+theme_override_fonts/font = ExtResource("2_853f1")
+text = " HISTORIA"
+
+[node name="OptionsButton" type="Button" parent="VBoxContainer" unique_id=1014945780]
+layout_mode = 2
+theme_override_fonts/font = ExtResource("2_853f1")
 text = " OPCIONES"
 
-[node name="Button3" type="Button" parent="VBoxContainer" unique_id=1014945780]
+[node name="CreditsButton" type="Button" parent="VBoxContainer" unique_id=1488004527]
 layout_mode = 2
+theme_override_fonts/font = ExtResource("2_853f1")
+text = " CRÉDITOS"
+
+[node name="ExitButton" type="Button" parent="VBoxContainer" unique_id=463499463]
+layout_mode = 2
+theme_override_fonts/font = ExtResource("2_853f1")
 text = " SALIR"
+
+[connection signal="pressed" from="VBoxContainer/PlayButton" to="." method="_on_play_button_pressed"]
+[connection signal="pressed" from="VBoxContainer/StoryButton" to="." method="_on_story_button_pressed"]
+[connection signal="pressed" from="VBoxContainer/OptionsButton" to="." method="_on_options_button_pressed"]
+[connection signal="pressed" from="VBoxContainer/CreditsButton" to="." method="_on_credits_button_pressed"]
+[connection signal="pressed" from="VBoxContainer/ExitButton" to="." method="_on_exit_button_pressed"]

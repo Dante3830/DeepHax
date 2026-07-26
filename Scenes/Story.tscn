@@ -1,0 +1,67 @@
+[gd_scene format=3 uid="uid://2ecwkbh0m3nj"]
+
+[ext_resource type="Script" uid="uid://bvlycqatqxa3x" path="res://Scripts/credits.gd" id="1_vactc"]
+[ext_resource type="FontFile" uid="uid://djx8toqe17ynx" path="res://Assets/Fonts/Michroma-Regular.ttf" id="2_ncg45"]
+[ext_resource type="FontFile" uid="uid://2afyco5rkpvl" path="res://Assets/Fonts/Anta-Regular.ttf" id="3_l07yc"]
+
+[sub_resource type="LabelSettings" id="LabelSettings_vactc"]
+font_color = Color(0, 1, 0, 1)
+
+[node name="Story" type="Control" unique_id=367809053]
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+script = ExtResource("1_vactc")
+
+[node name="Label" type="Label" parent="." unique_id=1558483367]
+layout_mode = 0
+offset_left = 278.0
+offset_top = 54.0
+offset_right = 872.0
+offset_bottom = 170.0
+theme_override_colors/font_color = Color(0, 1, 0, 1)
+theme_override_colors/font_outline_color = Color(0, 1, 0, 1)
+theme_override_constants/outline_size = 12
+theme_override_fonts/font = ExtResource("2_ncg45")
+theme_override_font_sizes/font_size = 81
+text = "HISTORIA"
+horizontal_alignment = 1
+
+[node name="Label2" type="Label" parent="." unique_id=1993840675]
+layout_mode = 0
+offset_left = 127.0
+offset_top = 186.0
+offset_right = 1024.0
+offset_bottom = 534.0
+theme_override_colors/font_color = Color(0, 1, 0, 1)
+theme_override_fonts/font = ExtResource("2_ncg45")
+theme_override_font_sizes/font_size = 23
+text = "Felicidades, has entrado a la Agencia Internacional de Ciberpatrullaje (AIC).
+Desde que tuvimos financiamiento de la multimillonaria Tech, dirigida por Richard Ellison, 
+estuvo circulando en Internet un peligroso ciberterrorista llamado Incognitus.
+Este criminal estuvo robandole las cuentas bancarias, e-mails y redes sociales de millones
+de usuarios comunes y corrientes de Internet.
+Nadie sabe su identidad ni ubicación, pero ese es justamente tu deber como
+agente nuestro. Deberás adentrarte en la Deep Web y copiar unas líneas de código
+que te enviaremos para acceder a la ubicación de Incognitus y detener sus fechorías.
+Pero no será tarea sencilla, ya que deberás también cerrar ventanas que estorban el
+Recibidor de código. Por si fuera poco, el tiempo para escribir cada línea de código
+antes de que te hackeen tu computadora es limitado.
+No obstante, estamos seguros de que no te vas a rendir y cumplirás con tu misión.
+¡BUENA SUERTE!"
+label_settings = SubResource("LabelSettings_vactc")
+horizontal_alignment = 1
+
+[node name="MenuButton" type="Button" parent="." unique_id=208904406]
+layout_mode = 0
+offset_left = 500.0
+offset_top = 561.0
+offset_right = 656.0
+offset_bottom = 590.0
+theme_override_fonts/font = ExtResource("3_l07yc")
+text = " VOLVER AL MENU "
+
+[connection signal="pressed" from="MenuButton" to="." method="_on_menu_button_pressed"]

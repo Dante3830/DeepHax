@@ -1,6 +1,6 @@
 extends Node
 
-@onready var receiving_code = $ReceivingCode/Label
+@onready var receiver = $Receiver/Label
 @onready var text_editor = $TextEditor
 @onready var time_bar = $TimeBar
 @onready var time = $Time
@@ -66,7 +66,7 @@ func _generate_random_lines() -> void:
 func _load_current_line() -> void:
 	# Muestra la línea actual que el jugador debe escribir
 	if current_line_index < lines_to_type.size():
-		receiving_code.text = lines_to_type[current_line_index]
+		receiver.text = lines_to_type[current_line_index]
 	text_editor.text = ""
 
 func _on_text_editor_gui_input(event: InputEvent) -> void:
@@ -83,7 +83,7 @@ func _on_text_editor_gui_input(event: InputEvent) -> void:
 			if text_completed:
 				return
 			
-			var expected = receiving_code.text
+			var expected = receiver.text
 			var current = text_editor.text
 			
 			if current == expected:
@@ -113,7 +113,7 @@ func _process(_delta: float) -> void:
 	if not text_completed and time.time_left > 0:
 		time_bar.value = (time.time_left / time.wait_time) * 100
 	
-	var expected = receiving_code.text
+	var expected = receiver.text
 	var current = text_editor.text
 	
 	if current == "":
