@@ -4,6 +4,26 @@
 [ext_resource type="FontFile" uid="uid://djx8toqe17ynx" path="res://Assets/Fonts/Michroma-Regular.ttf" id="1_i8h6y"]
 [ext_resource type="FontFile" uid="uid://2afyco5rkpvl" path="res://Assets/Fonts/Anta-Regular.ttf" id="3_uy3b0"]
 
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_7xmno"]
+bg_color = Color(0, 0, 0, 1)
+border_width_left = 2
+border_width_top = 2
+border_width_right = 2
+border_width_bottom = 2
+border_color = Color(0, 1, 0, 1)
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_uy3b0"]
+bg_color = Color(0, 1, 0, 1)
+border_width_left = 2
+border_width_top = 2
+border_width_right = 2
+border_width_bottom = 2
+border_color = Color(0, 0, 0, 1)
+
+[sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_iynit"]
+
+[sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_f64u0"]
+
 [node name="Credits" type="Control" unique_id=367809053]
 layout_mode = 3
 anchors_preset = 15
@@ -15,10 +35,10 @@ script = ExtResource("1_7xmno")
 
 [node name="Label" type="Label" parent="." unique_id=1558483367]
 layout_mode = 0
-offset_left = 278.0
-offset_top = 54.0
-offset_right = 872.0
-offset_bottom = 170.0
+offset_left = 720.0
+offset_top = 40.0
+offset_right = 1314.0
+offset_bottom = 156.0
 theme_override_colors/font_color = Color(0, 1, 0, 1)
 theme_override_colors/font_outline_color = Color(0, 1, 0, 1)
 theme_override_constants/outline_size = 12
@@ -29,10 +49,10 @@ horizontal_alignment = 1
 
 [node name="Label2" type="Label" parent="." unique_id=1993840675]
 layout_mode = 0
-offset_left = 278.0
-offset_top = 189.0
-offset_right = 872.0
-offset_bottom = 305.0
+offset_left = 57.0
+offset_top = 200.0
+offset_right = 651.0
+offset_bottom = 316.0
 theme_override_colors/font_color = Color(0, 1, 0, 1)
 theme_override_fonts/font = ExtResource("1_i8h6y")
 theme_override_font_sizes/font_size = 32
@@ -41,10 +61,10 @@ horizontal_alignment = 1
 
 [node name="Label3" type="Label" parent="." unique_id=355874864]
 layout_mode = 0
-offset_left = 418.0
-offset_top = 226.0
-offset_right = 722.0
-offset_bottom = 294.0
+offset_left = 197.0
+offset_top = 237.0
+offset_right = 501.0
+offset_bottom = 305.0
 theme_override_colors/font_color = Color(0, 1, 0, 1)
 theme_override_fonts/font = ExtResource("1_i8h6y")
 theme_override_font_sizes/font_size = 32
@@ -53,10 +73,10 @@ horizontal_alignment = 1
 
 [node name="Label6" type="Label" parent="." unique_id=295784569]
 layout_mode = 0
-offset_left = 278.0
-offset_top = 295.0
-offset_right = 872.0
-offset_bottom = 411.0
+offset_left = 222.0
+offset_top = 309.0
+offset_right = 462.0
+offset_bottom = 359.0
 theme_override_colors/font_color = Color(0, 1, 0, 1)
 theme_override_fonts/font = ExtResource("1_i8h6y")
 theme_override_font_sizes/font_size = 32
@@ -65,22 +85,22 @@ horizontal_alignment = 1
 
 [node name="Label7" type="Label" parent="." unique_id=326039592]
 layout_mode = 0
-offset_left = 418.0
-offset_top = 332.0
-offset_right = 722.0
-offset_bottom = 400.0
+offset_left = 155.0
+offset_top = 347.0
+offset_right = 548.0
+offset_bottom = 415.0
 theme_override_colors/font_color = Color(0, 1, 0, 1)
 theme_override_fonts/font = ExtResource("1_i8h6y")
 theme_override_font_sizes/font_size = 32
-text = "AXEL"
+text = "ACA VA NOMBRE"
 horizontal_alignment = 1
 
 [node name="Label4" type="Label" parent="." unique_id=381080118]
 layout_mode = 0
-offset_left = 269.0
-offset_top = 406.0
-offset_right = 863.0
-offset_bottom = 522.0
+offset_left = 48.0
+offset_top = 417.0
+offset_right = 642.0
+offset_bottom = 533.0
 theme_override_colors/font_color = Color(0, 1, 0, 1)
 theme_override_fonts/font = ExtResource("1_i8h6y")
 theme_override_font_sizes/font_size = 32
@@ -89,25 +109,35 @@ horizontal_alignment = 1
 
 [node name="Label5" type="Label" parent="." unique_id=616331133]
 layout_mode = 0
-offset_left = 386.0
-offset_top = 448.0
-offset_right = 744.0
-offset_bottom = 543.0
+offset_left = 171.0
+offset_top = 451.0
+offset_right = 529.0
+offset_bottom = 561.0
 theme_override_colors/font_color = Color(0, 1, 0, 1)
 theme_override_constants/line_spacing = -14
 theme_override_fonts/font = ExtResource("1_i8h6y")
 theme_override_font_sizes/font_size = 32
 text = "GOOGLE FONTS
-KENNEY"
+KENNEY
+ITCH.IO"
 horizontal_alignment = 1
 
-[node name="MenuButton" type="Button" parent="." unique_id=208904406]
+[node name="MenuButton" type="Button" parent="." unique_id=810465657]
 layout_mode = 0
-offset_left = 500.0
-offset_top = 561.0
-offset_right = 656.0
-offset_bottom = 590.0
+offset_left = 840.0
+offset_top = 968.0
+offset_right = 1129.0
+offset_bottom = 1027.0
+theme_override_colors/font_color = Color(0, 1, 0, 1)
+theme_override_colors/font_focus_color = Color(0.95, 0.95, 0.95, 1)
+theme_override_colors/font_pressed_color = Color(0, 0, 0, 1)
 theme_override_fonts/font = ExtResource("3_uy3b0")
-text = " VOLVER AL MENU "
+theme_override_font_sizes/font_size = 44
+theme_override_styles/normal = SubResource("StyleBoxFlat_7xmno")
+theme_override_styles/pressed = SubResource("StyleBoxFlat_uy3b0")
+theme_override_styles/hover = SubResource("StyleBoxFlat_7xmno")
+theme_override_styles/disabled = SubResource("StyleBoxEmpty_iynit")
+theme_override_styles/focus = SubResource("StyleBoxEmpty_f64u0")
+text = "  VOLVER AL MENÚ  "
 
 [connection signal="pressed" from="MenuButton" to="." method="_on_menu_button_pressed"]

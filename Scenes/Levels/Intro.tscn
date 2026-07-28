@@ -1,0 +1,84 @@
+[gd_scene format=3 uid="uid://domarxtrkyboj"]
+
+[ext_resource type="Script" uid="uid://bry188rk21w54" path="res://Scripts/intro.gd" id="1_biobi"]
+[ext_resource type="FontFile" uid="uid://djx8toqe17ynx" path="res://Assets/Fonts/Michroma-Regular.ttf" id="2_bd37o"]
+[ext_resource type="FontFile" uid="uid://2afyco5rkpvl" path="res://Assets/Fonts/Anta-Regular.ttf" id="3_r0mdn"]
+
+[sub_resource type="LabelSettings" id="LabelSettings_vactc"]
+font_size = 33
+font_color = Color(0, 1, 0, 1)
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_vactc"]
+bg_color = Color(0, 0, 0, 1)
+border_width_left = 2
+border_width_top = 2
+border_width_right = 2
+border_width_bottom = 2
+border_color = Color(0, 1, 0, 1)
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_ncg45"]
+bg_color = Color(0, 1, 0, 1)
+border_width_left = 2
+border_width_top = 2
+border_width_right = 2
+border_width_bottom = 2
+border_color = Color(0, 0, 0, 1)
+
+[sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_l07yc"]
+
+[sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_fipxo"]
+
+[node name="Story" type="Control" unique_id=367809053]
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+script = ExtResource("1_biobi")
+
+[node name="Label2" type="Label" parent="." unique_id=1993840675]
+layout_mode = 0
+offset_left = 64.0
+offset_top = 56.0
+offset_right = 1908.0
+offset_bottom = 869.0
+theme_override_colors/font_color = Color(0, 1, 0, 1)
+theme_override_fonts/font = ExtResource("2_bd37o")
+theme_override_font_sizes/font_size = 23
+text = "> AGENCIA INTERNACIONAL DE CIBERPATRULLAJE (AIC)
+> OPERACIÓN: INCOGNITUS
+> NIVEL DE AMENAZA: CRÍTICO
+
+> El ciberterrorista conocido como \"Incognitus\" ha sido rastreado hasta
+> un servidor oculto en la Deep Web. Su ubicación exacta está protegida
+> por un firewall de 4 capas.
+
+> Tu misión: Infiltrarte en cada capa, copiar las claves de acceso
+> y evitar que sus sistemas de defensa te detecten.
+
+> Las ventanas emergentes son trampas de su sistema. Ciérralas rápido,
+> pero no descuides el código.
+
+> ¿Preparado?
+> [Presiona ENTER para continuar]"
+label_settings = SubResource("LabelSettings_vactc")
+
+[node name="StartButton" type="Button" parent="." unique_id=473164858]
+visible = false
+layout_mode = 0
+offset_left = 744.0
+offset_top = 960.0
+offset_right = 1179.0
+offset_bottom = 1019.0
+theme_override_colors/font_color = Color(0, 1, 0, 1)
+theme_override_colors/font_focus_color = Color(0.95, 0.95, 0.95, 1)
+theme_override_colors/font_pressed_color = Color(0, 0, 0, 1)
+theme_override_fonts/font = ExtResource("3_r0mdn")
+theme_override_font_sizes/font_size = 44
+theme_override_styles/normal = SubResource("StyleBoxFlat_vactc")
+theme_override_styles/pressed = SubResource("StyleBoxFlat_ncg45")
+theme_override_styles/hover = SubResource("StyleBoxFlat_vactc")
+theme_override_styles/disabled = SubResource("StyleBoxEmpty_l07yc")
+theme_override_styles/focus = SubResource("StyleBoxEmpty_fipxo")
+text = "  SA  "

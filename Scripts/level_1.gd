@@ -3,6 +3,7 @@ extends Node
 @onready var receiver = $Receiver/Label
 @onready var text_editor = $TextEditor
 @onready var time_bar = $TimeBar
+@onready var time_text = $TimeBar/TimeText
 @onready var time = $Time
 
 @onready var light_1 = $Lights/Light1
@@ -103,6 +104,7 @@ func _on_text_editor_gui_input(event: InputEvent) -> void:
 					text_completed = true
 					print("¡Texto completado! Tiempo detenido.")
 					$Victoria.show()
+					$AnimationPlayer.play("Victory")
 				else:
 					# Quedan líneas: cargar la siguiente y reiniciar el temporizador
 					_load_current_line()
@@ -110,6 +112,9 @@ func _on_text_editor_gui_input(event: InputEvent) -> void:
 					time.start()
 
 func _process(_delta: float) -> void:
+	var seconds_left = int(ceil(time.time_left))
+	time_text.text = "%02d" % seconds_left
+	
 	if not text_completed and time.time_left > 0:
 		time_bar.value = (time.time_left / time.wait_time) * 100
 	

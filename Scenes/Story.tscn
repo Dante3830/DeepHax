@@ -5,7 +5,28 @@
 [ext_resource type="FontFile" uid="uid://2afyco5rkpvl" path="res://Assets/Fonts/Anta-Regular.ttf" id="3_l07yc"]
 
 [sub_resource type="LabelSettings" id="LabelSettings_vactc"]
+font_size = 33
 font_color = Color(0, 1, 0, 1)
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_vactc"]
+bg_color = Color(0, 0, 0, 1)
+border_width_left = 2
+border_width_top = 2
+border_width_right = 2
+border_width_bottom = 2
+border_color = Color(0, 1, 0, 1)
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_ncg45"]
+bg_color = Color(0, 1, 0, 1)
+border_width_left = 2
+border_width_top = 2
+border_width_right = 2
+border_width_bottom = 2
+border_color = Color(0, 0, 0, 1)
+
+[sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_l07yc"]
+
+[sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_fipxo"]
 
 [node name="Story" type="Control" unique_id=367809053]
 layout_mode = 3
@@ -18,10 +39,10 @@ script = ExtResource("1_vactc")
 
 [node name="Label" type="Label" parent="." unique_id=1558483367]
 layout_mode = 0
-offset_left = 278.0
-offset_top = 54.0
-offset_right = 872.0
-offset_bottom = 170.0
+offset_left = 664.0
+offset_top = 48.0
+offset_right = 1258.0
+offset_bottom = 164.0
 theme_override_colors/font_color = Color(0, 1, 0, 1)
 theme_override_colors/font_outline_color = Color(0, 1, 0, 1)
 theme_override_constants/outline_size = 12
@@ -32,10 +53,10 @@ horizontal_alignment = 1
 
 [node name="Label2" type="Label" parent="." unique_id=1993840675]
 layout_mode = 0
-offset_left = 127.0
-offset_top = 186.0
-offset_right = 1024.0
-offset_bottom = 534.0
+offset_left = 56.0
+offset_top = 192.0
+offset_right = 1900.0
+offset_bottom = 852.0
 theme_override_colors/font_color = Color(0, 1, 0, 1)
 theme_override_fonts/font = ExtResource("2_ncg45")
 theme_override_font_sizes/font_size = 23
@@ -55,13 +76,22 @@ No obstante, estamos seguros de que no te vas a rendir y cumplirás con tu misi�
 label_settings = SubResource("LabelSettings_vactc")
 horizontal_alignment = 1
 
-[node name="MenuButton" type="Button" parent="." unique_id=208904406]
+[node name="MenuButton" type="Button" parent="." unique_id=473164858]
 layout_mode = 0
-offset_left = 500.0
-offset_top = 561.0
-offset_right = 656.0
-offset_bottom = 590.0
+offset_left = 744.0
+offset_top = 960.0
+offset_right = 1179.0
+offset_bottom = 1019.0
+theme_override_colors/font_color = Color(0, 1, 0, 1)
+theme_override_colors/font_focus_color = Color(0.95, 0.95, 0.95, 1)
+theme_override_colors/font_pressed_color = Color(0, 0, 0, 1)
 theme_override_fonts/font = ExtResource("3_l07yc")
-text = " VOLVER AL MENU "
+theme_override_font_sizes/font_size = 44
+theme_override_styles/normal = SubResource("StyleBoxFlat_vactc")
+theme_override_styles/pressed = SubResource("StyleBoxFlat_ncg45")
+theme_override_styles/hover = SubResource("StyleBoxFlat_vactc")
+theme_override_styles/disabled = SubResource("StyleBoxEmpty_l07yc")
+theme_override_styles/focus = SubResource("StyleBoxEmpty_fipxo")
+text = "  VOLVER AL MENÚ  "
 
 [connection signal="pressed" from="MenuButton" to="." method="_on_menu_button_pressed"]

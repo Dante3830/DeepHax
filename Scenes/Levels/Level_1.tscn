@@ -5,7 +5,9 @@
 [ext_resource type="Script" uid="uid://frjsavx0jdcy" path="res://Scripts/puzzle-windows_manager.gd" id="2_qpfou"]
 [ext_resource type="FontFile" uid="uid://dkt6qdxklh4j6" path="res://Assets/Fonts/IBM_Plex_Mono/IBMPlexMono-Bold.ttf" id="3_qpfou"]
 [ext_resource type="PackedScene" uid="uid://cpp583uv45ray" path="res://Scenes/Puzzle-Windows/SimonSays.tscn" id="3_ybqp2"]
-[ext_resource type="FontFile" uid="uid://2afyco5rkpvl" path="res://Assets/Fonts/Anta-Regular.ttf" id="4_ybqp2"]
+[ext_resource type="Texture2D" uid="uid://byxixjomnx0qt" path="res://Assets/Kenney Game Icons/contrast.png" id="7_hs11j"]
+[ext_resource type="FontFile" uid="uid://djx8toqe17ynx" path="res://Assets/Fonts/Michroma-Regular.ttf" id="8_o5ofx"]
+[ext_resource type="Texture2D" uid="uid://dptce3hmit3di" path="res://Assets/Kenney Game Icons/checkmark.png" id="9_34y5i"]
 
 [sub_resource type="StyleBoxFlat" id="StyleBoxFlat_vnunq"]
 bg_color = Color(0, 0, 0, 1)
@@ -74,6 +76,9 @@ border_width_right = 3
 border_width_bottom = 3
 border_color = Color(0.96862745, 0.87058824, 0, 1)
 
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_ybqp2"]
+size = Vector2(1089.25, 301.25)
+
 [sub_resource type="Animation" id="Animation_vnunq"]
 length = 0.001
 tracks/0/type = "value"
@@ -112,6 +117,14 @@ _data = {
 &"Victory": SubResource("Animation_nw7js")
 }
 
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_ducwx"]
+bg_color = Color(0, 0, 0, 1)
+border_width_left = 3
+border_width_top = 3
+border_width_right = 3
+border_width_bottom = 3
+border_color = Color(1, 0, 0, 1)
+
 [node name="Level 1" type="Node" unique_id=742101328]
 script = ExtResource("1_q8yj7")
 
@@ -124,10 +137,10 @@ wait_time = 60.0
 autostart = true
 
 [node name="TimeBar" type="ProgressBar" parent="." unique_id=226786509]
-offset_left = 216.0
-offset_top = 96.0
-offset_right = 939.0
-offset_bottom = 123.0
+offset_left = 520.0
+offset_top = 200.0
+offset_right = 1392.0
+offset_bottom = 248.0
 theme_override_styles/background = SubResource("StyleBoxFlat_vnunq")
 theme_override_styles/fill = SubResource("StyleBoxFlat_nw7js")
 value = 100.0
@@ -136,14 +149,17 @@ show_percentage = false
 
 [node name="TimeText" type="Label" parent="TimeBar" unique_id=1051205803]
 layout_mode = 0
-offset_left = 1.0
-offset_top = -28.0
-offset_right = 716.0
-offset_bottom = 51.0
+offset_left = 392.0
+offset_top = -72.0
+offset_right = 476.0
+offset_bottom = -9.0
 theme_override_colors/font_color = Color(0, 1, 0, 1)
-theme_override_fonts/font = ExtResource("4_ybqp2")
-theme_override_font_sizes/font_size = 21
+theme_override_colors/font_outline_color = Color(0, 1, 0, 1)
+theme_override_constants/outline_size = 4
+theme_override_fonts/font = ExtResource("8_o5ofx")
+theme_override_font_sizes/font_size = 44
 text = "60"
+horizontal_alignment = 1
 
 [node name="Receiver" type="Panel" parent="." unique_id=291228518]
 anchors_preset = 8
@@ -151,10 +167,10 @@ anchor_left = 0.5
 anchor_top = 0.5
 anchor_right = 0.5
 anchor_bottom = 0.5
-offset_left = -368.0
+offset_left = -504.0
 offset_top = -76.0
-offset_right = 355.0
-offset_bottom = 11.0
+offset_right = 560.0
+offset_bottom = 92.0
 grow_horizontal = 2
 grow_vertical = 2
 theme_override_styles/panel = SubResource("StyleBoxFlat_oiua3")
@@ -167,26 +183,28 @@ offset_right = 719.5
 offset_bottom = 83.5
 theme_override_colors/font_color = Color(0.8666667, 0.29411766, 0, 1)
 theme_override_fonts/font = ExtResource("2_87l2y")
-theme_override_font_sizes/font_size = 31
+theme_override_font_sizes/font_size = 46
 text = "Input.scale.takingThreeTime.function()"
 
 [node name="Name" type="Label" parent="Receiver" unique_id=955687338]
 layout_mode = 0
-offset_left = -0.5
-offset_top = -27.5
-offset_right = 714.5
-offset_bottom = 51.5
+offset_top = -64.0
+offset_right = 338.0
+offset_bottom = -1.0
 theme_override_colors/font_color = Color(0.8666667, 0.29411766, 0, 1)
-theme_override_fonts/font = ExtResource("2_87l2y")
-theme_override_font_sizes/font_size = 21
-text = "Recibidor"
+theme_override_fonts/font = ExtResource("8_o5ofx")
+theme_override_font_sizes/font_size = 44
+text = "RECIBIDOR"
 
 [node name="Lights" type="Control" parent="." unique_id=1697260995]
+texture_filter = 1
 layout_mode = 3
 anchors_preset = 0
-offset_top = 48.0
-offset_right = 40.0
-offset_bottom = 88.0
+offset_left = -144.0
+offset_top = 200.0
+offset_right = -104.0
+offset_bottom = 240.0
+scale = Vector2(2, 2)
 
 [node name="Light1" type="Panel" parent="Lights" unique_id=201162600]
 layout_mode = 0
@@ -229,27 +247,39 @@ offset_bottom = 424.0
 theme_override_styles/panel = SubResource("StyleBoxFlat_i63mn")
 
 [node name="TextEditor" type="TextEdit" parent="." unique_id=1517384654]
+texture_filter = 1
 anchors_preset = 7
 anchor_left = 0.5
 anchor_top = 1.0
 anchor_right = 0.5
 anchor_bottom = 1.0
-offset_left = -368.0
-offset_top = -152.0
-offset_right = 354.0
-offset_bottom = -103.0
+offset_left = -504.0
+offset_top = -232.0
+offset_right = 552.0
+offset_bottom = -128.0
 grow_horizontal = 2
 grow_vertical = 0
 size_flags_vertical = 4
 theme_override_colors/font_color = Color(0.875, 0.875, 0.875, 1)
 theme_override_colors/font_placeholder_color = Color(1, 0.90000004, 0, 1)
 theme_override_fonts/font = ExtResource("3_qpfou")
-theme_override_font_sizes/font_size = 24
+theme_override_font_sizes/font_size = 44
 theme_override_styles/normal = SubResource("StyleBoxFlat_aur7v")
 placeholder_text = "Escribí acá el código"
 context_menu_enabled = false
 emoji_menu_enabled = false
 selecting_enabled = false
+
+[node name="Name" type="Label" parent="TextEditor" unique_id=462289741]
+texture_filter = 1
+layout_mode = 0
+offset_top = -56.0
+offset_right = 294.0
+offset_bottom = 2.0
+theme_override_colors/font_color = Color(1, 0.8980392, 0, 1)
+theme_override_fonts/font = ExtResource("8_o5ofx")
+theme_override_font_sizes/font_size = 40
+text = "INSERTOR"
 
 [node name="Victoria" type="Label" parent="." unique_id=356645498]
 visible = false
@@ -271,8 +301,116 @@ theme_override_colors/font_color = Color(1, 1, 1, 1)
 theme_override_font_sizes/font_size = 37
 text = "Perdiste UwU"
 
+[node name="RandomArea" type="Area2D" parent="." unique_id=202580248]
+position = Vector2(376, 224)
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="RandomArea" unique_id=1951861961]
+position = Vector2(608, 280)
+shape = SubResource("RectangleShape2D_ybqp2")
+debug_color = Color(0, 0.6, 0.69803923, 0)
+
+[node name="UI Coins-Combo" type="Control" parent="." unique_id=551413277]
+layout_mode = 3
+anchors_preset = 0
+offset_right = 40.0
+offset_bottom = 40.0
+
+[node name="GameTimeText" type="Label" parent="UI Coins-Combo" unique_id=245226185]
+layout_mode = 0
+offset_left = 19.0
+offset_top = 991.0
+offset_right = 375.0
+offset_bottom = 1065.0
+theme_override_colors/font_color = Color(1, 1, 1, 1)
+theme_override_colors/font_outline_color = Color(1, 1, 1, 1)
+theme_override_constants/outline_size = 9
+theme_override_fonts/font = ExtResource("8_o5ofx")
+theme_override_font_sizes/font_size = 51
+text = "00:00.25"
+
+[node name="Sprite2D" type="Sprite2D" parent="UI Coins-Combo" unique_id=1643640418]
+position = Vector2(66.5329, 58.832455)
+scale = Vector2(1.0693421, 1.0633508)
+texture = ExtResource("7_hs11j")
+
+[node name="CoinsText" type="Label" parent="UI Coins-Combo" unique_id=861616353]
+layout_mode = 0
+offset_left = 104.0
+offset_top = 8.0
+offset_right = 304.0
+offset_bottom = 108.0
+theme_override_colors/font_color = Color(1, 1, 1, 1)
+theme_override_colors/font_outline_color = Color(1, 1, 1, 1)
+theme_override_constants/outline_size = 9
+theme_override_fonts/font = ExtResource("8_o5ofx")
+theme_override_font_sizes/font_size = 70
+text = "000"
+
+[node name="Sprite2D2" type="Sprite2D" parent="UI Coins-Combo" unique_id=1418381753]
+position = Vector2(1734.9342, 68.33245)
+scale = Vector2(1.0986843, 1.0333508)
+texture = ExtResource("9_34y5i")
+
+[node name="ComboText" type="Label" parent="UI Coins-Combo" unique_id=1465435024]
+layout_mode = 1
+anchors_preset = 1
+anchor_left = 1.0
+anchor_right = 1.0
+offset_left = 1752.9342
+offset_top = 16.0
+offset_right = 1858.9342
+offset_bottom = 80.0
+grow_horizontal = 0
+theme_override_colors/font_color = Color(1, 1, 1, 1)
+theme_override_colors/font_outline_color = Color(1, 1, 1, 1)
+theme_override_constants/outline_size = 9
+theme_override_fonts/font = ExtResource("8_o5ofx")
+theme_override_font_sizes/font_size = 70
+text = "x1"
+
 [node name="AnimationPlayer" type="AnimationPlayer" parent="." unique_id=1090498134]
 libraries/ = SubResource("AnimationLibrary_nh7xm")
 speed_scale = 2.0
+
+[node name="SymonSays" parent="." unique_id=1270405932 instance=ExtResource("3_ybqp2")]
+offset_left = 1168.0
+offset_top = 392.0
+offset_right = 1168.0
+offset_bottom = 392.0
+
+[node name="GameOver" type="Panel" parent="." unique_id=31651215]
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -651.0
+offset_top = -26.0
+offset_right = 413.0
+offset_bottom = 142.0
+grow_horizontal = 2
+grow_vertical = 2
+theme_override_styles/panel = SubResource("StyleBoxFlat_ducwx")
+
+[node name="Label" type="Label" parent="GameOver" unique_id=541160486]
+layout_mode = 0
+offset_left = 4.5
+offset_top = 4.5
+offset_right = 719.5
+offset_bottom = 83.5
+theme_override_colors/font_color = Color(0.8666667, 0, 0, 1)
+theme_override_fonts/font = ExtResource("2_87l2y")
+theme_override_font_sizes/font_size = 46
+text = "Input.scale.takingThreeTime.function()"
+
+[node name="Name" type="Label" parent="GameOver" unique_id=1281563582]
+layout_mode = 0
+offset_top = -64.0
+offset_right = 338.0
+offset_bottom = -1.0
+theme_override_colors/font_color = Color(1, 0, 0, 1)
+theme_override_fonts/font = ExtResource("8_o5ofx")
+theme_override_font_sizes/font_size = 44
+text = "RECIBIDOR"
 
 [connection signal="timeout" from="Time" to="." method="_on_time_timeout"]
