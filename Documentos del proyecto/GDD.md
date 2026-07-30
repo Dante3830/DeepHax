@@ -7,17 +7,17 @@
 
 # GAME DESIGN DOCUMENT (GDD)
 
-**Nombre del Juego:** [Ingresa el nombre del juego]  
-**Versión:** 0.0.0  
-**Fecha de actualización:** [DD/MM/AAAA]
+**Nombre del Juego:** DEEP HAX
+**Versión:** 1.0.0  
+**Fecha de actualización:** [30/07/2026]
 
 ## Ficha del Grupo
 | Apellido y Nombre Completo | Función dentro del grupo |
 | :--- | :--- |
-| [Nombre del alumno] | Game Designer / Level Design |
-| [Nombre del alumno] | Artist |
-| [Nombre del alumno] | Programmer |
-| [Nombre del alumno] | Producer |
+| Dante Rizzi | Game Designer |
+| Dante Rizzi | Artista |
+| Dante Rizzi | Programador |
+| Dante Rizzi | Productor |
 
 ---
 
