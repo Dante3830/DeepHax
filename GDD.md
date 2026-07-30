@@ -96,7 +96,7 @@ El trabajo finalizará con un producto estable y testeado, listo para ser jugado
 2.  **Derrota de Fase:** El jugador pierde la fase si el temporizador llega a 0 antes de completar las 5 líneas.
 3.  **Regla del Temporizador:** Al copiar una línea correctamente, el temporizador se reinicia a su valor máximo (ej. 60 segundos).
 4.  **Regla de Interacción de Ventanas:** El jugador debe interactuar con las ventanas-puzzle usando el *click izquierdo* del mouse para cerrarlas.
-5.  **Regla de Penalización:** Fallar un microjuego de una ventana-puzzle resulta en una penalización de -5 segundos en el temporizador.
+5.  **Regla de Penalización:** Fallar un microjuego de una ventana-puzzle resulta en una penalización de -5 segundos en el temporizador, pero no cerrará la ventana.
 6.  **Regla de Recompensa:** Completar con éxito una ventana-puzzle otorga Hackoins. La cantidad es mayor si se resuelve rápidamente.
 7.  **Regla de Combos:** Cada línea de código copiada correctamente suma 1 al combo. Un error al copiar una línea (tecla incorrecta) reinicia el combo a 0.
 8.  **Regla de Condiciones:** Las ventanas-puzzle pueden tener una condición que altera el gameplay mientras estén abiertas.
@@ -108,7 +108,7 @@ El trabajo finalizará con un producto estable y testeado, listo para ser jugado
 
 ### 3.3 Descripción de una sesión de juego
 1.  El jugador inicia el juego desde el menú principal y es recibido por una breve cinemática de texto que contextualiza la historia.
-2.  Llega al "Hub" o "Pantalla de Fases", donde ve el progreso general (ej. 25% completado) y puede comprar mejoras.
+2.  Llega al "Hub" o "Pantalla de Fases", donde ve el progreso general (ej. 25% completado si está por empezar la Fase 2) y puede comprar mejoras.
 3.  Al presionar "Empezar hackeo", comienza la Fase 1.
 4.  El jugador ve el "Recibidor" con la primera línea de código y el "Insertor" donde debe escribirla.
 5.  Mientras escribe, comienzan a aparecer ventanas-puzzle en la pantalla. El jugador debe alternar rápidamente entre escribir código y hacer clic en las ventanas para resolver sus minijuegos.
