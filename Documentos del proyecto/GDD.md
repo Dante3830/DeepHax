@@ -8,71 +8,139 @@
 # GAME DESIGN DOCUMENT (GDD)
 
 **Nombre del Juego:** DEEP HAX
-**Versión:** 1.0.0  
+**Versión:** 1.0.1
 **Fecha de actualización:** [30/07/2026]
 
 ## Ficha del Grupo
 | Apellido y Nombre Completo | Función dentro del grupo |
 | :--- | :--- |
-| Dante Rizzi | Game Designer |
-| Dante Rizzi | Artista |
-| Dante Rizzi | Programador |
-| Dante Rizzi | Productor |
+| Dante Rizzi | Game Designer / Artista / Programador / Productor |
 
 ---
 
 ## 1. High Concept y Visión Inicial
 > *Nota: Es sumamente importante que en esta primera página haya un dibujo, arte conceptual o screenshot que dé la idea de cómo es el juego para que se entienda sin necesidad de leer mucho.*
 
-**[Insertar aquí imagen de pre-producción generada por IA que represente el mood/escena del juego]**
+**[Insertar aquí imagen de pre-producción generada por IA que represente el mood/escena del juego. Ej: Una interfaz de hacker con líneas de código verde y ventanas de puzzle flotando.]**
 
-**High Concept:** [El núcleo del juego en una frase. Debe encapsular la esencia del proyecto de forma clara y atractiva, destacando lo que lo hace único].
+**High Concept:** En *Deep Hax*, eres un agente de ciberpatrullaje que debe escribir código para rastrear a un peligroso terrorista, mientras cierras frenéticamente ventanas-puzzle que amenazan con interrumpir tu trabajo. Es un juego de habilidad y reflejos donde la velocidad y la precisión son la clave.
 
 ---
 
 ## 2. Estructura Core del Proyecto
 
 ### 2.1 Objetivo del Proyecto
-[Describe el propósito principal de este desarrollo, tanto a nivel de producto como académico].
+El objetivo principal de este proyecto es desarrollar un videojuego funcional y jugable para PC que sirva como trabajo final de la Tecnicatura. El proyecto busca demostrar las habilidades adquiridas en diseño de juego, programación y arte, creando una experiencia original que combine la temática de hackeo con mecánicas de juego ágiles y desafiantes.
 
 ### 2.2 Diseño e investigación
-- **Definición de idea:** [Explicación ampliada de qué trata el juego].
-- **Género:** [Ej: Plataformas 2D, RPG de acción, Puzzle, etc.].
-- **Referencias:** [Juegos similares, películas, libros o estéticas que sirvan de inspiración].
-- **Público objetivo:** [A quién va dirigido el juego (edad, tipo de jugador casual/hardcore)].
-- **Mecánicas principales:** [Las acciones fundamentales que el jugador realizará constantemente].
+- **Definición de idea:** *Deep Hax* es un simulador de hackeo en el que el jugador debe copiar líneas de código mientras resuelve rápidos minijuegos que aparecen en forma de ventanas emergentes. La presión del tiempo y la creciente dificultad de los puzzles crean una experiencia tensa y adictiva.
+- **Género:** Simulación de Hackeo, Puzzle, Arcade.
+- **Referencias:**
+    - **Gameplay de copiar código:** *Welcome to the Game* (Reflect Studios, 2016).
+    - **Minijuegos de puzzles:** *Keep Talking and Nobody Explodes* (Steel Crate Games, 2015).
+    - **Sistema de monedas y mejoras:** *Downwell* (Moppin, 2015).
+    - **Estética:** Cine y cultura de hackers (Matrix, Mr. Robot).
+- **Público objetivo:** Jugadores adolescentes a partir de 12 años, de cualquier género, que disfruten de juegos con temática de hackeo, alta dificultad, partidas cortas (menos de 30 minutos) y fáciles de aprender pero difíciles de dominar.
+- **Mecánicas principales:**
+    1.  **Copiar Código:** El jugador debe escribir en un campo de texto las líneas de código que aparecen en el "Recibidor".
+    2.  **Resolver Ventanas-Puzzle:** El jugador debe interactuar con ventanas emergentes que contienen minijuegos para cerrarlas.
+    3.  **Gestión de Recursos:** El jugador gana monedas ("Hackoins") al resolver puzzles y puede gastarlas en mejoras entre fases.
 
 ### 2.3 Concepto del Juego
-[Descripción más detallada del universo, la historia (si la hay) y el gancho principal del gameplay].
+En un futuro cercano, el jugador asume el rol de un agente de la Agencia Internacional de Ciberpatrullaje (AIC). Su misión es localizar y capturar a "Incognitus", un escurridizo ciberterrorista. Para ello, debe infiltrarse en su sistema y copiar líneas de código críticas que revelarán su ubicación.
+
+El gancho principal del juego reside en la multitarea: el jugador debe equilibrar la precisión al copiar el código con la rapidez para resolver los puzzles de las ventanas. La presión de un temporizador que se renueva con cada acierto, junto a la creciente complejidad de los minijuegos, genera una experiencia intensa y gratificante.
 
 ### 2.4 Premisas del Videojuego
-[Reglas inquebrantables del universo del juego, verdades fundamentales sobre la narrativa o el diseño que guiarán todo el desarrollo].
+1.  **El tiempo es el recurso más valioso.** Todo en el juego gira en torno a la gestión del tiempo.
+2.  **La distracción es el enemigo.** Las ventanas-puzzle son el principal obstáculo, no solo por su dificultad, sino por la interrupción que causan.
+3.  **La práctica lleva a la maestría.** El juego es fácil de entender pero difícil de dominar; la habilidad del jugador crece con cada partida.
+4.  **La estética "Hacker" es fundamental.** La interfaz, los colores y el sonido deben sumergir al jugador en el rol de un hacker.
 
 ### 2.5 Condiciones del Desarrollo
-[Herramientas a utilizar (Ej: Unity, Godot), motor gráfico, repositorios de Git, metodologías de trabajo, tiempos y limitaciones de hardware].
+- **Motor Gráfico/Herramientas:** Unity (o Godot, según prefieras).
+- **Lenguaje de Programación:** C# (para Unity) o GDScript (para Godot).
+- **Control de Versiones:** Git con un repositorio en GitHub.
+- **Metodología de Trabajo:** Desarrollo ágil con sprints cortos.
+- **Hardware Objetivo:** PC con sistema operativo Windows, MacOS o Linux. Resolución mínima de 1280x720.
+- **Idioma:** Español.
 
 ### 2.6 Alcance del proyecto
-[Qué se va a entregar exactamente: ¿Un prototipo funcional? ¿Un nivel completo (Vertical Slice)? Define claramente dónde empieza y dónde termina el trabajo].
+Este proyecto entregará una **versión jugable y completa del juego**, que incluye:
+- Un **menú principal** completamente funcional.
+- **Cuatro fases** de juego (con sus respectivas pantallas de transición) más una **fase final contra el jefe**.
+- Un **sistema de progresión** que incluye un hub de fases, mejoras comprables con monedas del juego y un perfil de jugador con desbloqueables.
+- **Todas las mecánicas** descritas (copiar código, 12 tipos de ventanas-puzzle, 4 condiciones, sistema de combos, etc.).
+- **Sistema de guardado** para el progreso, estadísticas y desbloqueos.
+- **Paletas de colores y filtros** desbloqueables para personalizar la experiencia visual.
+
+El trabajo finalizará con un producto estable y testeado, listo para ser jugado de principio a fin.
 
 ---
 
 ## 3. Diseño Detallado del Juego
 
 ### 3.1 Elementos del Juego
-[Enumerar y describir los distintos elementos que intervienen en el juego. Por ejemplo: Personaje principal, enemigos, ítems coleccionables, obstáculos, power-ups].
+- **Recibidor:** Caja que muestra la línea de código que el jugador debe copiar.
+- **Insertor:** Caja de texto donde el jugador escribe el código.
+- **Temporizador:** Barra o número que indica el tiempo restante para la fase.
+- **Ventanas-Puzzle:** Ventanas emergentes que contienen un microjuego. Aparecen periódicamente para distraer al jugador.
+- **Microjuegos (12 tipos):** Simon Dice, Mantener Pulsado, Laberinto, Contraseña, Conexión de cables, Deslizador, Encuentra la diferencia, Igualar cuadros 3x3, Pulsar repetidamente, Ajustar reloj, Ajustar figura, No pulsar.
+- **Condiciones de Ventanas (4 tipos):** Bloqueo de teclado, Acelerador, Desorden visual, Pérdida de hackois, Trampa. (El PDF menciona 5, las listo aquí).
+- **Hackoins:** Moneda del juego. Se obtienen al cerrar ventanas-puzzle (más si se hace rápido).
+- **Mejoras:** Potenciadores comprables con Hackoins entre fases (ej. Tiempo extra, Proteger combo, Auto-completar, etc.).
+- **Combos:** Racha de líneas de código copiadas sin errores. Multiplican las Hackoins al final de la fase.
+- **Perfil del Jugador:** Muestra el nivel (1-20), progreso de desbloqueos y estadísticas.
 
 ### 3.2 Reglas
-[Enumerar de la manera más detallada posible las reglas que gobiernan el comportamiento de los elementos, los límites del jugador y las condiciones de victoria y derrota].
+1.  **Victoria de Fase:** El jugador debe copiar exitosamente 5 líneas de código en el "Insertor" antes de que el temporizador llegue a 0.
+2.  **Derrota de Fase:** El jugador pierde la fase si el temporizador llega a 0 antes de completar las 5 líneas.
+3.  **Regla del Temporizador:** Al copiar una línea correctamente, el temporizador se reinicia a su valor máximo (ej. 60 segundos).
+4.  **Regla de Interacción de Ventanas:** El jugador debe interactuar con las ventanas-puzzle usando el *click izquierdo* del mouse para cerrarlas.
+5.  **Regla de Penalización:** Fallar un microjuego de una ventana-puzzle resulta en una penalización de -5 segundos en el temporizador.
+6.  **Regla de Recompensa:** Completar con éxito una ventana-puzzle otorga Hackoins. La cantidad es mayor si se resuelve rápidamente.
+7.  **Regla de Combos:** Cada línea de código copiada correctamente suma 1 al combo. Un error al copiar una línea (tecla incorrecta) reinicia el combo a 0.
+8.  **Regla de Condiciones:** Las ventanas-puzzle pueden tener una condición que altera el gameplay mientras estén abiertas.
+    - *Bloqueo de Teclado:* Inhabilita una tecla aleatoria.
+    - *Acelerador:* Aumenta la velocidad del temporizador.
+    - *Desorden Visual:* Distorsiona la imagen del "Recibidor".
+    - *Pérdida de Hackoins:* Si se ignora, el jugador pierde todas sus Hackoins.
+    - *Trampa:* Interactuar con ella en los primeros segundos penaliza con -10 segundos.
 
 ### 3.3 Descripción de una sesión de juego
-[Describir aquí paso a paso cómo sería una sesión típica de juego desde que el usuario toma el control].
+1.  El jugador inicia el juego desde el menú principal y es recibido por una breve cinemática de texto que contextualiza la historia.
+2.  Llega al "Hub" o "Pantalla de Fases", donde ve el progreso general (ej. 25% completado) y puede comprar mejoras.
+3.  Al presionar "Empezar hackeo", comienza la Fase 1.
+4.  El jugador ve el "Recibidor" con la primera línea de código y el "Insertor" donde debe escribirla.
+5.  Mientras escribe, comienzan a aparecer ventanas-puzzle en la pantalla. El jugador debe alternar rápidamente entre escribir código y hacer clic en las ventanas para resolver sus minijuegos.
+6.  El jugador completa las 5 líneas. Cada línea correcta reinicia el temporizador y suma un combo. Cada ventana resuelta añade Hackoins.
+7.  Al completar la fase, el juego muestra un resumen de la victoria y regresa al Hub. El jugador puede entonces comprar mejoras con sus Hackoins.
+8.  Este ciclo se repite para las Fases 2, 3 y 4, aumentando la dificultad (más ventanas, menos tiempo, nuevas condiciones).
+9.  Tras la Fase 4, el jugador se enfrenta a la Fase Final contra "Incognitus", que requiere un gran combo sin errores.
+10. Si el jugador gana, ve el final de la historia. Si pierde en cualquier momento, ve una pantalla de derrota con sus estadísticas y la opción de reintentar.
 
 ### 3.4 Estética y Experiencia del Jugador
-[Describir las respuestas estéticas o sentimientos que se espera despertar en el usuario (Ej: tensión, relajación, nostalgia, desafío) y cómo las mecánicas lograrán ese efecto].
+- **Experiencia del Jugador:** Se busca crear una sensación de **tensión y urgencia** propia de una situación de alto riesgo. El jugador debe sentirse como un hacker profesional bajo presión, donde cada segundo cuenta. La satisfacción vendrá de dominar la mecánica, mantener un combo alto y superar fases cada vez más difíciles.
+- **Estética:**
+    - **Visual:** Estética "Dark Hacker". Fondos oscuros, acentos en colores neón (verde, naranja, cian). Interfaz limpia pero con un toque técnico. Las paletas de colores y filtros desbloqueables permitirán personalizar esta experiencia (ej. estilo Matrix o monitor antiguo).
+    - **Sonora:** Música electrónica con un ritmo acelerado que aumente la tensión. Efectos de sonido de tecleo, estática y notificaciones digitales para reforzar la inmersión.
 
 ---
 
 ## 4. Arte, Audio y Bocetos
-**Bocetos de Pantalla / UI:** [Incluir bocetos, wireframes o mockups de cómo se vería la pantalla de juego (HUD), menús principales y señalar en el mismo los elementos en pantalla].
+**Bocetos de Pantalla / UI:**
+- **Menú Principal:** Título "DEEP HAX" en una tipografía tecnológica, con los botones: "¡A hackear!", "Historia", "Perfil", "Opciones", "Créditos" y "Salir".
+- **Pantalla de Juego (In-Game HUD):**
+    - Esquina superior: Temporizador.
+    - Centro: "Recibidor" (caja naranja con texto de código).
+    - Parte inferior: "Insertor" (caja amarilla con el texto que escribe el jugador).
+    - Sobre estos elementos: Ventanas-puzzle emergentes que el jugador debe cerrar.
+- **Pantalla de Fases (Hub):** Una interfaz con 4 casillas que representan el progreso del jugador. En la parte inferior, un panel para comprar mejoras.
+- **Pantalla de Perfil:** Muestra el nivel del jugador, una barra de progreso y las estadísticas (tiempo total, hackoins totales, etc.).
 
-**Estilo Visual y Sonoro:** [Descripción de la paleta de colores, estilo de arte (ej. Pixel Art, Low Poly) y el enfoque para la música y los efectos de sonido].
+*[Incluir aquí wireframes o mockups de estas pantallas]*
+
+**Estilo Visual y Sonoro:**
+- **Paleta de Colores Predeterminada:** Negro (#0a0a0a) como fondo, Verde lima (#39ff14) para el código, Naranja (#ff7b00) para el Recibidor, Amarillo (#ffd700) para el Insertor y Cian (#00ffff) para los acentos de las ventanas.
+- **Estilo de Arte:** 2D, con una estética de interfaz de usuario (UI) técnica y limpia. Se usarán formas geométricas, líneas finas y tipografías de estilo "monospace" (como "Courier New" o "Fira Code").
+- **Audio:** Una banda sonora de música electrónica (Synthwave / Cyberpunk) con ritmos rápidos. Los efectos de sonido serán principalmente digitales: teclas de computadora, pitidos, estática, etc.
