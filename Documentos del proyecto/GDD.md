@@ -14,7 +14,7 @@
 ## Ficha del Grupo
 | Apellido y Nombre Completo | Función dentro del grupo |
 | :--- | :--- |
-| Dante Rizzi | Game Designer / Artista / Programador / Productor |
+| Rizzi, Dante | Game Designer / Artista / Programador / Productor |
 
 ---
 
