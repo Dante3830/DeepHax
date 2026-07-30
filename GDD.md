@@ -19,11 +19,10 @@
 ---
 
 ## 1. High Concept y Visión Inicial
-> *Nota: Es sumamente importante que en esta primera página haya un dibujo, arte conceptual o screenshot que dé la idea de cómo es el juego para que se entienda sin necesidad de leer mucho.*
 
-**[Insertar aquí imagen de pre-producción generada por IA que represente el mood/escena del juego. Ej: Una interfaz de hacker con líneas de código verde y ventanas de puzzle flotando.]**
+<img width="1920" height="1080" alt="Captura de pantalla 2026-07-30 093958" src="https://github.com/user-attachments/assets/7fd0a55e-0180-41ef-b398-559b2203389d" />
 
-**High Concept:** En *Deep Hax*, eres un agente de ciberpatrullaje que debe escribir código para rastrear a un peligroso terrorista, mientras cierras frenéticamente ventanas-puzzle que amenazan con interrumpir tu trabajo. Es un juego de habilidad y reflejos donde la velocidad y la precisión son la clave.
+**High Concept:** En *Deep Hax*, sos un agente de ciberpatrullaje que debe escribir unos códigos para rastrear a un peligroso terrorista, mientras cerrás frenéticamente *ventanas-puzzle* que amenazan con interrumpir tu trabajo. Es un juego de habilidad y reflejos donde la velocidad y la precisión son la clave.
 
 ---
 
@@ -36,9 +35,9 @@ El objetivo principal de este proyecto es desarrollar un videojuego funcional y 
 - **Definición de idea:** *Deep Hax* es un simulador de hackeo en el que el jugador debe copiar líneas de código mientras resuelve rápidos minijuegos que aparecen en forma de ventanas emergentes. La presión del tiempo y la creciente dificultad de los puzzles crean una experiencia tensa y adictiva.
 - **Género:** Simulación de Hackeo, Puzzle, Arcade.
 - **Referencias:**
-    - **Gameplay de copiar código:** *Welcome to the Game* (Reflect Studios, 2016).
-    - **Minijuegos de puzzles:** *Keep Talking and Nobody Explodes* (Steel Crate Games, 2015).
-    - **Sistema de monedas y mejoras:** *Downwell* (Moppin, 2015).
+    - **Gameplay de copiar código:** *Welcome to the Game* (Reflect Studios, 2016). https://youtu.be/rdrwRDxuW3o?t=757
+    - **Minijuegos de puzzles:** *Keep Talking and Nobody Explodes* (Steel Crate Games, 2015). https://youtu.be/WhyxPD_PZJU
+    - **Sistema de monedas y mejoras:** *Downwell* (Moppin, 2015). https://youtu.be/-NgztqEH4iQ?t=110
     - **Estética:** Cine y cultura de hackers (Matrix, Mr. Robot).
 - **Público objetivo:** Jugadores adolescentes a partir de 12 años, de cualquier género, que disfruten de juegos con temática de hackeo, alta dificultad, partidas cortas (menos de 30 minutos) y fáciles de aprender pero difíciles de dominar.
 - **Mecánicas principales:**
@@ -47,7 +46,7 @@ El objetivo principal de este proyecto es desarrollar un videojuego funcional y 
     3.  **Gestión de Recursos:** El jugador gana monedas ("Hackoins") al resolver puzzles y puede gastarlas en mejoras entre fases.
 
 ### 2.3 Concepto del Juego
-En un futuro cercano, el jugador asume el rol de un agente de la Agencia Internacional de Ciberpatrullaje (AIC). Su misión es localizar y capturar a "Incognitus", un escurridizo ciberterrorista. Para ello, debe infiltrarse en su sistema y copiar líneas de código críticas que revelarán su ubicación.
+El jugador asume el rol de un agente de la Agencia Internacional de Ciberpatrullaje (AIC). Su misión es localizar y capturar a Incognitus, un escurridizo ciberterrorista. Para ello, debe infiltrarse en su sistema y copiar líneas de código críticas que revelarán su ubicación.
 
 El gancho principal del juego reside en la multitarea: el jugador debe equilibrar la precisión al copiar el código con la rapidez para resolver los puzzles de las ventanas. La presión de un temporizador que se renueva con cada acierto, junto a la creciente complejidad de los minijuegos, genera una experiencia intensa y gratificante.
 
@@ -58,11 +57,11 @@ El gancho principal del juego reside en la multitarea: el jugador debe equilibra
 4.  **La estética "Hacker" es fundamental.** La interfaz, los colores y el sonido deben sumergir al jugador en el rol de un hacker.
 
 ### 2.5 Condiciones del Desarrollo
-- **Motor Gráfico/Herramientas:** Unity (o Godot, según prefieras).
-- **Lenguaje de Programación:** C# (para Unity) o GDScript (para Godot).
+- **Motor Gráfico/Herramientas:** Godot.
+- **Lenguaje de Programación:** GDScript.
 - **Control de Versiones:** Git con un repositorio en GitHub.
 - **Metodología de Trabajo:** Desarrollo ágil con sprints cortos.
-- **Hardware Objetivo:** PC con sistema operativo Windows, MacOS o Linux. Resolución mínima de 1280x720.
+- **Hardware Objetivo:** PC con sistema operativo Windows, MacOS o Linux. Resolución mínima de 1920x1080.
 - **Idioma:** Español.
 
 ### 2.6 Alcance del proyecto
@@ -70,7 +69,7 @@ Este proyecto entregará una **versión jugable y completa del juego**, que incl
 - Un **menú principal** completamente funcional.
 - **Cuatro fases** de juego (con sus respectivas pantallas de transición) más una **fase final contra el jefe**.
 - Un **sistema de progresión** que incluye un hub de fases, mejoras comprables con monedas del juego y un perfil de jugador con desbloqueables.
-- **Todas las mecánicas** descritas (copiar código, 12 tipos de ventanas-puzzle, 4 condiciones, sistema de combos, etc.).
+- **Todas las mecánicas** descritas (copiar código, 12 tipos de ventanas-puzzle, 5 condiciones, sistema de combos, etc.).
 - **Sistema de guardado** para el progreso, estadísticas y desbloqueos.
 - **Paletas de colores y filtros** desbloqueables para personalizar la experiencia visual.
 
@@ -86,7 +85,7 @@ El trabajo finalizará con un producto estable y testeado, listo para ser jugado
 - **Temporizador:** Barra o número que indica el tiempo restante para la fase.
 - **Ventanas-Puzzle:** Ventanas emergentes que contienen un microjuego. Aparecen periódicamente para distraer al jugador.
 - **Microjuegos (12 tipos):** Simon Dice, Mantener Pulsado, Laberinto, Contraseña, Conexión de cables, Deslizador, Encuentra la diferencia, Igualar cuadros 3x3, Pulsar repetidamente, Ajustar reloj, Ajustar figura, No pulsar.
-- **Condiciones de Ventanas (4 tipos):** Bloqueo de teclado, Acelerador, Desorden visual, Pérdida de hackois, Trampa. (El PDF menciona 5, las listo aquí).
+- **Condiciones de Ventanas (5 tipos):** Bloqueo de teclado, Acelerador, Desorden visual, Pérdida de hackois, Trampa.
 - **Hackoins:** Moneda del juego. Se obtienen al cerrar ventanas-puzzle (más si se hace rápido).
 - **Mejoras:** Potenciadores comprables con Hackoins entre fases (ej. Tiempo extra, Proteger combo, Auto-completar, etc.).
 - **Combos:** Racha de líneas de código copiadas sin errores. Multiplican las Hackoins al final de la fase.
@@ -117,13 +116,13 @@ El trabajo finalizará con un producto estable y testeado, listo para ser jugado
 7.  Al completar la fase, el juego muestra un resumen de la victoria y regresa al Hub. El jugador puede entonces comprar mejoras con sus Hackoins.
 8.  Este ciclo se repite para las Fases 2, 3 y 4, aumentando la dificultad (más ventanas, menos tiempo, nuevas condiciones).
 9.  Tras la Fase 4, el jugador se enfrenta a la Fase Final contra "Incognitus", que requiere un gran combo sin errores.
-10. Si el jugador gana, ve el final de la historia. Si pierde en cualquier momento, ve una pantalla de derrota con sus estadísticas y la opción de reintentar.
+10. Si el jugador gana, ve el final de la historia. Si pierde en cualquier momento, ve una pantalla de derrota con sus estadísticas y la opción de reintentar empezando por la Fase 1.
 
 ### 3.4 Estética y Experiencia del Jugador
 - **Experiencia del Jugador:** Se busca crear una sensación de **tensión y urgencia** propia de una situación de alto riesgo. El jugador debe sentirse como un hacker profesional bajo presión, donde cada segundo cuenta. La satisfacción vendrá de dominar la mecánica, mantener un combo alto y superar fases cada vez más difíciles.
 - **Estética:**
     - **Visual:** Estética "Dark Hacker". Fondos oscuros, acentos en colores neón (verde, naranja, cian). Interfaz limpia pero con un toque técnico. Las paletas de colores y filtros desbloqueables permitirán personalizar esta experiencia (ej. estilo Matrix o monitor antiguo).
-    - **Sonora:** Música electrónica con un ritmo acelerado que aumente la tensión. Efectos de sonido de tecleo, estática y notificaciones digitales para reforzar la inmersión.
+    - **Sonora:** Música electrónica con un ritmo acelerado que aumente la tensión. Efectos de sonido de tecleo, estática y notificaciones digitales pseudo-futuristas para reforzar la inmersión.
 
 ---
 
@@ -131,16 +130,21 @@ El trabajo finalizará con un producto estable y testeado, listo para ser jugado
 **Bocetos de Pantalla / UI:**
 - **Menú Principal:** Título "DEEP HAX" en una tipografía tecnológica, con los botones: "¡A hackear!", "Historia", "Perfil", "Opciones", "Créditos" y "Salir".
 - **Pantalla de Juego (In-Game HUD):**
-    - Esquina superior: Temporizador.
+    - Parte superior: Temporizador.
+    - Izquierda superiror: Cantidad de Hackoins conseguidas por el jugador
+    - Derecha superior: Combo de líneas bien escritas.
     - Centro: "Recibidor" (caja naranja con texto de código).
     - Parte inferior: "Insertor" (caja amarilla con el texto que escribe el jugador).
+    - Izquierda inferior: Tiempo total calculado entre todas las fases.
     - Sobre estos elementos: Ventanas-puzzle emergentes que el jugador debe cerrar.
 - **Pantalla de Fases (Hub):** Una interfaz con 4 casillas que representan el progreso del jugador. En la parte inferior, un panel para comprar mejoras.
 - **Pantalla de Perfil:** Muestra el nivel del jugador, una barra de progreso y las estadísticas (tiempo total, hackoins totales, etc.).
 
-*[Incluir aquí wireframes o mockups de estas pantallas]*
+<img width="1917" height="1078" alt="Titulo" src="https://github.com/user-attachments/assets/8800ca79-0708-4b3b-b1b3-e10c0bc0ae05" />
+<img width="1920" height="1080" alt="Captura de pantalla 2026-07-30 093958" src="https://github.com/user-attachments/assets/d8a34a89-3f39-4906-9c5f-84010e83c1bc" />
+<img width="1917" height="1078" alt="Captura de pantalla 2026-07-26 231227" src="https://github.com/user-attachments/assets/2b3ec45d-847d-4fe3-81e9-d5b4a93127ed" />
 
 **Estilo Visual y Sonoro:**
 - **Paleta de Colores Predeterminada:** Negro (#0a0a0a) como fondo, Verde lima (#39ff14) para el código, Naranja (#ff7b00) para el Recibidor, Amarillo (#ffd700) para el Insertor y Cian (#00ffff) para los acentos de las ventanas.
-- **Estilo de Arte:** 2D, con una estética de interfaz de usuario (UI) técnica y limpia. Se usarán formas geométricas, líneas finas y tipografías de estilo "monospace" (como "Courier New" o "Fira Code").
-- **Audio:** Una banda sonora de música electrónica (Synthwave / Cyberpunk) con ritmos rápidos. Los efectos de sonido serán principalmente digitales: teclas de computadora, pitidos, estática, etc.
+- **Estilo de Arte:** 2D, con una estética de interfaz de usuario (UI) técnica y limpia. Se usarán formas geométricas, líneas finas y tipografías de estilo "monospace" (como "IBM Plex" o "Fira Code").
+- **Audio:** Una banda sonora de música electrónica con ritmos rápidos. Los efectos de sonido serán principalmente digitales: teclas de computadora, pitidos, estática, etc.
