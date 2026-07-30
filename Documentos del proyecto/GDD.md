@@ -8,7 +8,7 @@
 # GAME DESIGN DOCUMENT (GDD)
 
 **Nombre del Juego:** DEEP HAX
-**Versión:** 1.0.1
+**Versión:** 1.0.0
 **Fecha de actualización:** [30/07/2026]
 
 ## Ficha del Grupo
