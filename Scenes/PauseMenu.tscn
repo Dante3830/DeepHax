@@ -1,0 +1,47 @@
+[gd_scene format=3 uid="uid://cp4ires0jxc61"]
+
+[ext_resource type="FontFile" uid="uid://dmrmrajbismn8" path="res://Assets/Fonts/IBM_Plex_Mono/IBMPlexMono-Medium.ttf" id="1_qwhev"]
+[ext_resource type="FontFile" uid="uid://djx8toqe17ynx" path="res://Assets/Fonts/Michroma-Regular.ttf" id="2_5w4ur"]
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_ducwx"]
+bg_color = Color(0, 0, 0, 1)
+border_width_left = 3
+border_width_top = 3
+border_width_right = 3
+border_width_bottom = 3
+border_color = Color(1, 0, 0, 1)
+
+[node name="PauseMenu" type="Panel" unique_id=479690622]
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -952.0
+offset_top = -484.0
+offset_right = 112.0
+offset_bottom = -316.0
+grow_horizontal = 2
+grow_vertical = 2
+theme_override_styles/panel = SubResource("StyleBoxFlat_ducwx")
+
+[node name="Label" type="Label" parent="." unique_id=1884497574]
+layout_mode = 0
+offset_left = 4.5
+offset_top = 4.5
+offset_right = 719.5
+offset_bottom = 83.5
+theme_override_colors/font_color = Color(0.8666667, 0, 0, 1)
+theme_override_fonts/font = ExtResource("1_qwhev")
+theme_override_font_sizes/font_size = 46
+text = "Input.scale.takingThreeTime.function()"
+
+[node name="Name" type="Label" parent="." unique_id=428363969]
+layout_mode = 0
+offset_top = -64.0
+offset_right = 338.0
+offset_bottom = -1.0
+theme_override_colors/font_color = Color(1, 0, 0, 1)
+theme_override_fonts/font = ExtResource("2_5w4ur")
+theme_override_font_sizes/font_size = 44
+text = "RECIBIDOR"

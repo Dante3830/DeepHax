@@ -2,12 +2,12 @@
 
 [ext_resource type="Script" uid="uid://bua7gyvgy8qia" path="res://Scripts/level_1.gd" id="1_q8yj7"]
 [ext_resource type="FontFile" uid="uid://dmrmrajbismn8" path="res://Assets/Fonts/IBM_Plex_Mono/IBMPlexMono-Medium.ttf" id="2_87l2y"]
-[ext_resource type="Script" uid="uid://frjsavx0jdcy" path="res://Scripts/puzzle-windows_manager.gd" id="2_qpfou"]
 [ext_resource type="FontFile" uid="uid://dkt6qdxklh4j6" path="res://Assets/Fonts/IBM_Plex_Mono/IBMPlexMono-Bold.ttf" id="3_qpfou"]
-[ext_resource type="PackedScene" uid="uid://cpp583uv45ray" path="res://Scenes/Puzzle-Windows/SimonSays.tscn" id="3_ybqp2"]
+[ext_resource type="PackedScene" uid="uid://cpp583uv45ray" path="res://Scenes/Puzzle-Windows/BaseVentanaPuzzle.tscn" id="3_ybqp2"]
 [ext_resource type="Texture2D" uid="uid://byxixjomnx0qt" path="res://Assets/Kenney Game Icons/contrast.png" id="7_hs11j"]
 [ext_resource type="FontFile" uid="uid://djx8toqe17ynx" path="res://Assets/Fonts/Michroma-Regular.ttf" id="8_o5ofx"]
 [ext_resource type="Texture2D" uid="uid://dptce3hmit3di" path="res://Assets/Kenney Game Icons/checkmark.png" id="9_34y5i"]
+[ext_resource type="Script" uid="uid://ba44a2me1f0pu" path="res://Scripts/camera.gd" id="9_hs11j"]
 
 [sub_resource type="StyleBoxFlat" id="StyleBoxFlat_vnunq"]
 bg_color = Color(0, 0, 0, 1)
@@ -77,7 +77,58 @@ border_width_bottom = 3
 border_color = Color(0.96862745, 0.87058824, 0, 1)
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_ybqp2"]
-size = Vector2(1089.25, 301.25)
+size = Vector2(1089.25, 612.625)
+
+[sub_resource type="Animation" id="Animation_ducwx"]
+resource_name = "MinusFive"
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("TimeBar/MinusFive:visible")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0, 1),
+"transitions": PackedFloat32Array(1, 1),
+"update": 1,
+"values": [true, false]
+}
+tracks/1/type = "value"
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/path = NodePath("TimeBar/MinusFive:theme_override_colors/font_color")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/keys = {
+"times": PackedFloat32Array(0, 1),
+"transitions": PackedFloat32Array(1, 1),
+"update": 0,
+"values": [Color(0, 1, 0, 1), Color(0, 0, 0, 1)]
+}
+tracks/2/type = "value"
+tracks/2/imported = false
+tracks/2/enabled = true
+tracks/2/path = NodePath("TimeBar/MinusFive:theme_override_colors/font_outline_color")
+tracks/2/interp = 1
+tracks/2/loop_wrap = true
+tracks/2/keys = {
+"times": PackedFloat32Array(0, 1),
+"transitions": PackedFloat32Array(1, 1),
+"update": 0,
+"values": [Color(0, 1, 0, 1), Color(0, 0, 0, 1)]
+}
+tracks/3/type = "value"
+tracks/3/imported = false
+tracks/3/enabled = true
+tracks/3/path = NodePath("TimeBar/MinusFive:position")
+tracks/3/interp = 1
+tracks/3/loop_wrap = true
+tracks/3/keys = {
+"times": PackedFloat32Array(0, 0.89921784),
+"transitions": PackedFloat32Array(1, 1),
+"update": 0,
+"values": [Vector2(481, -95), Vector2(549, -95)]
+}
 
 [sub_resource type="Animation" id="Animation_vnunq"]
 length = 0.001
@@ -92,6 +143,54 @@ tracks/0/keys = {
 "transitions": PackedFloat32Array(1),
 "update": 1,
 "values": [true]
+}
+tracks/1/type = "value"
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/path = NodePath("TimeBar/MinusFive:visible")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 1,
+"values": [true]
+}
+tracks/2/type = "value"
+tracks/2/imported = false
+tracks/2/enabled = true
+tracks/2/path = NodePath("TimeBar/MinusFive:theme_override_colors/font_color")
+tracks/2/interp = 1
+tracks/2/loop_wrap = true
+tracks/2/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [Color(0, 1, 0, 1)]
+}
+tracks/3/type = "value"
+tracks/3/imported = false
+tracks/3/enabled = true
+tracks/3/path = NodePath("TimeBar/MinusFive:theme_override_colors/font_outline_color")
+tracks/3/interp = 1
+tracks/3/loop_wrap = true
+tracks/3/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [Color(0, 1, 0, 1)]
+}
+tracks/4/type = "value"
+tracks/4/imported = false
+tracks/4/enabled = true
+tracks/4/path = NodePath("TimeBar/MinusFive:position")
+tracks/4/interp = 1
+tracks/4/loop_wrap = true
+tracks/4/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [Vector2(549, -95)]
 }
 
 [sub_resource type="Animation" id="Animation_nw7js"]
@@ -113,24 +212,13 @@ tracks/0/keys = {
 
 [sub_resource type="AnimationLibrary" id="AnimationLibrary_nh7xm"]
 _data = {
+&"MinusFive": SubResource("Animation_ducwx"),
 &"RESET": SubResource("Animation_vnunq"),
 &"Victory": SubResource("Animation_nw7js")
 }
 
-[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_ducwx"]
-bg_color = Color(0, 0, 0, 1)
-border_width_left = 3
-border_width_top = 3
-border_width_right = 3
-border_width_bottom = 3
-border_color = Color(1, 0, 0, 1)
-
 [node name="Level 1" type="Node" unique_id=742101328]
 script = ExtResource("1_q8yj7")
-
-[node name="Puzzle-Windows Manager" type="Node" parent="." unique_id=146269572]
-script = ExtResource("2_qpfou")
-SymonSays = ExtResource("3_ybqp2")
 
 [node name="Time" type="Timer" parent="." unique_id=236611217]
 wait_time = 60.0
@@ -155,10 +243,23 @@ offset_right = 476.0
 offset_bottom = -9.0
 theme_override_colors/font_color = Color(0, 1, 0, 1)
 theme_override_colors/font_outline_color = Color(0, 1, 0, 1)
-theme_override_constants/outline_size = 4
+theme_override_constants/outline_size = 9
 theme_override_fonts/font = ExtResource("8_o5ofx")
 theme_override_font_sizes/font_size = 44
 text = "60"
+horizontal_alignment = 1
+
+[node name="MinusFive" type="Label" parent="TimeBar" unique_id=802221644]
+layout_mode = 0
+offset_left = 549.0
+offset_top = -95.0
+offset_right = 645.0
+theme_override_colors/font_color = Color(0, 1, 0, 1)
+theme_override_colors/font_outline_color = Color(0, 1, 0, 1)
+theme_override_constants/outline_size = 4
+theme_override_fonts/font = ExtResource("8_o5ofx")
+theme_override_font_sizes/font_size = 66
+text = "-5"
 horizontal_alignment = 1
 
 [node name="Receiver" type="Panel" parent="." unique_id=291228518]
@@ -305,7 +406,7 @@ text = "Perdiste UwU"
 position = Vector2(376, 224)
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="RandomArea" unique_id=1951861961]
-position = Vector2(608, 280)
+position = Vector2(608, 435.6875)
 shape = SubResource("RectangleShape2D_ybqp2")
 debug_color = Color(0, 0.6, 0.69803923, 0)
 
@@ -372,45 +473,24 @@ text = "x1"
 libraries/ = SubResource("AnimationLibrary_nh7xm")
 speed_scale = 2.0
 
-[node name="SymonSays" parent="." unique_id=1270405932 instance=ExtResource("3_ybqp2")]
-offset_left = 1168.0
-offset_top = 392.0
-offset_right = 1168.0
-offset_bottom = 392.0
+[node name="Camera2D" type="Camera2D" parent="." unique_id=495764839]
+anchor_mode = 0
+script = ExtResource("9_hs11j")
 
-[node name="GameOver" type="Panel" parent="." unique_id=31651215]
-anchors_preset = 8
-anchor_left = 0.5
-anchor_top = 0.5
-anchor_right = 0.5
-anchor_bottom = 0.5
-offset_left = -651.0
-offset_top = -26.0
-offset_right = 413.0
-offset_bottom = 142.0
-grow_horizontal = 2
-grow_vertical = 2
-theme_override_styles/panel = SubResource("StyleBoxFlat_ducwx")
+[node name="TestPuzzleWindow" parent="." unique_id=1270405932 instance=ExtResource("3_ybqp2")]
+anchor_left = 0.44700003
+anchor_top = 0.377
+anchor_right = 0.44700003
+anchor_bottom = 0.377
+offset_left = -321.24005
+offset_top = -2.1600037
+offset_right = -321.24005
+offset_bottom = -2.1600037
 
-[node name="Label" type="Label" parent="GameOver" unique_id=541160486]
-layout_mode = 0
-offset_left = 4.5
-offset_top = 4.5
-offset_right = 719.5
-offset_bottom = 83.5
-theme_override_colors/font_color = Color(0.8666667, 0, 0, 1)
-theme_override_fonts/font = ExtResource("2_87l2y")
-theme_override_font_sizes/font_size = 46
-text = "Input.scale.takingThreeTime.function()"
-
-[node name="Name" type="Label" parent="GameOver" unique_id=1281563582]
-layout_mode = 0
-offset_top = -64.0
-offset_right = 338.0
-offset_bottom = -1.0
-theme_override_colors/font_color = Color(1, 0, 0, 1)
-theme_override_fonts/font = ExtResource("8_o5ofx")
-theme_override_font_sizes/font_size = 44
-text = "RECIBIDOR"
+[node name="TestPuzzleWindow2" parent="." unique_id=1140047965 instance=ExtResource("3_ybqp2")]
+offset_left = 1019.36
+offset_top = 281.47998
+offset_right = 1019.36
+offset_bottom = 281.47998
 
 [connection signal="timeout" from="Time" to="." method="_on_time_timeout"]

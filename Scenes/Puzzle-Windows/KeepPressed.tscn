@@ -1,0 +1,68 @@
+[gd_scene format=3 uid="uid://du5t2mojof51w"]
+
+[ext_resource type="Script" uid="uid://bvcy8jhjtn4sp" path="res://Scripts/Puzzle Windows/keep_pressed.gd" id="1_vgns1"]
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_vgns1"]
+bg_color = Color(1, 0, 0, 1)
+border_width_left = 3
+border_width_top = 3
+border_width_right = 3
+border_width_bottom = 3
+border_color = Color(0, 1, 0, 1)
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_hwjv2"]
+bg_color = Color(1, 1, 0, 1)
+border_width_left = 3
+border_width_right = 3
+border_width_bottom = 3
+border_color = Color(0, 1, 0, 1)
+
+[sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_vgns1"]
+
+[sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_hwjv2"]
+
+[sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_5v4g5"]
+
+[node name="KeepPressed" type="Control" unique_id=1270405932]
+layout_mode = 3
+anchor_left = -0.067
+anchor_top = -0.119
+anchor_right = -0.067
+anchor_bottom = -0.119
+offset_left = 0.63998413
+offset_top = 0.519989
+offset_right = 0.63998413
+offset_bottom = 0.519989
+script = ExtResource("1_vgns1")
+
+[node name="ProgressBar" type="ProgressBar" parent="." unique_id=1010280022]
+layout_mode = 0
+offset_left = 48.000015
+offset_top = 48.000015
+offset_right = 208.00002
+offset_bottom = 208.00002
+theme_override_styles/background = SubResource("StyleBoxFlat_vgns1")
+theme_override_styles/fill = SubResource("StyleBoxFlat_hwjv2")
+value = 61.81
+fill_mode = 3
+show_percentage = false
+
+[node name="HoldButton" type="Button" parent="." unique_id=1582387017]
+layout_mode = 0
+offset_left = 48.000015
+offset_top = 48.000015
+offset_right = 208.00002
+offset_bottom = 208.00002
+theme_override_styles/normal = SubResource("StyleBoxEmpty_vgns1")
+theme_override_styles/pressed = SubResource("StyleBoxEmpty_hwjv2")
+theme_override_styles/hover = SubResource("StyleBoxEmpty_5v4g5")
+
+[node name="Label" type="Label" parent="." unique_id=897939129]
+layout_mode = 0
+offset_left = 88.000015
+offset_top = 96.000015
+offset_right = 166.00002
+offset_bottom = 145.00002
+text = "MANTENÉ
+PULSADO"
+horizontal_alignment = 1

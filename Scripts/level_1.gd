@@ -12,6 +12,24 @@ extends Node
 @onready var light_4 = $Lights/Light4
 @onready var light_5 = $Lights/Light5
 
+@onready var combo_text = $"UI Coins-Combo/ComboText"
+
+@onready var animation_player = $AnimationPlayer
+@onready var camera = $Camera2D
+
+# Ventana-puzzle dedicada a pruebas (nodo separado del que vayas a usar
+# para el Simón Dice real más adelante).
+@onready var test_window: PuzzleWindow = $TestPuzzleWindow
+
+# Segundo nodo de prueba, para no pisar el de Mantener Pulsado.
+@onready var test_window_2: PuzzleWindow = $TestPuzzleWindow2
+
+# Ajustá esta ruta a donde hayas guardado la escena de Mantener Pulsado.
+const MANTENER_PULSADO_SCENE: PackedScene = preload("res://Scenes/Puzzle-Windows/KeepPressed.tscn")
+
+# Ajustá esta ruta a donde hayas guardado la escena de Simón Dice.
+const SIMON_DICE_SCENE: PackedScene = preload("res://Scenes/Puzzle-Windows/SimonSays.tscn")
+
 # Array con las 5 luces en orden, para acceder a ellas por índice
 var lights = []
 
@@ -41,15 +59,40 @@ var completed_lines = 0
 
 var text_completed = false
 
+var line_time_limit: float = 0.0
+
 func _ready():
+	$TimeBar/MinusFive.visible = false
 	randomize()
 	lights = [light_1, light_2, light_3, light_4, light_5]
 	for light in lights:
 		_set_light_on(light, false)
+	line_time_limit = time.wait_time
+	combo_text.text = "x" + str(GameManager.lines_combo)
 	_generate_random_lines()
 	# Conectar la señal gui_input del TextEdit para capturar Enter
 	text_editor.gui_input.connect(_on_text_editor_gui_input)
 	_load_current_line()
+
+	# Prueba de Mantener Pulsado en la ventana ya colocada en la escena
+	test_window.setup(MANTENER_PULSADO_SCENE)
+	test_window.solved.connect(_on_test_window_solved)
+	test_window.failed.connect(_on_test_window_failed)
+
+	# Prueba de Simón Dice en el segundo nodo de prueba
+	test_window_2.setup(SIMON_DICE_SCENE, null, 12.0)
+	test_window_2.solved.connect(_on_test_window_solved)
+	test_window_2.failed.connect(_on_test_window_failed)
+
+func _on_test_window_solved(_window: PuzzleWindow, hackoin_reward: int) -> void:
+	print("Puzzle resuelto. Hackoins ganados: ", hackoin_reward)
+	# Acá después vas a llamar a tu sistema real de Hackoins.
+
+func _on_test_window_failed(_window: PuzzleWindow, time_penalty: float) -> void:
+	print("Puzzle fallado. Penalización: ", time_penalty)
+	_apply_time_penalty(time_penalty)
+	animation_player.play("MinusFive")
+	camera.trigger_shake()
 
 func _set_light_on(light: Panel, on: bool) -> void:
 	# Cambia solo el bg_color del StyleBoxFlat del panel, manteniendo el borde intacto
@@ -71,7 +114,7 @@ func _load_current_line() -> void:
 	text_editor.text = ""
 
 func _on_text_editor_gui_input(event: InputEvent) -> void:
-	if event is InputEventKey and event.pressed:
+	if event is InputEventKey and event.pressed and not event.is_echo():
 		# Bloquear Tab
 		if event.keycode == KEY_TAB:
 			text_editor.accept_event()
@@ -87,9 +130,12 @@ func _on_text_editor_gui_input(event: InputEvent) -> void:
 			var expected = receiver.text
 			var current = text_editor.text
 			
+			# Si la línea coincide con el Receiber
 			if current == expected:
 				completed_lines += 1
 				current_line_index += 1
+				GameManager.lines_combo += 1
+				combo_text.text = "x" + str(GameManager.lines_combo)
 				
 				# Encender el indicador correspondiente a esta línea completada
 				if completed_lines - 1 < lights.size():
@@ -104,19 +150,42 @@ func _on_text_editor_gui_input(event: InputEvent) -> void:
 					text_completed = true
 					print("¡Texto completado! Tiempo detenido.")
 					$Victoria.show()
-					$AnimationPlayer.play("Victory")
+					animation_player.play("Victory")
 				else:
 					# Quedan líneas: cargar la siguiente y reiniciar el temporizador
 					_load_current_line()
 					time.stop()
-					time.start()
+					time.start(line_time_limit)
+			# Si la línea NO coincide con el Receiber
+			else:
+				print("Línea incorrecta. Penalización: -5 segundos.")
+				_apply_time_penalty(5.0)
+				GameManager.lines_combo = 0
+				camera.trigger_shake()
+				combo_text.text = "x" + str(GameManager.lines_combo)
+				animation_player.play("MinusFive")
+
+func _apply_time_penalty(seconds: float) -> void:
+	# Timer.time_left es de solo lectura en Godot, así que para "quitarle" tiempo
+	# hay que detener el Timer y volver a arrancarlo con el tiempo restante ya reducido.
+	if text_completed:
+		return
+	
+	var remaining = time.time_left - seconds
+	time.stop()
+	
+	if remaining <= 0.0:
+		# La penalización agota el tiempo restante: game over inmediato
+		_on_time_timeout()
+	else:
+		time.start(remaining)
 
 func _process(_delta: float) -> void:
 	var seconds_left = int(ceil(time.time_left))
 	time_text.text = "%02d" % seconds_left
 	
 	if not text_completed and time.time_left > 0:
-		time_bar.value = (time.time_left / time.wait_time) * 100
+		time_bar.value = (time.time_left / line_time_limit) * 100
 	
 	var expected = receiver.text
 	var current = text_editor.text
