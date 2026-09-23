@@ -2,19 +2,24 @@ class_name SimonDice
 extends PuzzleMinigame
 
 # Microjuego "Simón Dice": se muestra una secuencia de colores iluminando
-# el panel de cada botón (más claro), y el jugador tiene que repetirla en
+# el panel Light de cada botón, y el jugador tiene que repetirla en
 # el mismo orden tocando los botones. Si se equivoca, falla.
 
 @export var sequence_length: int = 4
 @export var flash_duration: float = 0.6
 @export var pause_between_flashes: float = 0.25
+@export var reveal_duration: float = 0.3  # cuánto tarda en aparecer el tablero
 
+# Los 4 botones clickeables
 @onready var buttons: Array[Button] = [$Red, $Yellow, $Green, $Blue]
 
-# Guardamos el color original de cada botón al arrancar, así "prender" y
-# "apagar" siempre vuelve exactamente al mismo color (sin ir aclarando
-# de más si el microjuego se juega más de una vez).
-var _base_colors: Array[Color] = []
+# Los paneles Light hijos de cada botón (mismo orden que buttons)
+@onready var lights: Array[Panel] = [
+	$Red/RedLight,
+	$Yellow/YellowLight,
+	$Green/GreenLight,
+	$Blue/BlueLight,
+]
 
 var _sequence: Array[int] = []
 var _player_index: int = 0
@@ -23,20 +28,42 @@ var _first_input: bool = true
 var _finished: bool = false
 
 func _ready() -> void:
+	# Ocultar todo hasta que arranque la presentación: botones en
+	# opacidad 0 (para el fade-in) y paneles Light apagados (para
+	# la secuencia de luces).
+	for button in buttons:
+		button.modulate.a = 0.0
+	for light in lights:
+		light.visible = false
+
 	for i in buttons.size():
-		var style := buttons[i].get_theme_stylebox("normal")
-		_base_colors.append(style.bg_color if style is StyleBoxFlat else Color.WHITE)
 		buttons[i].pressed.connect(_on_button_pressed.bind(i))
+
+	_set_buttons_disabled(true)
 	_generate_sequence()
-	_play_sequence()
+
+# Llamada por PuzzleWindow (ver PuzzleMinigame.start()) justo después de
+# que la ventana termina de emerger: revela el tablero (fade-in de
+# botones) y recién después arranca la secuencia de luces.
+func start() -> void:
+	await _reveal_buttons()
+	await _play_sequence()
+
+# Hace aparecer los 4 botones juntos, a la vez, con un fade-in.
+func _reveal_buttons() -> void:
+	var tween := create_tween()
+	tween.set_parallel(true)
+	for button in buttons:
+		tween.tween_property(button, "modulate:a", 1.0, reveal_duration)
+	await tween.finished
 
 func _generate_sequence() -> void:
 	_sequence.clear()
 	for i in sequence_length:
 		_sequence.append(randi() % buttons.size())
 
-# Corrutina: muestra la secuencia completa (iluminando los paneles) y
-# recién después habilita el input en los botones.
+# Corrutina: muestra la secuencia completa iluminando los paneles Light
+# y recién después habilita el input del jugador.
 func _play_sequence() -> void:
 	_accepting_input = false
 	_set_buttons_disabled(true)
@@ -56,14 +83,12 @@ func _play_sequence() -> void:
 	_set_buttons_disabled(false)
 
 func _flash_button(index: int) -> void:
-	_set_panel_lit(index, true)
+	lights[index].visible = true
 	await get_tree().create_timer(flash_duration).timeout
-	_set_panel_lit(index, false)
+	lights[index].visible = false
 
-func _set_panel_lit(index: int, lit: bool) -> void:
-	var style := buttons[index].get_theme_stylebox("normal")
-	if style is StyleBoxFlat:
-		style.bg_color = _base_colors[index].lightened(0.6) if lit else _base_colors[index]
+func _set_light(index: int, lit: bool) -> void:
+	lights[index].visible = lit
 
 func _set_buttons_disabled(disabled: bool) -> void:
 	for button in buttons:
@@ -77,6 +102,12 @@ func _on_button_pressed(index: int) -> void:
 		_first_input = false
 		interacted.emit()
 
+	_set_light(index, true)
+	get_tree().create_timer(0.15).timeout.connect(
+		func(): _set_light(index, false),
+		CONNECT_ONE_SHOT
+	)
+
 	if index == _sequence[_player_index]:
 		_player_index += 1
 		if _player_index >= _sequence.size():
@@ -88,6 +119,8 @@ func _finish(success: bool) -> void:
 	_finished = true
 	_accepting_input = false
 	_set_buttons_disabled(true)
+	for light in lights:
+		light.visible = false
 	if success:
 		solved.emit()
 	else:

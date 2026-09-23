@@ -11,6 +11,7 @@ signal closed(window: PuzzleWindow)
 
 @export var fail_time_penalty: float = 5.0
 @export var base_hackoin_reward: int = 10
+@export var emerge_duration: float = 0.25  # cuánto tarda en aparecer la ventana
 
 @onready var content_container: Control = %ContentContainer
 @onready var player_timer: Timer = $PlayerTimer
@@ -27,25 +28,48 @@ func _ready() -> void:
 	condition_icon.visible = false
 	condition_time_label.visible = false
 
+	# Ocultar la ventana hasta que setup() la haga emerger. Si tu Control
+	# raíz no queda centrado al escalar, ajustá pivot_offset a mano en el
+	# editor (debería ser la mitad de tu tamaño real).
+	pivot_offset = size / 2.0
+	scale = Vector2.ZERO
+	modulate.a = 0.0
+
 # Llamado por el spawner justo después de instanciar la ventana.
 # time_limit es cuánto tarda en fallar sola si el jugador no hace nada
 # (ajustalo distinto para cada tipo de microjuego: Simón Dice necesita
-##más que Mantener Pulsado, por ejemplo).
+# más que Mantener Pulsado, por ejemplo). El cronómetro arranca recién
+# cuando la ventana termina de emerger, no antes.
 func setup(minigame_scene: PackedScene, condition_resource: PuzzleCondition = null, time_limit: float = 10.0) -> void:
 	minigame = minigame_scene.instantiate()
 	content_container.add_child(minigame)
 	minigame.solved.connect(_on_minigame_solved)
 	minigame.failed.connect(_on_minigame_failed)
 	minigame.interacted.connect(_on_minigame_interacted)
-	
-	player_timer.wait_time = time_limit
-	player_timer.start()
-	
+
 	if condition_resource:
 		condition = condition_resource
 		condition_icon.visible = true
 		condition_icon.texture = condition.icon
 		condition.apply(self)
+
+	await _emerge()
+
+	player_timer.wait_time = time_limit
+	player_timer.start()
+	minigame.start()
+
+# Animación de aparición de la ventana entera (contenido + panel de
+# condición incluidos): crece desde el centro y se desvanece hacia
+# adentro. El microjuego arranca su propia intro (start()) recién
+# cuando esto termina.
+func _emerge() -> void:
+	var tween := create_tween()
+	tween.set_parallel(true)
+	tween.tween_property(self, "scale", Vector2.ONE, emerge_duration)\
+		.set_trans(Tween.TRANS_BACK).set_ease(Tween.EASE_OUT)
+	tween.tween_property(self, "modulate:a", 1.0, emerge_duration)
+	await tween.finished
 
 ## API para que una PuzzleCondition muestre su propia cuenta regresiva
 ## (ej: Trampa mostrando "5", Pérdida de hackoins mostrando "10").
