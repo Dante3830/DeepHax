@@ -1,0 +1,208 @@
+[gd_scene format=3 uid="uid://7x0x505pik5l"]
+
+[ext_resource type="Script" uid="uid://dvb21d0rxu23v" path="res://Scripts/Puzzle Windows/three_times_three.gd" id="1_w5ilg"]
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_ixs4m"]
+bg_color = Color(0, 0, 0, 1)
+border_width_left = 2
+border_width_top = 2
+border_width_right = 2
+border_width_bottom = 2
+border_color = Color(0, 1, 0, 1)
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_2oc4w"]
+bg_color = Color(1, 1, 1, 1)
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_iakuh"]
+bg_color = Color(0, 0, 1, 1)
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_w5ilg"]
+bg_color = Color(1, 1, 1, 1)
+
+[node name="ThreeTimesThree" type="Control" unique_id=1270405932]
+layout_mode = 3
+anchor_left = -0.067
+anchor_top = -0.119
+anchor_right = -0.067
+anchor_bottom = -0.119
+offset_left = 0.6399994
+offset_top = 0.5200043
+offset_right = 0.6399994
+offset_bottom = 0.5200043
+script = ExtResource("1_w5ilg")
+
+[node name="Panel" type="Panel" parent="." unique_id=205638928]
+layout_mode = 0
+offset_right = 256.0
+offset_bottom = 256.0
+theme_override_styles/panel = SubResource("StyleBoxFlat_ixs4m")
+
+[node name="Label" type="Label" parent="." unique_id=1919636162]
+layout_mode = 0
+offset_left = 96.0
+offset_top = 32.0
+offset_right = 238.0
+offset_bottom = 55.0
+text = "Replicá"
+
+[node name="Button1" type="Button" parent="." unique_id=399848102]
+layout_mode = 0
+offset_left = 24.0
+offset_top = 96.0
+offset_right = 64.0
+offset_bottom = 136.0
+theme_override_styles/normal = SubResource("StyleBoxFlat_2oc4w")
+theme_override_styles/pressed = SubResource("StyleBoxFlat_iakuh")
+toggle_mode = true
+
+[node name="Button2" type="Button" parent="." unique_id=419879913]
+layout_mode = 0
+offset_left = 72.0
+offset_top = 96.0
+offset_right = 112.0
+offset_bottom = 136.0
+theme_override_styles/normal = SubResource("StyleBoxFlat_2oc4w")
+theme_override_styles/pressed = SubResource("StyleBoxFlat_iakuh")
+toggle_mode = true
+
+[node name="Button3" type="Button" parent="." unique_id=392152675]
+layout_mode = 0
+offset_left = 120.0
+offset_top = 96.0
+offset_right = 160.0
+offset_bottom = 136.0
+theme_override_styles/normal = SubResource("StyleBoxFlat_2oc4w")
+theme_override_styles/pressed = SubResource("StyleBoxFlat_iakuh")
+toggle_mode = true
+
+[node name="Button4" type="Button" parent="." unique_id=1350058462]
+layout_mode = 0
+offset_left = 24.0
+offset_top = 144.0
+offset_right = 64.0
+offset_bottom = 184.0
+theme_override_styles/normal = SubResource("StyleBoxFlat_2oc4w")
+theme_override_styles/pressed = SubResource("StyleBoxFlat_iakuh")
+toggle_mode = true
+
+[node name="Button5" type="Button" parent="." unique_id=1268724830]
+layout_mode = 0
+offset_left = 72.0
+offset_top = 144.0
+offset_right = 112.0
+offset_bottom = 184.0
+theme_override_styles/normal = SubResource("StyleBoxFlat_2oc4w")
+theme_override_styles/pressed = SubResource("StyleBoxFlat_iakuh")
+toggle_mode = true
+
+[node name="Button6" type="Button" parent="." unique_id=1692879202]
+layout_mode = 0
+offset_left = 120.0
+offset_top = 144.0
+offset_right = 160.0
+offset_bottom = 184.0
+theme_override_styles/normal = SubResource("StyleBoxFlat_2oc4w")
+theme_override_styles/pressed = SubResource("StyleBoxFlat_iakuh")
+toggle_mode = true
+
+[node name="Button7" type="Button" parent="." unique_id=642889088]
+layout_mode = 0
+offset_left = 24.0
+offset_top = 192.0
+offset_right = 64.0
+offset_bottom = 232.0
+theme_override_styles/normal = SubResource("StyleBoxFlat_2oc4w")
+theme_override_styles/pressed = SubResource("StyleBoxFlat_iakuh")
+toggle_mode = true
+
+[node name="Button8" type="Button" parent="." unique_id=3709839]
+layout_mode = 0
+offset_left = 72.0
+offset_top = 192.0
+offset_right = 112.0
+offset_bottom = 232.0
+theme_override_styles/normal = SubResource("StyleBoxFlat_2oc4w")
+theme_override_styles/pressed = SubResource("StyleBoxFlat_iakuh")
+toggle_mode = true
+
+[node name="Button9" type="Button" parent="." unique_id=341580687]
+layout_mode = 0
+offset_left = 120.0
+offset_top = 192.0
+offset_right = 160.0
+offset_bottom = 232.0
+theme_override_styles/normal = SubResource("StyleBoxFlat_2oc4w")
+theme_override_styles/pressed = SubResource("StyleBoxFlat_iakuh")
+toggle_mode = true
+
+[node name="Panel1" type="Panel" parent="." unique_id=1527658242]
+layout_mode = 0
+offset_left = 168.0
+offset_top = 8.0
+offset_right = 192.0
+offset_bottom = 32.0
+theme_override_styles/panel = SubResource("StyleBoxFlat_w5ilg")
+
+[node name="Panel2" type="Panel" parent="." unique_id=473491144]
+layout_mode = 0
+offset_left = 192.0
+offset_top = 8.0
+offset_right = 216.0
+offset_bottom = 32.0
+theme_override_styles/panel = SubResource("StyleBoxFlat_w5ilg")
+
+[node name="Panel3" type="Panel" parent="." unique_id=762263296]
+layout_mode = 0
+offset_left = 216.0
+offset_top = 8.0
+offset_right = 240.0
+offset_bottom = 32.0
+theme_override_styles/panel = SubResource("StyleBoxFlat_w5ilg")
+
+[node name="Panel4" type="Panel" parent="." unique_id=2102774692]
+layout_mode = 0
+offset_left = 168.0
+offset_top = 32.0
+offset_right = 192.0
+offset_bottom = 56.0
+theme_override_styles/panel = SubResource("StyleBoxFlat_w5ilg")
+
+[node name="Panel5" type="Panel" parent="." unique_id=1993176686]
+layout_mode = 0
+offset_left = 192.0
+offset_top = 32.0
+offset_right = 216.0
+offset_bottom = 56.0
+theme_override_styles/panel = SubResource("StyleBoxFlat_w5ilg")
+
+[node name="Panel6" type="Panel" parent="." unique_id=491297909]
+layout_mode = 0
+offset_left = 216.0
+offset_top = 32.0
+offset_right = 240.0
+offset_bottom = 56.0
+theme_override_styles/panel = SubResource("StyleBoxFlat_w5ilg")
+
+[node name="Panel7" type="Panel" parent="." unique_id=1261884706]
+layout_mode = 0
+offset_left = 168.0
+offset_top = 56.0
+offset_right = 192.0
+offset_bottom = 80.0
+theme_override_styles/panel = SubResource("StyleBoxFlat_w5ilg")
+
+[node name="Panel8" type="Panel" parent="." unique_id=1908888224]
+layout_mode = 0
+offset_left = 192.0
+offset_top = 56.0
+offset_right = 216.0
+offset_bottom = 80.0
+theme_override_styles/panel = SubResource("StyleBoxFlat_w5ilg")
+
+[node name="Panel9" type="Panel" parent="." unique_id=308831361]
+layout_mode = 0
+offset_left = 216.0
+offset_top = 56.0
+offset_right = 240.0
+offset_bottom = 80.0
+theme_override_styles/panel = SubResource("StyleBoxFlat_w5ilg")

@@ -1,0 +1,432 @@
+[gd_scene format=3 uid="uid://b4dy4ctch6v1h"]
+
+[ext_resource type="Script" uid="uid://d2ec7rfgwhm8c" path="res://Scripts/Puzzle Windows/cables_connect.gd" id="1_wcpy4"]
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_mysfb"]
+bg_color = Color(0, 0, 0, 1)
+border_width_left = 2
+border_width_top = 2
+border_width_right = 2
+border_width_bottom = 2
+border_color = Color(0, 1, 0, 1)
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_wcpy4"]
+bg_color = Color(1, 0, 0.9843137, 1)
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_cf44q"]
+bg_color = Color(0.7176471, 1, 0, 1)
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_wcpy4"]
+size = Vector2(40, 40)
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_cf44q"]
+size = Vector2(38, 38)
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_c414x"]
+size = Vector2(38, 38)
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_v7irc"]
+size = Vector2(40, 39)
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_c414x"]
+bg_color = Color(1, 0, 0, 1)
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_v7irc"]
+bg_color = Color(0.31764707, 0, 1, 1)
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_xqhwu"]
+bg_color = Color(1, 1, 1, 1)
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_xqhwu"]
+size = Vector2(37, 38)
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_60epa"]
+size = Vector2(38, 39)
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_r2xma"]
+size = Vector2(40, 40)
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_a8h5c"]
+size = Vector2(40, 40)
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_ffvs6"]
+size = Vector2(40, 40)
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_b58v7"]
+size = Vector2(39, 40)
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_60epa"]
+bg_color = Color(1, 0.56666666, 0, 1)
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_r2xma"]
+bg_color = Color(1, 0, 0.5166669, 1)
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_a8h5c"]
+bg_color = Color(0, 0.4333334, 1, 1)
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_ffvs6"]
+bg_color = Color(1, 0, 0, 1)
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_b58v7"]
+bg_color = Color(1, 0, 0.5166669, 1)
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_mysfb"]
+size = Vector2(40, 38)
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_qse05"]
+size = Vector2(40, 40)
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_wpmjr"]
+size = Vector2(40, 40)
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_kbsqc"]
+size = Vector2(38, 38)
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_75n2s"]
+size = Vector2(38, 38)
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_wk2ws"]
+size = Vector2(38, 38)
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_xyvep"]
+size = Vector2(38, 38)
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_vj3sy"]
+size = Vector2(38, 38)
+
+[node name="CablesConnect" type="Control" unique_id=1270405932]
+layout_mode = 3
+anchors_preset = 0
+offset_left = -128.0
+offset_top = -128.0
+offset_right = -128.0
+offset_bottom = -128.0
+script = ExtResource("1_wcpy4")
+
+[node name="Panel" type="Panel" parent="." unique_id=78538593]
+layout_mode = 0
+offset_right = 256.0
+offset_bottom = 256.0
+theme_override_styles/panel = SubResource("StyleBoxFlat_mysfb")
+
+[node name="Label" type="Label" parent="." unique_id=1485411393]
+layout_mode = 0
+offset_left = 104.0
+offset_top = 8.0
+offset_right = 246.0
+offset_bottom = 31.0
+text = "Conectá los cables"
+
+[node name="Variation1" type="Control" parent="." unique_id=1509544700]
+visible = false
+anchors_preset = 0
+offset_right = 40.0
+offset_bottom = 40.0
+
+[node name="PointA1" type="Panel" parent="Variation1" unique_id=984001785]
+layout_mode = 0
+offset_left = 40.0
+offset_top = 88.0
+offset_right = 80.0
+offset_bottom = 128.0
+theme_override_styles/panel = SubResource("StyleBoxFlat_wcpy4")
+
+[node name="PointA2" type="Panel" parent="Variation1" unique_id=2041392534]
+layout_mode = 0
+offset_left = 40.0
+offset_top = 144.0
+offset_right = 80.0
+offset_bottom = 184.0
+theme_override_styles/panel = SubResource("StyleBoxFlat_cf44q")
+
+[node name="PointB1" type="Panel" parent="Variation1" unique_id=989761656]
+layout_mode = 0
+offset_left = 184.0
+offset_top = 88.0
+offset_right = 224.0
+offset_bottom = 128.0
+theme_override_styles/panel = SubResource("StyleBoxFlat_cf44q")
+
+[node name="PointB2" type="Panel" parent="Variation1" unique_id=1921227071]
+layout_mode = 0
+offset_left = 184.0
+offset_top = 144.0
+offset_right = 224.0
+offset_bottom = 184.0
+theme_override_styles/panel = SubResource("StyleBoxFlat_wcpy4")
+
+[node name="Area2D" type="Area2D" parent="Variation1" unique_id=5054275]
+position = Vector2(56, 104)
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Variation1/Area2D" unique_id=1956823773]
+position = Vector2(4, 4)
+shape = SubResource("RectangleShape2D_wcpy4")
+
+[node name="Line2D" type="Line2D" parent="Variation1/Area2D" unique_id=40301193]
+default_color = Color(1, 0, 0.9833331, 1)
+
+[node name="Area2D2" type="Area2D" parent="Variation1" unique_id=1295657457]
+position = Vector2(56, 160)
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Variation1/Area2D2" unique_id=2093441329]
+position = Vector2(4, 4)
+shape = SubResource("RectangleShape2D_cf44q")
+
+[node name="Line2D" type="Line2D" parent="Variation1/Area2D2" unique_id=1172350361]
+default_color = Color(0.7166667, 1, 0, 1)
+
+[node name="Area2D3" type="Area2D" parent="Variation1" unique_id=1523455121]
+position = Vector2(208, 104)
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Variation1/Area2D3" unique_id=1797578765]
+position = Vector2(-4, 4)
+shape = SubResource("RectangleShape2D_c414x")
+
+[node name="Area2D4" type="Area2D" parent="Variation1" unique_id=31222392]
+position = Vector2(208, 160)
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Variation1/Area2D4" unique_id=757133209]
+position = Vector2(-4, 3.5)
+shape = SubResource("RectangleShape2D_v7irc")
+
+[node name="Variation2" type="Control" parent="." unique_id=1893776619]
+visible = false
+anchors_preset = 0
+offset_right = 40.0
+offset_bottom = 40.0
+
+[node name="PointA1" type="Panel" parent="Variation2" unique_id=1768786152]
+layout_mode = 0
+offset_left = 40.0
+offset_top = 64.0
+offset_right = 80.0
+offset_bottom = 104.0
+theme_override_styles/panel = SubResource("StyleBoxFlat_c414x")
+
+[node name="PointA2" type="Panel" parent="Variation2" unique_id=654383221]
+layout_mode = 0
+offset_left = 40.0
+offset_top = 120.0
+offset_right = 80.0
+offset_bottom = 160.0
+theme_override_styles/panel = SubResource("StyleBoxFlat_v7irc")
+
+[node name="PointA3" type="Panel" parent="Variation2" unique_id=1996325819]
+layout_mode = 0
+offset_left = 40.0
+offset_top = 176.0
+offset_right = 80.0
+offset_bottom = 216.0
+theme_override_styles/panel = SubResource("StyleBoxFlat_xqhwu")
+
+[node name="PointB1" type="Panel" parent="Variation2" unique_id=1973618234]
+layout_mode = 0
+offset_left = 184.0
+offset_top = 64.0
+offset_right = 224.0
+offset_bottom = 104.0
+theme_override_styles/panel = SubResource("StyleBoxFlat_v7irc")
+
+[node name="PointB2" type="Panel" parent="Variation2" unique_id=1308102297]
+layout_mode = 0
+offset_left = 184.0
+offset_top = 120.0
+offset_right = 224.0
+offset_bottom = 160.0
+theme_override_styles/panel = SubResource("StyleBoxFlat_xqhwu")
+
+[node name="PointB3" type="Panel" parent="Variation2" unique_id=604677489]
+layout_mode = 0
+offset_left = 184.0
+offset_top = 176.0
+offset_right = 224.0
+offset_bottom = 216.0
+theme_override_styles/panel = SubResource("StyleBoxFlat_c414x")
+
+[node name="Area2D" type="Area2D" parent="Variation2" unique_id=314266350]
+position = Vector2(56, 88)
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Variation2/Area2D" unique_id=1978742074]
+position = Vector2(3.5, -4)
+shape = SubResource("RectangleShape2D_xqhwu")
+
+[node name="Line2D" type="Line2D" parent="Variation2/Area2D" unique_id=2095269244]
+default_color = Color(1, 0, 0, 1)
+
+[node name="Area2D2" type="Area2D" parent="Variation2" unique_id=410727615]
+position = Vector2(56, 144)
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Variation2/Area2D2" unique_id=1699469360]
+position = Vector2(4, -3.5)
+shape = SubResource("RectangleShape2D_60epa")
+
+[node name="Line2D" type="Line2D" parent="Variation2/Area2D2" unique_id=1307079185]
+default_color = Color(0.3166666, 0, 1, 1)
+
+[node name="Area2D3" type="Area2D" parent="Variation2" unique_id=1216614587]
+position = Vector2(56, 200)
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Variation2/Area2D3" unique_id=98490323]
+position = Vector2(4, -4)
+shape = SubResource("RectangleShape2D_r2xma")
+
+[node name="Line2D" type="Line2D" parent="Variation2/Area2D3" unique_id=142271043]
+
+[node name="Area2D4" type="Area2D" parent="Variation2" unique_id=964456901]
+position = Vector2(208, 88)
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Variation2/Area2D4" unique_id=1153643343]
+position = Vector2(-4, -4)
+shape = SubResource("RectangleShape2D_a8h5c")
+
+[node name="Area2D5" type="Area2D" parent="Variation2" unique_id=1416114599]
+position = Vector2(208, 144)
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Variation2/Area2D5" unique_id=972704105]
+position = Vector2(-4, -4)
+shape = SubResource("RectangleShape2D_ffvs6")
+
+[node name="Area2D6" type="Area2D" parent="Variation2" unique_id=1570793941]
+position = Vector2(208, 200)
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Variation2/Area2D6" unique_id=423563318]
+position = Vector2(-4.5, -4)
+shape = SubResource("RectangleShape2D_b58v7")
+
+[node name="Variation3" type="Control" parent="." unique_id=488667813]
+visible = false
+anchors_preset = 0
+offset_right = 40.0
+offset_bottom = 40.0
+
+[node name="PointA1" type="Panel" parent="Variation3" unique_id=338699265]
+layout_mode = 0
+offset_left = 40.0
+offset_top = 48.0
+offset_right = 80.0
+offset_bottom = 88.0
+theme_override_styles/panel = SubResource("StyleBoxFlat_60epa")
+
+[node name="PointA2" type="Panel" parent="Variation3" unique_id=1566881315]
+layout_mode = 0
+offset_left = 40.0
+offset_top = 96.0
+offset_right = 80.0
+offset_bottom = 136.0
+theme_override_styles/panel = SubResource("StyleBoxFlat_r2xma")
+
+[node name="PointA3" type="Panel" parent="Variation3" unique_id=1246893899]
+layout_mode = 0
+offset_left = 40.0
+offset_top = 144.0
+offset_right = 80.0
+offset_bottom = 184.0
+theme_override_styles/panel = SubResource("StyleBoxFlat_a8h5c")
+
+[node name="PointA4" type="Panel" parent="Variation3" unique_id=1541012775]
+layout_mode = 0
+offset_left = 40.0
+offset_top = 192.0
+offset_right = 80.0
+offset_bottom = 232.0
+theme_override_styles/panel = SubResource("StyleBoxFlat_ffvs6")
+
+[node name="PointB1" type="Panel" parent="Variation3" unique_id=559525071]
+layout_mode = 0
+offset_left = 184.0
+offset_top = 48.0
+offset_right = 224.0
+offset_bottom = 88.0
+theme_override_styles/panel = SubResource("StyleBoxFlat_b58v7")
+
+[node name="PointB2" type="Panel" parent="Variation3" unique_id=956834344]
+layout_mode = 0
+offset_left = 184.0
+offset_top = 96.0
+offset_right = 224.0
+offset_bottom = 136.0
+theme_override_styles/panel = SubResource("StyleBoxFlat_ffvs6")
+
+[node name="PointB3" type="Panel" parent="Variation3" unique_id=1636927681]
+layout_mode = 0
+offset_left = 184.0
+offset_top = 144.0
+offset_right = 224.0
+offset_bottom = 184.0
+theme_override_styles/panel = SubResource("StyleBoxFlat_60epa")
+
+[node name="PointB4" type="Panel" parent="Variation3" unique_id=1808974721]
+layout_mode = 0
+offset_left = 184.0
+offset_top = 192.0
+offset_right = 224.0
+offset_bottom = 232.0
+theme_override_styles/panel = SubResource("StyleBoxFlat_a8h5c")
+
+[node name="Area2D" type="Area2D" parent="Variation3" unique_id=1083295679]
+position = Vector2(56, 72)
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Variation3/Area2D" unique_id=381671953]
+position = Vector2(4, -4)
+shape = SubResource("RectangleShape2D_mysfb")
+
+[node name="Line2D" type="Line2D" parent="Variation3/Area2D" unique_id=275847088]
+default_color = Color(1, 0.5647059, 0, 1)
+
+[node name="Area2D2" type="Area2D" parent="Variation3" unique_id=771528958]
+position = Vector2(56, 112)
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Variation3/Area2D2" unique_id=1975032134]
+position = Vector2(4, 4)
+shape = SubResource("RectangleShape2D_qse05")
+
+[node name="Line2D" type="Line2D" parent="Variation3/Area2D2" unique_id=1648862071]
+default_color = Color(1, 0, 0.5176471, 1)
+
+[node name="Area2D3" type="Area2D" parent="Variation3" unique_id=1758035709]
+position = Vector2(56, 168)
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Variation3/Area2D3" unique_id=1137941378]
+position = Vector2(4, -4)
+shape = SubResource("RectangleShape2D_wpmjr")
+
+[node name="Line2D" type="Line2D" parent="Variation3/Area2D3" unique_id=357541605]
+default_color = Color(0, 0.43137255, 1, 1)
+
+[node name="Area2D4" type="Area2D" parent="Variation3" unique_id=21696072]
+position = Vector2(64, 208)
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Variation3/Area2D4" unique_id=1445226119]
+position = Vector2(-4, 4)
+shape = SubResource("RectangleShape2D_kbsqc")
+
+[node name="Line2D" type="Line2D" parent="Variation3/Area2D4" unique_id=784450749]
+default_color = Color(1, 0, 0, 1)
+
+[node name="Area2D5" type="Area2D" parent="Variation3" unique_id=506290026]
+position = Vector2(208, 72)
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Variation3/Area2D5" unique_id=449526908]
+position = Vector2(-4, -4)
+shape = SubResource("RectangleShape2D_75n2s")
+
+[node name="Area2D6" type="Area2D" parent="Variation3" unique_id=2082117387]
+position = Vector2(200, 112)
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Variation3/Area2D6" unique_id=548992110]
+position = Vector2(4, 4)
+shape = SubResource("RectangleShape2D_wk2ws")
+
+[node name="Area2D7" type="Area2D" parent="Variation3" unique_id=938900450]
+position = Vector2(208, 168)
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Variation3/Area2D7" unique_id=1023993346]
+position = Vector2(-4, -4)
+shape = SubResource("RectangleShape2D_xyvep")
+
+[node name="Area2D8" type="Area2D" parent="Variation3" unique_id=1209977407]
+position = Vector2(208, 216)
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Variation3/Area2D8" unique_id=1511437602]
+position = Vector2(-4, -4)
+shape = SubResource("RectangleShape2D_vj3sy")

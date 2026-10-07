@@ -1,10 +1,6 @@
 class_name SimonDice
 extends PuzzleMinigame
 
-# Microjuego "Simón Dice": se muestra una secuencia de colores iluminando
-# el panel Light de cada botón, y el jugador tiene que repetirla en
-# el mismo orden tocando los botones. Si se equivoca, falla.
-
 @export var sequence_length: int = 4
 @export var flash_duration: float = 0.6
 @export var pause_between_flashes: float = 0.25
@@ -28,6 +24,12 @@ var _first_input: bool = true
 var _finished: bool = false
 
 func _ready() -> void:
+	# Los botones vienen con el estilo "Disabled" vacío (StyleBoxEmpty),
+	# así que al deshabilitarlos durante la secuencia se vuelven
+	# invisibles. Generamos un "disabled" a partir del color normal de
+	# cada uno, un poco más oscuro, para que sigan viéndose.
+	_fix_disabled_styles()
+
 	# Ocultar todo hasta que arranque la presentación: botones en
 	# opacidad 0 (para el fade-in) y paneles Light apagados (para
 	# la secuencia de luces).
@@ -56,6 +58,14 @@ func _reveal_buttons() -> void:
 	for button in buttons:
 		tween.tween_property(button, "modulate:a", 1.0, reveal_duration)
 	await tween.finished
+
+func _fix_disabled_styles() -> void:
+	for button in buttons:
+		var normal_style := button.get_theme_stylebox("normal")
+		if normal_style is StyleBoxFlat:
+			var dimmed: StyleBoxFlat = normal_style.duplicate()
+			dimmed.bg_color = normal_style.bg_color.darkened(0.35)
+			button.add_theme_stylebox_override("disabled", dimmed)
 
 func _generate_sequence() -> void:
 	_sequence.clear()

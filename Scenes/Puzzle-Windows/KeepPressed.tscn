@@ -2,6 +2,14 @@
 
 [ext_resource type="Script" uid="uid://bvcy8jhjtn4sp" path="res://Scripts/Puzzle Windows/keep_pressed.gd" id="1_vgns1"]
 
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_65fla"]
+bg_color = Color(0, 0, 0, 1)
+border_width_left = 2
+border_width_top = 2
+border_width_right = 2
+border_width_bottom = 2
+border_color = Color(0, 1, 0, 1)
+
 [sub_resource type="StyleBoxFlat" id="StyleBoxFlat_vgns1"]
 bg_color = Color(1, 0, 0, 1)
 border_width_left = 3
@@ -35,6 +43,13 @@ offset_right = 0.63998413
 offset_bottom = 0.519989
 script = ExtResource("1_vgns1")
 
+[node name="Panel" type="Panel" parent="." unique_id=1917115549]
+visible = false
+layout_mode = 0
+offset_right = 256.0
+offset_bottom = 256.0
+theme_override_styles/panel = SubResource("StyleBoxFlat_65fla")
+
 [node name="ProgressBar" type="ProgressBar" parent="." unique_id=1010280022]
 layout_mode = 0
 offset_left = 48.000015
@@ -63,6 +78,8 @@ offset_left = 88.000015
 offset_top = 96.000015
 offset_right = 166.00002
 offset_bottom = 145.00002
+theme_override_colors/font_outline_color = Color(1, 1, 1, 1)
+theme_override_constants/outline_size = 4
 text = "MANTENÉ
 PULSADO"
 horizontal_alignment = 1

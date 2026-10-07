@@ -1,13 +1,14 @@
 [gd_scene format=3 uid="uid://b2pxktbvxss5i"]
 
 [ext_resource type="Script" uid="uid://bua7gyvgy8qia" path="res://Scripts/level_1.gd" id="1_q8yj7"]
-[ext_resource type="FontFile" uid="uid://dmrmrajbismn8" path="res://Assets/Fonts/IBM_Plex_Mono/IBMPlexMono-Medium.ttf" id="2_87l2y"]
+[ext_resource type="FontFile" uid="uid://mqlbqukrj1i2" path="res://Assets/Fonts/IBM_Plex_Mono/IBMPlexMono-Medium.ttf" id="2_87l2y"]
 [ext_resource type="FontFile" uid="uid://dkt6qdxklh4j6" path="res://Assets/Fonts/IBM_Plex_Mono/IBMPlexMono-Bold.ttf" id="3_qpfou"]
 [ext_resource type="PackedScene" uid="uid://cpp583uv45ray" path="res://Scenes/Puzzle-Windows/BaseVentanaPuzzle.tscn" id="3_ybqp2"]
 [ext_resource type="Texture2D" uid="uid://byxixjomnx0qt" path="res://Assets/Kenney Game Icons/contrast.png" id="7_hs11j"]
 [ext_resource type="FontFile" uid="uid://djx8toqe17ynx" path="res://Assets/Fonts/Michroma-Regular.ttf" id="8_o5ofx"]
 [ext_resource type="Texture2D" uid="uid://dptce3hmit3di" path="res://Assets/Kenney Game Icons/checkmark.png" id="9_34y5i"]
 [ext_resource type="Script" uid="uid://ba44a2me1f0pu" path="res://Scripts/camera.gd" id="9_hs11j"]
+[ext_resource type="PackedScene" uid="uid://bsnqwtrg5ipng" path="res://Scenes/LooseScreen.tscn" id="9_o5ofx"]
 
 [sub_resource type="StyleBoxFlat" id="StyleBoxFlat_vnunq"]
 bg_color = Color(0, 0, 0, 1)
@@ -392,16 +393,6 @@ theme_override_colors/font_color = Color(1, 1, 1, 1)
 theme_override_font_sizes/font_size = 37
 text = "Victoria :D"
 
-[node name="Game Over" type="Label" parent="." unique_id=1526846980]
-visible = false
-offset_left = 473.0
-offset_top = 83.0
-offset_right = 1165.0
-offset_bottom = 134.0
-theme_override_colors/font_color = Color(1, 1, 1, 1)
-theme_override_font_sizes/font_size = 37
-text = "Perdiste UwU"
-
 [node name="RandomArea" type="Area2D" parent="." unique_id=202580248]
 position = Vector2(376, 224)
 
@@ -434,7 +425,7 @@ position = Vector2(66.5329, 58.832455)
 scale = Vector2(1.0693421, 1.0633508)
 texture = ExtResource("7_hs11j")
 
-[node name="CoinsText" type="Label" parent="UI Coins-Combo" unique_id=861616353]
+[node name="HackoinsText" type="Label" parent="UI Coins-Combo" unique_id=861616353]
 layout_mode = 0
 offset_left = 104.0
 offset_top = 8.0
@@ -478,19 +469,17 @@ anchor_mode = 0
 script = ExtResource("9_hs11j")
 
 [node name="TestPuzzleWindow" parent="." unique_id=1270405932 instance=ExtResource("3_ybqp2")]
+anchors_preset = -1
 anchor_left = 0.44700003
 anchor_top = 0.377
 anchor_right = 0.44700003
 anchor_bottom = 0.377
-offset_left = -321.24005
-offset_top = -2.1600037
-offset_right = -321.24005
-offset_bottom = -2.1600037
+offset_left = -3.2400513
+offset_top = 12.839996
+offset_right = -3.2400513
+offset_bottom = 12.839996
 
-[node name="TestPuzzleWindow2" parent="." unique_id=1140047965 instance=ExtResource("3_ybqp2")]
-offset_left = 1019.36
-offset_top = 281.47998
-offset_right = 1019.36
-offset_bottom = 281.47998
+[node name="LooseScreen" parent="." unique_id=1964894798 instance=ExtResource("9_o5ofx")]
+visible = false
 
 [connection signal="timeout" from="Time" to="." method="_on_time_timeout"]

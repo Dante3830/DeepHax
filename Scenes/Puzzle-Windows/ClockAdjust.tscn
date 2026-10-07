@@ -1,0 +1,273 @@
+[gd_scene format=3 uid="uid://ky6a80ty8iho"]
+
+[ext_resource type="Script" uid="uid://de1ykevhgqftj" path="res://Scripts/Puzzle Windows/clock_adjust.gd" id="1_c63cc"]
+[ext_resource type="FontFile" uid="uid://c3kf3eydfw551" path="res://Assets/Fonts/lcd_lcd_mono/LCDWinTT/LCD2B___.TTF" id="2_o83mr"]
+[ext_resource type="Texture2D" uid="uid://bs34a10w0rch0" path="res://Assets/Circulo.png" id="2_r26b5"]
+[ext_resource type="Texture2D" uid="uid://bkx2djypoopw7" path="res://Assets/Aguja.png" id="3_p2p4g"]
+[ext_resource type="FontFile" uid="uid://2afyco5rkpvl" path="res://Assets/Fonts/Anta-Regular.ttf" id="4_enk4a"]
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_p2p4g"]
+bg_color = Color(0, 0, 0, 1)
+border_width_left = 2
+border_width_top = 2
+border_width_right = 2
+border_width_bottom = 2
+border_color = Color(0, 1, 0, 1)
+
+[node name="ClockAdjust" type="Control" unique_id=1270405932]
+layout_mode = 3
+anchor_left = -0.067
+anchor_top = -0.119
+anchor_right = -0.067
+anchor_bottom = -0.119
+offset_left = 0.6399994
+offset_top = 0.5200043
+offset_right = 0.6399994
+offset_bottom = 0.5200043
+script = ExtResource("1_c63cc")
+
+[node name="Panel" type="Panel" parent="." unique_id=1798305932]
+layout_mode = 0
+offset_right = 256.0
+offset_bottom = 256.0
+theme_override_styles/panel = SubResource("StyleBoxFlat_p2p4g")
+
+[node name="CircleA" type="Sprite2D" parent="." unique_id=74511984]
+position = Vector2(127.999985, 127.999985)
+scale = Vector2(0.43142858, 0.43142858)
+texture = ExtResource("2_r26b5")
+
+[node name="Aguja1" type="RayCast2D" parent="." unique_id=231102474]
+position = Vector2(128, 128)
+target_position = Vector2(0, -58)
+
+[node name="Sprite2D" type="Sprite2D" parent="Aguja1" unique_id=2022425973]
+modulate = Color(0, 0.83137256, 1, 1)
+texture_filter = 1
+position = Vector2(0, -29.5)
+scale = Vector2(0.038, 0.056481488)
+texture = ExtResource("3_p2p4g")
+
+[node name="Aguja2" type="RayCast2D" parent="." unique_id=1357483592]
+position = Vector2(128, 128)
+target_position = Vector2(0, -58)
+
+[node name="Sprite2D2" type="Sprite2D" parent="Aguja2" unique_id=972916398]
+modulate = Color(1, 0.9647059, 0, 1)
+texture_filter = 1
+position = Vector2(0, -29.5)
+scale = Vector2(0.038, 0.056481488)
+texture = ExtResource("3_p2p4g")
+
+[node name="Aguja3" type="RayCast2D" parent="." unique_id=1392155748]
+position = Vector2(128, 128)
+target_position = Vector2(0, -58)
+
+[node name="Sprite2D3" type="Sprite2D" parent="Aguja3" unique_id=1801277380]
+modulate = Color(1, 0, 0, 1)
+texture_filter = 1
+position = Vector2(0, -29.5)
+scale = Vector2(0.038, 0.056481488)
+texture = ExtResource("3_p2p4g")
+
+[node name="HH_MM_SS" type="Control" parent="." unique_id=187977979]
+anchors_preset = 0
+offset_left = 56.0
+offset_top = 208.0
+offset_right = 208.0
+offset_bottom = 248.0
+
+[node name="HoursText" type="Label" parent="HH_MM_SS" unique_id=579204801]
+layout_mode = 0
+offset_left = 5.0
+offset_right = 45.0
+offset_bottom = 40.0
+theme_override_colors/font_color = Color(0, 0.83137256, 1, 1)
+theme_override_fonts/font = ExtResource("2_o83mr")
+theme_override_font_sizes/font_size = 36
+text = "11"
+
+[node name="MinutesText" type="Label" parent="HH_MM_SS" unique_id=776111531]
+layout_mode = 0
+offset_left = 49.0
+offset_right = 89.0
+offset_bottom = 40.0
+theme_override_colors/font_color = Color(1, 0.9666667, 0, 1)
+theme_override_fonts/font = ExtResource("2_o83mr")
+theme_override_font_sizes/font_size = 36
+text = "30"
+
+[node name="SecondsText" type="Label" parent="HH_MM_SS" unique_id=396761682]
+layout_mode = 0
+offset_left = 100.0
+offset_right = 148.0
+offset_bottom = 40.0
+theme_override_colors/font_color = Color(1, 0, 0, 1)
+theme_override_fonts/font = ExtResource("2_o83mr")
+theme_override_font_sizes/font_size = 36
+text = "45"
+
+[node name="HourText4" type="Label" parent="HH_MM_SS" unique_id=2079720849]
+layout_mode = 0
+offset_left = -2.0
+offset_top = -7.0
+offset_right = 141.0
+offset_bottom = 33.0
+theme_override_fonts/font = ExtResource("2_o83mr")
+theme_override_font_sizes/font_size = 36
+text = ":  :"
+horizontal_alignment = 1
+
+[node name="Horas" type="Node2D" parent="." unique_id=2076874401]
+
+[node name="Hora1" type="Marker2D" parent="Horas" unique_id=453197675]
+position = Vector2(160, 64)
+
+[node name="Hora2" type="Marker2D" parent="Horas" unique_id=1026526614]
+position = Vector2(192, 96)
+
+[node name="Hora3" type="Marker2D" parent="Horas" unique_id=1163276478]
+position = Vector2(200, 128)
+
+[node name="Hora4" type="Marker2D" parent="Horas" unique_id=1922491272]
+position = Vector2(192, 160)
+
+[node name="Hora5" type="Marker2D" parent="Horas" unique_id=1078833196]
+position = Vector2(160, 192)
+
+[node name="Hora6" type="Marker2D" parent="Horas" unique_id=809862519]
+position = Vector2(128, 200)
+
+[node name="Hora7" type="Marker2D" parent="Horas" unique_id=1008738195]
+position = Vector2(96, 192)
+
+[node name="Hora8" type="Marker2D" parent="Horas" unique_id=160154758]
+position = Vector2(64, 160)
+
+[node name="Hora9" type="Marker2D" parent="Horas" unique_id=158145574]
+position = Vector2(56, 128)
+
+[node name="Hora10" type="Marker2D" parent="Horas" unique_id=1403714229]
+position = Vector2(64, 96)
+
+[node name="Hora11" type="Marker2D" parent="Horas" unique_id=1937944718]
+position = Vector2(96, 64)
+
+[node name="Hora12" type="Marker2D" parent="Horas" unique_id=747021288]
+position = Vector2(128, 56)
+
+[node name="Label1" type="Label" parent="Horas" unique_id=926664438]
+offset_left = 155.0
+offset_top = 63.0
+offset_right = 171.0
+offset_bottom = 84.0
+theme_override_colors/font_color = Color(0, 0, 0, 1)
+theme_override_fonts/font = ExtResource("4_enk4a")
+text = "1"
+
+[node name="Label2" type="Label" parent="Horas" unique_id=94493134]
+offset_left = 181.0
+offset_top = 90.0
+offset_right = 197.0
+offset_bottom = 111.0
+theme_override_colors/font_color = Color(0, 0, 0, 1)
+theme_override_fonts/font = ExtResource("4_enk4a")
+text = "2"
+
+[node name="Label3" type="Label" parent="Horas" unique_id=815531395]
+offset_left = 190.0
+offset_top = 119.0
+offset_right = 206.0
+offset_bottom = 140.0
+theme_override_colors/font_color = Color(0, 0, 0, 1)
+theme_override_fonts/font = ExtResource("4_enk4a")
+text = "3"
+
+[node name="Label4" type="Label" parent="Horas" unique_id=2112283487]
+offset_left = 181.0
+offset_top = 145.0
+offset_right = 197.0
+offset_bottom = 166.0
+theme_override_colors/font_color = Color(0, 0, 0, 1)
+theme_override_fonts/font = ExtResource("4_enk4a")
+text = "4"
+
+[node name="Label5" type="Label" parent="Horas" unique_id=1271711643]
+offset_left = 154.0
+offset_top = 173.0
+offset_right = 170.0
+offset_bottom = 194.0
+theme_override_colors/font_color = Color(0, 0, 0, 1)
+theme_override_fonts/font = ExtResource("4_enk4a")
+text = "5"
+
+[node name="Label6" type="Label" parent="Horas" unique_id=697419409]
+offset_left = 123.0
+offset_top = 182.0
+offset_right = 139.0
+offset_bottom = 203.0
+theme_override_colors/font_color = Color(0, 0, 0, 1)
+theme_override_fonts/font = ExtResource("4_enk4a")
+text = "6"
+
+[node name="Label7" type="Label" parent="Horas" unique_id=2037730412]
+offset_left = 92.0
+offset_top = 172.0
+offset_right = 108.0
+offset_bottom = 193.0
+theme_override_colors/font_color = Color(0, 0, 0, 1)
+theme_override_fonts/font = ExtResource("4_enk4a")
+text = "7"
+
+[node name="Label8" type="Label" parent="Horas" unique_id=628317039]
+offset_left = 66.0
+offset_top = 143.0
+offset_right = 82.0
+offset_bottom = 164.0
+theme_override_colors/font_color = Color(0, 0, 0, 1)
+theme_override_fonts/font = ExtResource("4_enk4a")
+text = "8"
+
+[node name="Label9" type="Label" parent="Horas" unique_id=2108805867]
+offset_left = 58.0
+offset_top = 118.0
+offset_right = 74.0
+offset_bottom = 139.0
+theme_override_colors/font_color = Color(0, 0, 0, 1)
+theme_override_fonts/font = ExtResource("4_enk4a")
+text = "9"
+
+[node name="Label10" type="Label" parent="Horas" unique_id=582160043]
+offset_left = 68.0
+offset_top = 90.0
+offset_right = 84.0
+offset_bottom = 111.0
+theme_override_colors/font_color = Color(0, 0, 0, 1)
+theme_override_fonts/font = ExtResource("4_enk4a")
+text = "10"
+
+[node name="Label11" type="Label" parent="Horas" unique_id=139539358]
+offset_left = 92.0
+offset_top = 62.0
+offset_right = 108.0
+offset_bottom = 83.0
+theme_override_colors/font_color = Color(0, 0, 0, 1)
+theme_override_fonts/font = ExtResource("4_enk4a")
+text = "11"
+
+[node name="Label12" type="Label" parent="Horas" unique_id=930837263]
+offset_left = 120.0
+offset_top = 52.0
+offset_right = 136.0
+offset_bottom = 73.0
+theme_override_colors/font_color = Color(0, 0, 0, 1)
+theme_override_fonts/font = ExtResource("4_enk4a")
+text = "12"
+
+[node name="Label" type="Label" parent="." unique_id=1354919412]
+layout_mode = 0
+offset_left = 104.0
+offset_top = 8.0
+offset_right = 246.0
+offset_bottom = 31.0
+text = "Ajustá el reloj"
