@@ -1,4 +1,4 @@
-class_name PerdidaDeHackoins
+class_name HackoinsLoose
 extends PuzzleCondition
 
 ## Condición "Pérdida de hackoins": si el jugador no interactúa con la

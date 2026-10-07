@@ -1,4 +1,4 @@
-class_name BloqueoDeTeclado
+class_name KeyboardLock
 extends PuzzleCondition
 
 ## Condición "Bloqueo de teclado": mientras la ventana está abierta, el
@@ -7,7 +7,6 @@ extends PuzzleCondition
 
 func _on_apply(_window: PuzzleWindow) -> void:
 	GameManager.block_keyboard()
-
 
 func _on_remove(_window: PuzzleWindow) -> void:
 	GameManager.unblock_keyboard()

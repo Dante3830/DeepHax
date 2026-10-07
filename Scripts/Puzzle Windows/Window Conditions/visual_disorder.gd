@@ -1,4 +1,4 @@
-class_name DesordenVisual
+class_name VisualDisorder
 extends PuzzleCondition
 
 ## Condición "Desorden visual": aplica un shader de glitch sobre el texto

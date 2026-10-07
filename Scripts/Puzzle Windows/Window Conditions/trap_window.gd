@@ -1,4 +1,4 @@
-class_name Trampa
+class_name TrapWindow
 extends PuzzleCondition
 
 ## Condición "Trampa": si el jugador interactúa con la ventana dentro de los

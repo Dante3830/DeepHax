@@ -5,7 +5,7 @@ signal hackoins_changed(total: int, delta: int)
 var phase = 1
 var lines_combo = 0
 var hackoins: int = 0
-var total_time
+var game_time : float
 
 # Condición "Acelerador": multiplica la velocidad a la que se consume el
 # tiempo de escribir la línea actual. 1.0 = velocidad normal.

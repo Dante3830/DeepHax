@@ -3,7 +3,6 @@
 [ext_resource type="Script" uid="uid://bua7gyvgy8qia" path="res://Scripts/level_1.gd" id="1_q8yj7"]
 [ext_resource type="FontFile" uid="uid://mqlbqukrj1i2" path="res://Assets/Fonts/IBM_Plex_Mono/IBMPlexMono-Medium.ttf" id="2_87l2y"]
 [ext_resource type="FontFile" uid="uid://dkt6qdxklh4j6" path="res://Assets/Fonts/IBM_Plex_Mono/IBMPlexMono-Bold.ttf" id="3_qpfou"]
-[ext_resource type="PackedScene" uid="uid://cpp583uv45ray" path="res://Scenes/Puzzle-Windows/BaseVentanaPuzzle.tscn" id="3_ybqp2"]
 [ext_resource type="Texture2D" uid="uid://byxixjomnx0qt" path="res://Assets/Kenney Game Icons/contrast.png" id="7_hs11j"]
 [ext_resource type="FontFile" uid="uid://djx8toqe17ynx" path="res://Assets/Fonts/Michroma-Regular.ttf" id="8_o5ofx"]
 [ext_resource type="Texture2D" uid="uid://dptce3hmit3di" path="res://Assets/Kenney Game Icons/checkmark.png" id="9_34y5i"]
@@ -467,17 +466,6 @@ speed_scale = 2.0
 [node name="Camera2D" type="Camera2D" parent="." unique_id=495764839]
 anchor_mode = 0
 script = ExtResource("9_hs11j")
-
-[node name="TestPuzzleWindow" parent="." unique_id=1270405932 instance=ExtResource("3_ybqp2")]
-anchors_preset = -1
-anchor_left = 0.44700003
-anchor_top = 0.377
-anchor_right = 0.44700003
-anchor_bottom = 0.377
-offset_left = -3.2400513
-offset_top = 12.839996
-offset_right = -3.2400513
-offset_bottom = 12.839996
 
 [node name="LooseScreen" parent="." unique_id=1964894798 instance=ExtResource("9_o5ofx")]
 visible = false
