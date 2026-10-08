@@ -15,11 +15,24 @@ var receiver_label: CanvasItem = null
 
 var _active_conditions: Dictionary = {}
 
+var _keyboard_locked: bool = false
+
+func lock_keyboard() -> void:
+	_keyboard_locked = true
+
+func unlock_keyboard() -> void:
+	_keyboard_locked = false
+
+func is_keyboard_locked() -> bool:
+	return _keyboard_locked
+
 func add_hackoins(amount: int) -> void:
 	hackoins += amount
 	hackoins_changed.emit(hackoins, amount)
 
 func is_key_blocked(keycode: int) -> bool:
+	if _keyboard_locked:
+		return true
 	return _blocked_keys.has(keycode)
 
 func block_key(keycode: int) -> void:
@@ -49,6 +62,7 @@ func reset_conditions() -> void:
 	time_speed_multiplier = 1.0
 	_blocked_keys.clear()
 	_active_conditions.clear()
+	_keyboard_locked = false
 
 func change_scenes():
 	pass

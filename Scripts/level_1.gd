@@ -43,7 +43,7 @@ var phase1_minigames: Array[Dictionary] = [
 	{ "scene": SIMON_DICE_SCENE, "time_limit": 12.0 },
 	{ "scene": MANTENER_PULSADO_SCENE, "time_limit": 10.0 },
 	{ "scene": IGUALAR_CUADROS_SCENE, "time_limit": 10.0 },
-	{ "scene": AJUSTAR_RELOJ_SCENE, "time_limit": 15.0 },
+	{ "scene": AJUSTAR_RELOJ_SCENE, "time_limit": 10.0 },
 	{ "scene": CONEXION_CABLES_SCENE, "time_limit": 10.0 }
 ]
 
@@ -55,12 +55,25 @@ var phase1_conditions: Array[PuzzleCondition] = [null, BLOQUEO_TECLADO_CONDITION
 # Frecuencia de aparición de la Fase 1 según el GDD: 8-12 segundos. Por
 # ahora es el tiempo de espera desde que se cierra una ventana hasta que
 # aparece la siguiente, ya que solo dejamos una ventana abierta a la vez.
-const WINDOW_SPAWN_MIN: float = 5.0
-const WINDOW_SPAWN_MAX: float = 9.0
+const WINDOW_SPAWN_MIN: float = 8.0
+const WINDOW_SPAWN_MAX: float = 12.0
 
 # Cuántos segundos se muestra la animación de victoria antes de pasar a
-# la escena ThankYou (la transición en sí dura aparte, ver SceneTransitioner).
+# la escena ThankYou (la transición en sí dura aparte, ver SceneManage).
 const VICTORY_SHOW_TIME: float = 3.0
+
+# Ventanas que se mueven: probabilidad de que una ventana nueva rebote por
+# el RandomArea, y su velocidad en px/seg (lento pero molesto).
+const MOVING_WINDOW_CHANCE: float = 0.35
+const MOVING_WINDOW_SPEED_MIN: float = 70.0
+const MOVING_WINDOW_SPEED_MAX: float = 110.0
+
+# Temblor horizontal de la pantalla cuando aparece una ventana.
+const SPAWN_SHAKE_STRENGTH: float = 14.0  # píxeles de desplazamiento máximo
+const SPAWN_SHAKE_DURATION: float = 0.35  # segundos
+const SPAWN_SHAKE_CYCLES: float = 4.0     # idas y vueltas completas
+var _shake_tween: Tween = null
+var _camera_base_x: float = 0.0
 
 # Ventana-puzzle actualmente abierta, o null si no hay ninguna.
 var _current_puzzle_window: PuzzleWindow = null
@@ -99,6 +112,11 @@ var line_time_limit: float = 0.0
 func _ready():
 	$TimeBar/MinusFive.visible = false
 	randomize()
+	_camera_base_x = camera.position.x
+	# El Timer del reloj viene SIN One Shot en la escena: al llegar a 0 se
+	# reiniciaba solo con el último tiempo sobrante (start(remaining) le
+	# cambia el wait_time) y el reloj "se loopeaba" después de perder.
+	time.one_shot = true
 	# Red de seguridad: GameManager es un autoload y su estado sobrevive
 	# a recargar la escena, así que arrancamos con las condiciones en cero.
 	GameManager.reset_conditions()
@@ -144,7 +162,26 @@ func _spawn_puzzle_window() -> void:
 	window.closed.connect(_on_puzzle_window_closed)
 	window.setup(config.get("scene"), condition, config.get("time_limit", 10.0))
 
+	# Algunas ventanas rebotan por el RandomArea en vez de quedarse quietas.
+	if randf() < MOVING_WINDOW_CHANCE:
+		window.enable_bounce(_get_random_area_rect(), randf_range(MOVING_WINDOW_SPEED_MIN, MOVING_WINDOW_SPEED_MAX))
+
+	_shake_screen_horizontal()
 	_current_puzzle_window = window
+
+# Sacude la pantalla de izquierda a derecha, con más fuerza al principio y
+# amortiguándose hasta quedar quieta. Mueve camera.position.x (y no offset)
+# para no pisarse con trigger_shake(), que suele usar offset.
+func _shake_screen_horizontal() -> void:
+	if _shake_tween:
+		_shake_tween.kill()
+	camera.position.x = _camera_base_x
+	_shake_tween = create_tween()
+	_shake_tween.tween_method(_set_horizontal_shake, 0.0, 1.0, SPAWN_SHAKE_DURATION)
+
+func _set_horizontal_shake(progress: float) -> void:
+	var wave := sin(progress * TAU * SPAWN_SHAKE_CYCLES)
+	camera.position.x = _camera_base_x + wave * SPAWN_SHAKE_STRENGTH * (1.0 - progress)
 
 # Rectángulo global del RandomArea. Se lee del CollisionShape2D cada vez,
 # así que si lo movés o lo escalás en el editor no hay que tocar código.
@@ -267,9 +304,7 @@ func _on_text_editor_gui_input(event: InputEvent) -> void:
 				if completed_lines >= lines_to_type.size():
 					# Todas las líneas completadas: el jugador gana
 					text_editor.text = ""
-					time.stop()
-					text_completed = true
-					_close_active_puzzle_window()
+					_end_phase()
 					print("¡Texto completado! Tiempo detenido.")
 					$Victoria.show()
 					animation_player.play("Victory")
@@ -304,6 +339,8 @@ func _apply_time_penalty(seconds: float) -> void:
 		time.start(remaining)
 
 func _process(delta: float) -> void:
+	if text_completed == false:
+		GameManager.game_time += delta
 	# Condición "Acelerador": el Timer de Godot no tiene una velocidad
 	# configurable, así que mientras haya algún multiplicador activo le
 	# restamos el tiempo "extra" (más allá del segundo a segundo normal)
@@ -312,23 +349,19 @@ func _process(delta: float) -> void:
 		var extra_time: float = delta * (GameManager.time_speed_multiplier - 1.0)
 		_apply_time_penalty(extra_time)
 	
-	if not text_completed:
-		GameManager.game_time += delta
-	
 	var minutes := int(GameManager.game_time) / 60
 	var seconds := int(GameManager.game_time) % 60
 	var miliseconds := int((GameManager.game_time - int(GameManager.game_time)) * 100)
 	
 	game_time_text.text = "%02d:%02d.%02d" % [minutes, seconds, miliseconds]
 	
-	var seconds_left: int = 0
-	if not text_completed and time.time_left > 0.0:
-	# floor en vez de ceil: así no muestra "01" cuando queda menos de 1s
-		seconds_left = int(floor(time.time_left))
-	time_text.text = "%02d" % seconds_left
-	
-	if not text_completed and time.time_left > 0.0:
-		time_bar.value = (time.time_left / line_time_limit) * 100
+	# Mientras se juega, el texto sigue al Timer. Al terminar la fase deja de
+	# actualizarse: si ganó queda congelado con el tiempo que sobraba, y si
+	# perdió _on_time_timeout() ya lo dejó en "00".
+	if not text_completed:
+		time_text.text = "%02d" % int(ceil(time.time_left))
+		if time.time_left > 0:
+			time_bar.value = (time.time_left / line_time_limit) * 100
 	
 	var expected = receiver.text
 	var current = text_editor.text
@@ -357,18 +390,27 @@ func _process(delta: float) -> void:
 	else:
 		text_editor.add_theme_color_override("font_color", Color(1.0, 1.0, 1.0))
 
-func _on_time_timeout() -> void:
+# Cierra la fase, ganando o perdiendo, y corta todo lo que seguía corriendo.
+# Tener UN solo lugar evita que un camino de salida se olvide de algo (al
+# perder se dejaba vivo el Timer, y por eso el reloj seguía y podían volver
+# a aparecer ventanas).
+func _end_phase() -> void:
+	text_completed = true  # frena game_time, el spawn de ventanas y los Enter
+	time.stop()            # el reloj no puede reiniciarse ni volver a disparar
 	_close_active_puzzle_window()
-	print("¡Tiempo agotado!")
-	text_completed = true
-	# Forzamos el display a 00 porque _process ya no actualiza (text_completed == true)
+
+func _on_time_timeout() -> void:
+	# Puede llegar dos veces (señal del Timer + una penalización que agota
+	# el tiempo): la segunda no tiene que hacer nada.
+	if text_completed:
+		return
+	_end_phase()
+	# El reloj vacío siempre se lee "00" (y la barra, en cero).
 	time_text.text = "00"
-	time_bar.value = 0.0
+	time_bar.value = 0
+	print("¡Tiempo agotado!")
 	$LooseScreen.show()
 
-# Deja correr la animación de victoria VICTORY_SHOW_TIME segundos y recién
-# después hace la transición a la escena ThankYou. Es una corrutina: se la
-# llama sin await y el resto del código del nivel sigue sin bloquearse.
 func victory() -> void:
 	await get_tree().create_timer(VICTORY_SHOW_TIME).timeout
 	SceneManage.change_scene(self, "ThankYou")

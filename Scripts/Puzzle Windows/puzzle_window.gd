@@ -1,20 +1,25 @@
 class_name PuzzleWindow
 extends Control
 
-## Ventana-puzzle genérica. Orquesta un microjuego (PuzzleMinigame) y,
-## opcionalmente, una condición (PuzzleCondition), usando el PlayerTimer
-## de la escena como límite de tiempo para fallar automáticamente.
-
 signal solved(window: PuzzleWindow, hackoin_reward: int)
 signal failed(window: PuzzleWindow, time_penalty: float)
 signal closed(window: PuzzleWindow)
 
 @export var fail_time_penalty: float = 5.0
 @export var base_hackoin_reward: int = 10
-@export var emerge_duration: float = 0.25  # cuánto tarda en aparecer la ventana
+@export var emerge_duration: float = 0.25
+
+@export var condition_icon_size: float = 28.0
+
+@export var warning_time: float = 5.0
+@export var warning_color: Color = Color(0.8, 0.0, 0.0)
+
+const WARNING_HZ_START: float = 2.0
+const WARNING_HZ_END: float = 6.0
 
 @onready var content_container: Control = %ContentContainer
 @onready var player_timer: Timer = $PlayerTimer
+@onready var panel: Panel = $Panel
 @onready var condition_panel: Panel = $ConditionPanel
 @onready var condition_icon: Sprite2D = $ConditionPanel/Condition
 @onready var condition_time_label: Label = $ConditionPanel/Time
@@ -24,67 +29,65 @@ var condition: PuzzleCondition = null
 
 var _resolved: bool = false
 
-# true mientras la condición está aplicada. Evita llamar a remove() dos
-# veces (una desde _close() y otra desde _exit_tree()) o llamarlo sin
-# haber hecho apply() antes.
 var _condition_applied: bool = false
+
+# --- Titileo rojo ---
+var _panel_style: StyleBoxFlat = null
+var _base_bg_color: Color = Color.BLACK
+var _warning_phase: float = 0.0
+
+# --- Rebote en la pantalla ---
+var _active: bool = false
+var _bounce_enabled: bool = false
+var _bounce_area: Rect2 = Rect2()
+var _bounce_velocity: Vector2 = Vector2.ZERO
+var _footprint: Rect2 = Rect2()
 
 func _ready() -> void:
 	condition_icon.visible = false
 	condition_time_label.visible = false
-
-	# El PlayerTimer de la escena tiene autostart: se disparaba solo antes
-	# de que setup() le pusiera el límite real. Lo frenamos acá y lo
-	# arranca setup() cuando la ventana termina de emerger.
+	
 	player_timer.stop()
 	player_timer.one_shot = true
-
-	# Ocultar la ventana hasta que setup() la haga emerger. Si tu Control
-	# raíz no queda centrado al escalar, ajustá pivot_offset a mano en el
-	# editor (debería ser la mitad de tu tamaño real).
+	
+	var base_style := panel.get_theme_stylebox("panel") as StyleBoxFlat
+	if base_style:
+		_panel_style = base_style.duplicate()
+		_base_bg_color = _panel_style.bg_color
+		panel.add_theme_stylebox_override("panel", _panel_style)
+	else:
+		push_warning("PuzzleWindow: el Panel no tiene un StyleBoxFlat; no habrá titileo rojo.")
+	
 	pivot_offset = size / 2.0
 	scale = Vector2.ZERO
 	modulate.a = 0.0
 
-# Llamado por el spawner justo después de instanciar la ventana.
-# time_limit es cuánto tarda en fallar sola si el jugador no hace nada
-# (ajustalo distinto para cada tipo de microjuego: Simón Dice necesita
-# más que Mantener Pulsado, por ejemplo). El cronómetro arranca recién
-# cuando la ventana termina de emerger, no antes.
 func setup(minigame_scene: PackedScene, condition_resource: PuzzleCondition = null, time_limit: float = 10.0) -> void:
 	minigame = minigame_scene.instantiate()
 	content_container.add_child(minigame)
 	minigame.solved.connect(_on_minigame_solved)
 	minigame.failed.connect(_on_minigame_failed)
 	minigame.interacted.connect(_on_minigame_interacted)
-
-	# Sin condición, el recuadro del ícono queda oculto.
+	
 	condition_panel.visible = condition_resource != null
 	if condition_resource:
-		# duplicate(): los .tres precargados son UN solo recurso compartido
-		# por todas las ventanas. Con una copia por ventana, el estado de la
-		# condición (ej: qué tecla bloqueó) vive y muere con esta ventana.
 		condition = condition_resource.duplicate()
 		condition_icon.visible = true
 		condition_icon.texture = condition.icon
-
+		_fit_condition_icon()
+	
 	await _emerge()
-
-	# El efecto arranca recién cuando la ventana terminó de emerger (igual
-	# que el cronómetro), para no penalizar mientras el jugador todavía no
-	# llegó a verla.
+	_footprint = get_footprint()
+	_active = true
+	
 	if condition:
 		condition.apply(self)
 		_condition_applied = true
-
+	
 	player_timer.wait_time = time_limit
 	player_timer.start()
 	minigame.start()
 
-# Animación de aparición de la ventana entera (contenido + panel de
-# condición incluidos): crece desde el centro y se desvanece hacia
-# adentro. El microjuego arranca su propia intro (start()) recién
-# cuando esto termina.
 func _emerge() -> void:
 	var tween := create_tween()
 	tween.set_parallel(true)
@@ -93,10 +96,58 @@ func _emerge() -> void:
 	tween.tween_property(self, "modulate:a", 1.0, emerge_duration)
 	await tween.finished
 
-## Rectángulo (en coordenadas locales de la ventana) que ocupa en pantalla:
-## la unión de todos sus hijos Control. El nodo raíz mide 0x0, así que el
-## spawner usa esto para saber qué tan grande es la ventana de verdad y
-## poder mantenerla entera dentro del RandomArea.
+func enable_bounce(area: Rect2, speed: float) -> void:
+	_bounce_enabled = true
+	_bounce_area = area
+	# Dirección en diagonal: los ángulos casi horizontales o verticales
+	# rebotan siempre entre las mismas dos paredes y se ven aburridos.
+	var angle := deg_to_rad(randf_range(25.0, 65.0)) + randi_range(0, 3) * (PI / 2.0)
+	_bounce_velocity = Vector2.from_angle(angle) * speed
+
+func _process(delta: float) -> void:
+	if not _active or _resolved:
+		return
+	_update_warning(delta)
+	if _bounce_enabled:
+		_update_bounce(delta)
+
+func _update_warning(delta: float) -> void:
+	if _panel_style == null or player_timer.is_stopped():
+		return
+	var time_left := player_timer.time_left
+	if time_left > warning_time:
+		return
+	var urgency := 1.0 - clampf(time_left / maxf(warning_time, 0.001), 0.0, 1.0)
+	_warning_phase += delta * lerpf(WARNING_HZ_START, WARNING_HZ_END, urgency)
+	var pulse := (1.0 - cos(_warning_phase * TAU)) * 0.5  # 0 (negro) .. 1 (rojo)
+	_panel_style.bg_color = _base_bg_color.lerp(warning_color, smoothstep(0.2, 0.8, pulse))
+
+func _update_bounce(delta: float) -> void:
+	if _is_player_holding_click():
+		return
+	var min_pos := _bounce_area.position - _footprint.position
+	var max_pos := (_bounce_area.end - _footprint.size - _footprint.position).max(min_pos)
+	var pos := global_position + _bounce_velocity * delta
+	if pos.x <= min_pos.x:
+		pos.x = min_pos.x
+		_bounce_velocity.x = absf(_bounce_velocity.x)
+	elif pos.x >= max_pos.x:
+		pos.x = max_pos.x
+		_bounce_velocity.x = -absf(_bounce_velocity.x)
+	if pos.y <= min_pos.y:
+		pos.y = min_pos.y
+		_bounce_velocity.y = absf(_bounce_velocity.y)
+	elif pos.y >= max_pos.y:
+		pos.y = max_pos.y
+		_bounce_velocity.y = -absf(_bounce_velocity.y)
+	global_position = pos
+
+func _is_player_holding_click() -> bool:
+	if not Input.is_mouse_button_pressed(MOUSE_BUTTON_LEFT):
+		return false
+	var rect := Rect2(global_position + _footprint.position, _footprint.size)
+	return rect.has_point(get_global_mouse_position())
+
 func get_footprint() -> Rect2:
 	var rect := Rect2()
 	var first := true
@@ -107,8 +158,17 @@ func get_footprint() -> Rect2:
 			first = false
 	return rect
 
-## API para que una PuzzleCondition muestre su propia cuenta regresiva
-## (ej: Trampa mostrando "5", Pérdida de hackoins mostrando "10").
+func _fit_condition_icon() -> void:
+	if condition_icon.texture == null:
+		#push_warning("PuzzleWindow: la condición '%s' no tiene ícono." % ...)
+		condition_icon.visible = false
+		return
+	var texture_size: Vector2 = condition_icon.texture.get_size()
+	var longest_side: float = maxf(texture_size.x, texture_size.y)
+	if longest_side <= 0.0:
+		return
+	condition_icon.scale = Vector2.ONE * minf(1.0, condition_icon_size / longest_side)
+
 func set_condition_time_text(text: String) -> void:
 	condition_time_label.visible = true
 	condition_time_label.text = text
@@ -117,7 +177,6 @@ func hide_condition_time() -> void:
 	condition_time_label.visible = false
 
 func _on_player_timer_timeout() -> void:
-	# El jugador no resolvió a tiempo: cuenta como fallo.
 	_on_minigame_failed()
 
 func _on_minigame_solved() -> void:
@@ -142,8 +201,6 @@ func _on_minigame_interacted() -> void:
 	if condition:
 		condition.on_interaction(self)
 
-# Más rápido lo resuelve el jugador (relativo al tiempo límite de esta
-# ventana), más hackoins se lleva.
 func _calculate_reward(elapsed_seconds: float) -> int:
 	var speed_bonus: float = clamp(1.0 - (elapsed_seconds / player_timer.wait_time), 0.0, 1.0)
 	return int(base_hackoin_reward * (1.0 + speed_bonus))
@@ -153,10 +210,6 @@ func _close() -> void:
 	closed.emit(self)
 	queue_free()
 
-# Si la ventana se destruye por afuera (level_1.gd usa queue_free() directo
-# al ganar la fase o agotarse el tiempo, o se cambia de escena con la
-# ventana abierta), _close() nunca corre. Sin esto, el bloqueo de teclado
-# o el acelerador quedaban pegados en GameManager para siempre.
 func _exit_tree() -> void:
 	_release_condition()
 

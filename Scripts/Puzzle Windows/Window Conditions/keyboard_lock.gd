@@ -1,23 +1,19 @@
 class_name KeyboardLock
 extends PuzzleCondition
 
-@export var blockable_keys: Array[int] = [
-	KEY_A, KEY_E, KEY_I, KEY_O, KEY_S, KEY_T, KEY_R, KEY_N, KEY_C, KEY_ENTER
-]
-
-# Cada ventana recibe su propia copia de esta condición (ver
-# PuzzleWindow.setup), así que este estado no se mezcla entre ventanas.
-var _blocked_key: int = KEY_NONE
+var _was_locked_by_me: bool = false
 
 func _on_apply(window: PuzzleWindow) -> void:
-	if blockable_keys.is_empty():
-		return
-	_blocked_key = blockable_keys.pick_random()
-	GameManager.block_key(_blocked_key)
-	window.set_condition_time_text(OS.get_keycode_string(_blocked_key))
+	# Si ya estaba bloqueado por otra ventana, no hacemos nada raro:
+	# igual marcamos que nosotros lo activamos para no desbloquear lo ajeno.
+	if GameManager.is_keyboard_locked():
+		_was_locked_by_me = false
+	else:
+		GameManager.lock_keyboard()
+		_was_locked_by_me = true
+	window.set_condition_time_text("TECLADO BLOQUEADO")
 
 func _on_remove(_window: PuzzleWindow) -> void:
-	if _blocked_key == KEY_NONE:
-		return
-	GameManager.unblock_key(_blocked_key)
-	_blocked_key = KEY_NONE
+	if _was_locked_by_me:
+		GameManager.unlock_keyboard()
+		_was_locked_by_me = false
