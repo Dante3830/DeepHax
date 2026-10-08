@@ -24,9 +24,20 @@ var condition: PuzzleCondition = null
 
 var _resolved: bool = false
 
+# true mientras la condición está aplicada. Evita llamar a remove() dos
+# veces (una desde _close() y otra desde _exit_tree()) o llamarlo sin
+# haber hecho apply() antes.
+var _condition_applied: bool = false
+
 func _ready() -> void:
 	condition_icon.visible = false
 	condition_time_label.visible = false
+
+	# El PlayerTimer de la escena tiene autostart: se disparaba solo antes
+	# de que setup() le pusiera el límite real. Lo frenamos acá y lo
+	# arranca setup() cuando la ventana termina de emerger.
+	player_timer.stop()
+	player_timer.one_shot = true
 
 	# Ocultar la ventana hasta que setup() la haga emerger. Si tu Control
 	# raíz no queda centrado al escalar, ajustá pivot_offset a mano en el
@@ -47,13 +58,24 @@ func setup(minigame_scene: PackedScene, condition_resource: PuzzleCondition = nu
 	minigame.failed.connect(_on_minigame_failed)
 	minigame.interacted.connect(_on_minigame_interacted)
 
+	# Sin condición, el recuadro del ícono queda oculto.
+	condition_panel.visible = condition_resource != null
 	if condition_resource:
-		condition = condition_resource
+		# duplicate(): los .tres precargados son UN solo recurso compartido
+		# por todas las ventanas. Con una copia por ventana, el estado de la
+		# condición (ej: qué tecla bloqueó) vive y muere con esta ventana.
+		condition = condition_resource.duplicate()
 		condition_icon.visible = true
 		condition_icon.texture = condition.icon
-		condition.apply(self)
 
 	await _emerge()
+
+	# El efecto arranca recién cuando la ventana terminó de emerger (igual
+	# que el cronómetro), para no penalizar mientras el jugador todavía no
+	# llegó a verla.
+	if condition:
+		condition.apply(self)
+		_condition_applied = true
 
 	player_timer.wait_time = time_limit
 	player_timer.start()
@@ -70,6 +92,20 @@ func _emerge() -> void:
 		.set_trans(Tween.TRANS_BACK).set_ease(Tween.EASE_OUT)
 	tween.tween_property(self, "modulate:a", 1.0, emerge_duration)
 	await tween.finished
+
+## Rectángulo (en coordenadas locales de la ventana) que ocupa en pantalla:
+## la unión de todos sus hijos Control. El nodo raíz mide 0x0, así que el
+## spawner usa esto para saber qué tan grande es la ventana de verdad y
+## poder mantenerla entera dentro del RandomArea.
+func get_footprint() -> Rect2:
+	var rect := Rect2()
+	var first := true
+	for child in get_children():
+		if child is Control:
+			var child_rect := Rect2(child.position, child.size)
+			rect = child_rect if first else rect.merge(child_rect)
+			first = false
+	return rect
 
 ## API para que una PuzzleCondition muestre su propia cuenta regresiva
 ## (ej: Trampa mostrando "5", Pérdida de hackoins mostrando "10").
@@ -113,7 +149,18 @@ func _calculate_reward(elapsed_seconds: float) -> int:
 	return int(base_hackoin_reward * (1.0 + speed_bonus))
 
 func _close() -> void:
-	if condition:
-		condition.remove(self)
+	_release_condition()
 	closed.emit(self)
 	queue_free()
+
+# Si la ventana se destruye por afuera (level_1.gd usa queue_free() directo
+# al ganar la fase o agotarse el tiempo, o se cambia de escena con la
+# ventana abierta), _close() nunca corre. Sin esto, el bloqueo de teclado
+# o el acelerador quedaban pegados en GameManager para siempre.
+func _exit_tree() -> void:
+	_release_condition()
+
+func _release_condition() -> void:
+	if condition and _condition_applied:
+		_condition_applied = false
+		condition.remove(self)

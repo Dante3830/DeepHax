@@ -1,12 +1,23 @@
 class_name KeyboardLock
 extends PuzzleCondition
 
-## Condición "Bloqueo de teclado": mientras la ventana está abierta, el
-## TextEditor del nivel ignora CUALQUIER tecla (ver GameManager.is_key_blocked(),
-## usado en level_1.gd antes de procesar Tab, Enter o cualquier otra tecla).
+@export var blockable_keys: Array[int] = [
+	KEY_A, KEY_E, KEY_I, KEY_O, KEY_S, KEY_T, KEY_R, KEY_N, KEY_C, KEY_ENTER
+]
 
-func _on_apply(_window: PuzzleWindow) -> void:
-	GameManager.block_keyboard()
+# Cada ventana recibe su propia copia de esta condición (ver
+# PuzzleWindow.setup), así que este estado no se mezcla entre ventanas.
+var _blocked_key: int = KEY_NONE
+
+func _on_apply(window: PuzzleWindow) -> void:
+	if blockable_keys.is_empty():
+		return
+	_blocked_key = blockable_keys.pick_random()
+	GameManager.block_key(_blocked_key)
+	window.set_condition_time_text(OS.get_keycode_string(_blocked_key))
 
 func _on_remove(_window: PuzzleWindow) -> void:
-	GameManager.unblock_keyboard()
+	if _blocked_key == KEY_NONE:
+		return
+	GameManager.unblock_key(_blocked_key)
+	_blocked_key = KEY_NONE

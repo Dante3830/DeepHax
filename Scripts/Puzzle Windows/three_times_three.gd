@@ -53,7 +53,7 @@ func _show_target_pattern() -> void:
 	for i in target_panels.size():
 		target_panels[i].self_modulate = lit_color if _target_pattern[i] else Color.WHITE
 
-func _on_button_toggled(_pressed: bool, index: int) -> void:
+func _on_button_toggled(_pressed: bool, _index: int) -> void:
 	if _finished:
 		return
 	

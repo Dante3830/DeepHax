@@ -7,7 +7,9 @@
 [ext_resource type="FontFile" uid="uid://djx8toqe17ynx" path="res://Assets/Fonts/Michroma-Regular.ttf" id="8_o5ofx"]
 [ext_resource type="Texture2D" uid="uid://dptce3hmit3di" path="res://Assets/Kenney Game Icons/checkmark.png" id="9_34y5i"]
 [ext_resource type="Script" uid="uid://ba44a2me1f0pu" path="res://Scripts/camera.gd" id="9_hs11j"]
+[ext_resource type="PackedScene" uid="uid://cpp583uv45ray" path="res://Scenes/Puzzle-Windows/BaseVentanaPuzzle.tscn" id="9_nlqrh"]
 [ext_resource type="PackedScene" uid="uid://bsnqwtrg5ipng" path="res://Scenes/LooseScreen.tscn" id="9_o5ofx"]
+[ext_resource type="PackedScene" uid="uid://byvl8ug5mi4wy" path="res://Scenes/SceneManage.tscn" id="10_o5ofx"]
 
 [sub_resource type="StyleBoxFlat" id="StyleBoxFlat_vnunq"]
 bg_color = Color(0, 0, 0, 1)
@@ -27,6 +29,14 @@ border_width_top = 3
 border_width_right = 3
 border_width_bottom = 3
 border_color = Color(0.8666667, 0.29411766, 0, 1)
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_o5ofx"]
+bg_color = Color(0, 0, 0, 1)
+border_width_left = 15
+border_width_top = 15
+border_width_right = 15
+border_width_bottom = 15
+border_color = Color(0, 1, 0, 1)
 
 [sub_resource type="StyleBoxFlat" id="StyleBoxFlat_nh7xm"]
 bg_color = Color(0, 0, 0, 1)
@@ -297,6 +307,33 @@ theme_override_fonts/font = ExtResource("8_o5ofx")
 theme_override_font_sizes/font_size = 44
 text = "RECIBIDOR"
 
+[node name="Victoria" type="Panel" parent="." unique_id=1410935841]
+visible = false
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -504.0
+offset_top = -76.0
+offset_right = 560.0
+offset_bottom = 92.0
+grow_horizontal = 2
+grow_vertical = 2
+theme_override_styles/panel = SubResource("StyleBoxFlat_o5ofx")
+
+[node name="Label" type="Label" parent="Victoria" unique_id=1003166431]
+layout_mode = 0
+offset_left = -35.0
+offset_top = 18.0
+offset_right = 1077.0
+offset_bottom = 160.0
+theme_override_colors/font_color = Color(0, 1, 0, 1)
+theme_override_fonts/font = ExtResource("2_87l2y")
+theme_override_font_sizes/font_size = 99
+text = "¡FASE COMPLETADA!"
+horizontal_alignment = 1
+
 [node name="Lights" type="Control" parent="." unique_id=1697260995]
 texture_filter = 1
 layout_mode = 3
@@ -382,16 +419,6 @@ theme_override_fonts/font = ExtResource("8_o5ofx")
 theme_override_font_sizes/font_size = 40
 text = "INSERTOR"
 
-[node name="Victoria" type="Label" parent="." unique_id=356645498]
-visible = false
-offset_left = 473.0
-offset_top = 83.0
-offset_right = 1165.0
-offset_bottom = 134.0
-theme_override_colors/font_color = Color(1, 1, 1, 1)
-theme_override_font_sizes/font_size = 37
-text = "Victoria :D"
-
 [node name="RandomArea" type="Area2D" parent="." unique_id=202580248]
 position = Vector2(376, 224)
 
@@ -457,7 +484,7 @@ theme_override_colors/font_outline_color = Color(1, 1, 1, 1)
 theme_override_constants/outline_size = 9
 theme_override_fonts/font = ExtResource("8_o5ofx")
 theme_override_font_sizes/font_size = 70
-text = "x1"
+text = "x0"
 
 [node name="AnimationPlayer" type="AnimationPlayer" parent="." unique_id=1090498134]
 libraries/ = SubResource("AnimationLibrary_nh7xm")
@@ -469,5 +496,10 @@ script = ExtResource("9_hs11j")
 
 [node name="LooseScreen" parent="." unique_id=1964894798 instance=ExtResource("9_o5ofx")]
 visible = false
+
+[node name="TestPuzzleWindow" parent="." unique_id=1270405932 instance=ExtResource("9_nlqrh")]
+visible = false
+
+[node name="SceneManage" parent="." unique_id=1453041143 instance=ExtResource("10_o5ofx")]
 
 [connection signal="timeout" from="Time" to="." method="_on_time_timeout"]

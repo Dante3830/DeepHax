@@ -1,0 +1,47 @@
+[gd_scene format=3 uid="uid://b3oahf4kgtch0"]
+
+[ext_resource type="FontFile" uid="uid://dkt6qdxklh4j6" path="res://Assets/Fonts/IBM_Plex_Mono/IBMPlexMono-Bold.ttf" id="1_fmy8h"]
+
+[node name="Control" type="Control" unique_id=511657394]
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="Label" type="Label" parent="." unique_id=444493887]
+layout_mode = 0
+offset_left = 203.0
+offset_top = 137.0
+offset_right = 1456.0
+offset_bottom = 368.0
+theme_override_colors/font_color = Color(0, 1, 0, 1)
+theme_override_fonts/font = ExtResource("1_fmy8h")
+theme_override_font_sizes/font_size = 87
+text = "MUCHAS GRACIAS
+POR JUGAR ESTE PROTOTIPO :D"
+
+[node name="Label2" type="Label" parent="." unique_id=268094008]
+layout_mode = 0
+offset_left = 209.0
+offset_top = 405.0
+offset_right = 1462.0
+offset_bottom = 681.0
+theme_override_colors/font_color = Color(0, 1, 0, 1)
+theme_override_fonts/font = ExtResource("1_fmy8h")
+theme_override_font_sizes/font_size = 69
+text = "AHORA ANDÁ A LLENAR
+EL FORMULARIO, ME VA A SERVIR
+DE MUCHA AYUDA ;)"
+
+[node name="Label3" type="Label" parent="." unique_id=1357448912]
+layout_mode = 0
+offset_left = 211.0
+offset_top = 838.0
+offset_right = 1464.0
+offset_bottom = 1114.0
+theme_override_colors/font_color = Color(0, 1, 0, 1)
+theme_override_fonts/font = ExtResource("1_fmy8h")
+theme_override_font_sizes/font_size = 69
+text = "PRESIONÁ F8 PARA SALIR"

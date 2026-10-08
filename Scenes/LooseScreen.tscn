@@ -1,7 +1,7 @@
 [gd_scene format=3 uid="uid://bsnqwtrg5ipng"]
 
 [ext_resource type="FontFile" uid="uid://djx8toqe17ynx" path="res://Assets/Fonts/Michroma-Regular.ttf" id="1_ktst8"]
-[ext_resource type="Script" uid="uid://d3nuumctpxwet" path="res://Scenes/loose_screen.gd" id="1_loy5t"]
+[ext_resource type="Script" uid="uid://d3nuumctpxwet" path="res://Scripts/loose_screen.gd" id="1_loy5t"]
 [ext_resource type="FontFile" uid="uid://2afyco5rkpvl" path="res://Assets/Fonts/Anta-Regular.ttf" id="2_imhnd"]
 [ext_resource type="FontFile" uid="uid://dkt6qdxklh4j6" path="res://Assets/Fonts/IBM_Plex_Mono/IBMPlexMono-Bold.ttf" id="2_subpc"]
 
@@ -88,9 +88,9 @@ horizontal_alignment = 1
 
 [node name="RestartButton" type="Button" parent="." unique_id=872204543]
 layout_mode = 0
-offset_left = 48.0
+offset_left = 120.0
 offset_top = 248.0
-offset_right = 232.0
+offset_right = 304.0
 offset_bottom = 288.0
 theme_override_colors/font_color = Color(1, 0, 0, 1)
 theme_override_colors/font_focus_color = Color(0.95, 0.95, 0.95, 1)
@@ -106,9 +106,9 @@ text = " REINCIAR"
 
 [node name="MenuButton" type="Button" parent="." unique_id=1523239842]
 layout_mode = 0
-offset_left = 288.0
+offset_left = 344.0
 offset_top = 248.0
-offset_right = 528.0
+offset_right = 464.0
 offset_bottom = 288.0
 theme_override_colors/font_color = Color(1, 0, 0, 1)
 theme_override_colors/font_focus_color = Color(0.95, 0.95, 0.95, 1)
@@ -120,7 +120,7 @@ theme_override_styles/pressed = SubResource("StyleBoxFlat_qkjm6")
 theme_override_styles/hover = SubResource("StyleBoxFlat_loy5t")
 theme_override_styles/disabled = SubResource("StyleBoxEmpty_elpn7")
 theme_override_styles/focus = SubResource("StyleBoxEmpty_udv0s")
-text = " VOLVER AL MENÚ "
+text = " SALIR "
 
 [connection signal="pressed" from="RestartButton" to="." method="_on_restart_button_pressed"]
 [connection signal="pressed" from="MenuButton" to="." method="_on_menu_button_pressed"]

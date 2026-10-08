@@ -1,22 +1,8 @@
 [gd_scene format=3 uid="uid://cpp583uv45ray"]
 
 [ext_resource type="Script" uid="uid://c1ufu0upfxucp" path="res://Scripts/Puzzle Windows/puzzle_window.gd" id="1_lu45j"]
-[ext_resource type="Script" uid="uid://csatc8uxh0vn2" path="res://Scripts/Puzzle Windows/puzzle_condition.gd" id="2_37uox"]
-[ext_resource type="Texture2D" uid="uid://pe5lygnjtaj2" path="res://Assets/Kenney Game Icons/fastForward.png" id="3_xfi5e"]
-[ext_resource type="Texture2D" uid="uid://bggri235l2ulr" path="res://Assets/Kenney Game Icons/locked.png" id="4_7ux62"]
-[ext_resource type="Texture2D" uid="uid://byxixjomnx0qt" path="res://Assets/Kenney Game Icons/contrast.png" id="4_t77sw"]
-[ext_resource type="Texture2D" uid="uid://cj3lubyehwrto" path="res://Assets/Kenney Game Icons/warning.png" id="5_t77sw"]
-[ext_resource type="Texture2D" uid="uid://dhovpgd7t042s" path="res://Assets/Kenney Game Icons/information.png" id="6_dh5uh"]
 
 [sub_resource type="StyleBoxFlat" id="StyleBoxFlat_lu45j"]
-bg_color = Color(0, 0, 0, 1)
-border_width_left = 2
-border_width_top = 2
-border_width_right = 2
-border_width_bottom = 2
-border_color = Color(0, 1, 0, 1)
-
-[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_yklot"]
 bg_color = Color(0, 0, 0, 1)
 border_width_left = 2
 border_width_top = 2
@@ -32,9 +18,7 @@ offset_top = -128.0
 offset_right = -128.0
 offset_bottom = -128.0
 script = ExtResource("1_lu45j")
-fail_time_penalty = null
 base_hackoin_reward = 8
-emerge_duration = null
 
 [node name="PlayerTimer" type="Timer" parent="." unique_id=1960595137]
 wait_time = 10.0
@@ -46,54 +30,18 @@ offset_right = 256.0
 offset_bottom = 256.0
 theme_override_styles/panel = SubResource("StyleBoxFlat_lu45j")
 
-[node name="Accelerator" type="Panel" parent="." unique_id=498017753]
+[node name="ConditionPanel" type="Panel" parent="." unique_id=342292111]
 layout_mode = 0
 offset_right = 32.0
 offset_bottom = 32.0
-theme_override_styles/panel = SubResource("StyleBoxFlat_yklot")
-script = ExtResource("2_37uox")
-icon = ExtResource("3_xfi5e")
-condition_name = "Accelerator"
+theme_override_styles/panel = SubResource("StyleBoxFlat_lu45j")
 
-[node name="HackoinsLoose" type="Panel" parent="." unique_id=213329021]
-visible = false
-layout_mode = 0
-offset_right = 32.0
-offset_bottom = 32.0
-theme_override_styles/panel = SubResource("StyleBoxFlat_yklot")
-script = ExtResource("2_37uox")
-icon = ExtResource("4_t77sw")
-condition_name = "HackoinsLoose"
+[node name="Condition" type="Sprite2D" parent="ConditionPanel" unique_id=1497261455]
 
-[node name="KeyboardLock" type="Panel" parent="." unique_id=523735524]
-visible = false
+[node name="Time" type="Label" parent="ConditionPanel" unique_id=414223357]
 layout_mode = 0
-offset_right = 32.0
-offset_bottom = 32.0
-theme_override_styles/panel = SubResource("StyleBoxFlat_yklot")
-script = ExtResource("2_37uox")
-icon = ExtResource("4_7ux62")
-condition_name = "KeyboardLock"
-
-[node name="TrapWindow" type="Panel" parent="." unique_id=815144062]
-visible = false
-layout_mode = 0
-offset_right = 32.0
-offset_bottom = 32.0
-theme_override_styles/panel = SubResource("StyleBoxFlat_yklot")
-script = ExtResource("2_37uox")
-icon = ExtResource("5_t77sw")
-condition_name = "TrapWindow"
-
-[node name="VisualDisorder" type="Panel" parent="." unique_id=1531021779]
-visible = false
-layout_mode = 0
-offset_right = 32.0
-offset_bottom = 32.0
-theme_override_styles/panel = SubResource("StyleBoxFlat_yklot")
-script = ExtResource("2_37uox")
-icon = ExtResource("6_dh5uh")
-condition_name = "VisualDisorder"
+offset_right = 40.0
+offset_bottom = 23.0
 
 [node name="ContentContainer" type="Control" parent="." unique_id=400895573]
 unique_name_in_owner = true

@@ -1,0 +1,10 @@
+[gd_resource type="Resource" script_class="Accelerator" format=3 uid="uid://cb247682j17v"]
+
+[ext_resource type="Script" uid="uid://c48lwmcrylb0i" path="res://Scripts/Puzzle Windows/Window Conditions/accelerator.gd" id="1_adju3"]
+[ext_resource type="Texture2D" uid="uid://pe5lygnjtaj2" path="res://Assets/Kenney Game Icons/fastForward.png" id="1_t5ug5"]
+
+[resource]
+script = ExtResource("1_adju3")
+icon = ExtResource("1_t5ug5")
+condition_name = "Accelerator"
+metadata/_custom_type_script = "uid://c48lwmcrylb0i"

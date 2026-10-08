@@ -19,42 +19,32 @@ extends Node
 @onready var animation_player = $AnimationPlayer
 @onready var camera = $Camera2D
 
-# Ventana-puzzle colocada a mano en el editor, usada solo como referencia
-# de posición: se clona su transform (ver _window_spawn_transform) para
-# cada ventana nueva que genere el spawner, y se destruye apenas arranca
-# el nivel (no se usa directamente como ventana real).
-@onready var window_spawn_point: PuzzleWindow = $TestPuzzleWindow
+# Zona rectangular donde pueden aparecer las ventanas-puzzle: el
+# CollisionShape2D del RandomArea (tiene que ser un RectangleShape2D).
+@onready var random_area_shape: CollisionShape2D = $RandomArea/CollisionShape2D
 
-# Escena de la ventana-puzzle en sí, para poder instanciar una nueva
-# copia cada vez que la anterior se cierre sola.
+# Escena de la ventana-puzzle
 const PUZZLE_WINDOW_SCENE: PackedScene = preload("res://Scenes/Puzzle-Windows/BaseVentanaPuzzle.tscn")
 
-# Ajustá esta ruta a donde hayas guardado la escena de Mantener Pulsado.
+# Microjuegos
 const MANTENER_PULSADO_SCENE: PackedScene = preload("res://Scenes/Puzzle-Windows/KeepPressed.tscn")
-
-# Ajustá esta ruta a donde hayas guardado la escena de Simón Dice.
 const SIMON_DICE_SCENE: PackedScene = preload("res://Scenes/Puzzle-Windows/SimonSays.tscn")
-
-# Estas 3 son de Fase 2 y 3 según el GDD, todavía no entran en el pool de
-# la Fase 1 (phase1_minigames, más abajo). Las dejo precargadas para
-# cuando armemos esas fases.
 const IGUALAR_CUADROS_SCENE: PackedScene = preload("res://Scenes/Puzzle-Windows/ThreeTimesThree.tscn")
 const AJUSTAR_RELOJ_SCENE: PackedScene = preload("res://Scenes/Puzzle-Windows/ClockAdjust.tscn")
 const CONEXION_CABLES_SCENE: PackedScene = preload("res://Scenes/Puzzle-Windows/CablesConnect.tscn")
 
-# Creá estos dos recursos en el editor si todavía no existen (click derecho
-# en la carpeta → Nuevo recurso → Acelerador / BloqueoDeTeclado) y ajustá
-# la ruta si los guardaste en otro lado.
-const ACELERADOR_CONDITION: PuzzleCondition = preload("res://Resources/Conditions/Acelerador.tres")
-const BLOQUEO_TECLADO_CONDITION: PuzzleCondition = preload("res://Resources/Conditions/BloqueoDeTeclado.tres")
+# Condicionadores
+const ACELERADOR_CONDITION: PuzzleCondition = preload("res://Scenes/Window Conditions/Accelerator.tres")
+const BLOQUEO_TECLADO_CONDITION: PuzzleCondition = preload("res://Scenes/Window Conditions/KeyboardLock.tres")
 
 # Pool de la Fase 1, según la tabla "Frecuencia de aparición de las
 # ventanas-puzzle" del GDD: Simón Dice, Laberinto, Mantener pulsado,
-# Pulsar repetidamente. Todavía no armamos Laberinto ni Pulsar
-# repetidamente - sumalos acá apenas los programemos.
 var phase1_minigames: Array[Dictionary] = [
 	{ "scene": SIMON_DICE_SCENE, "time_limit": 12.0 },
 	{ "scene": MANTENER_PULSADO_SCENE, "time_limit": 10.0 },
+	{ "scene": IGUALAR_CUADROS_SCENE, "time_limit": 10.0 },
+	{ "scene": AJUSTAR_RELOJ_SCENE, "time_limit": 15.0 },
+	{ "scene": CONEXION_CABLES_SCENE, "time_limit": 10.0 }
 ]
 
 # Condiciones de la Fase 1 (según la misma tabla): Bloqueo de teclado y
@@ -65,12 +55,12 @@ var phase1_conditions: Array[PuzzleCondition] = [null, BLOQUEO_TECLADO_CONDITION
 # Frecuencia de aparición de la Fase 1 según el GDD: 8-12 segundos. Por
 # ahora es el tiempo de espera desde que se cierra una ventana hasta que
 # aparece la siguiente, ya que solo dejamos una ventana abierta a la vez.
-const WINDOW_SPAWN_MIN: float = 8.0
-const WINDOW_SPAWN_MAX: float = 12.0
+const WINDOW_SPAWN_MIN: float = 5.0
+const WINDOW_SPAWN_MAX: float = 9.0
 
-# Anclas/offsets de la ventana puesta a mano en el editor, para clonar
-# su posición cada vez que el spawner genere una ventana nueva.
-var _window_spawn_transform: Array = []
+# Cuántos segundos se muestra la animación de victoria antes de pasar a
+# la escena ThankYou (la transición en sí dura aparte, ver SceneTransitioner).
+const VICTORY_SHOW_TIME: float = 3.0
 
 # Ventana-puzzle actualmente abierta, o null si no hay ninguna.
 var _current_puzzle_window: PuzzleWindow = null
@@ -109,6 +99,9 @@ var line_time_limit: float = 0.0
 func _ready():
 	$TimeBar/MinusFive.visible = false
 	randomize()
+	# Red de seguridad: GameManager es un autoload y su estado sobrevive
+	# a recargar la escena, así que arrancamos con las condiciones en cero.
+	GameManager.reset_conditions()
 	# Condición "Desorden visual": le da a GameManager la referencia al
 	# Label para poder aplicarle el shader de glitch mientras esté activa.
 	GameManager.receiver_label = receiver
@@ -122,17 +115,6 @@ func _ready():
 	# Conectar la señal gui_input del TextEdit para capturar Enter
 	text_editor.gui_input.connect(_on_text_editor_gui_input)
 	_load_current_line()
-	
-	# Guardamos la posición/tamaño de la ventana puesta en el editor para
-	# poder clonarla cada vez que el spawner genere una ventana nueva, y
-	# destruimos la de referencia (no es una ventana real).
-	_window_spawn_transform = [
-		window_spawn_point.anchor_left, window_spawn_point.anchor_top,
-		window_spawn_point.anchor_right, window_spawn_point.anchor_bottom,
-		window_spawn_point.offset_left, window_spawn_point.offset_top,
-		window_spawn_point.offset_right, window_spawn_point.offset_bottom,
-	]
-	window_spawn_point.queue_free()
 	_schedule_next_puzzle_window()
 
 # Espera un tiempo al azar (8-12s en Fase 1) y genera la siguiente
@@ -144,22 +126,15 @@ func _schedule_next_puzzle_window() -> void:
 	await get_tree().create_timer(delay).timeout
 	_spawn_puzzle_window()
 
-# Instancia una ventana-puzzle nueva en la posición de referencia, con un
-# microjuego y una condición al azar del pool de la Fase 1.
+# Instancia una ventana-puzzle nueva en un lugar al azar dentro del
+# RandomArea, con un microjuego y una condición al azar del pool de la Fase 1.
 func _spawn_puzzle_window() -> void:
 	if text_completed or time.time_left <= 0.0:
 		return
 
 	var window: PuzzleWindow = PUZZLE_WINDOW_SCENE.instantiate()
 	add_child(window)
-	window.anchor_left = _window_spawn_transform[0]
-	window.anchor_top = _window_spawn_transform[1]
-	window.anchor_right = _window_spawn_transform[2]
-	window.anchor_bottom = _window_spawn_transform[3]
-	window.offset_left = _window_spawn_transform[4]
-	window.offset_top = _window_spawn_transform[5]
-	window.offset_right = _window_spawn_transform[6]
-	window.offset_bottom = _window_spawn_transform[7]
+	window.global_position = _random_window_position(window)
 
 	var config: Dictionary = phase1_minigames.pick_random()
 	var condition: PuzzleCondition = _pick_phase1_condition()
@@ -170,6 +145,27 @@ func _spawn_puzzle_window() -> void:
 	window.setup(config.get("scene"), condition, config.get("time_limit", 10.0))
 
 	_current_puzzle_window = window
+
+# Rectángulo global del RandomArea. Se lee del CollisionShape2D cada vez,
+# así que si lo movés o lo escalás en el editor no hay que tocar código.
+# (Solo soporta RectangleShape2D, sin rotación.)
+func _get_random_area_rect() -> Rect2:
+	var shape := random_area_shape.shape as RectangleShape2D
+	if shape == null:
+		push_warning("El CollisionShape2D del RandomArea tiene que ser un RectangleShape2D.")
+		return get_viewport().get_visible_rect()
+	var size: Vector2 = shape.size * random_area_shape.global_scale.abs()
+	return Rect2(random_area_shape.global_position - size / 2.0, size)
+
+# Posición al azar para que la ventana ENTERA (no solo su esquina) quede
+# dentro del RandomArea. Si el área es más chica que la ventana, la pega
+# a la esquina superior izquierda del área.
+func _random_window_position(window: PuzzleWindow) -> Vector2:
+	var area: Rect2 = _get_random_area_rect()
+	var footprint: Rect2 = window.get_footprint()
+	var free_space: Vector2 = (area.size - footprint.size).max(Vector2.ZERO)
+	var top_left: Vector2 = area.position + Vector2(randf() * free_space.x, randf() * free_space.y)
+	return top_left - footprint.position
 
 # Elige una condición del pool de la Fase 1 que no esté ya activa en otra
 # ventana abierta (ver GameManager.is_condition_active). null (sin
@@ -196,7 +192,7 @@ func _close_active_puzzle_window() -> void:
 		_current_puzzle_window.queue_free()
 		_current_puzzle_window = null
 
-func _on_hackoins_changed(total: int, delta: int) -> void:
+func _on_hackoins_changed(total: int, _delta: int) -> void:
 	hackoins_text.text = "x" + str(total)
 	#if delta > 0:
 		#_show_hackoin_popup(delta)
@@ -209,6 +205,8 @@ func _on_puzzle_window_failed(_window: PuzzleWindow, time_penalty: float) -> voi
 # La ventana se cerró sola (resuelta o fallada): programamos la próxima.
 func _on_puzzle_window_closed(_window: PuzzleWindow) -> void:
 	_current_puzzle_window = null
+	# Si el microjuego usó Buttons, le robaron el foco al TextEdit.
+	text_editor.grab_focus()
 	_schedule_next_puzzle_window()
 
 func _set_light_on(light: Panel, on: bool) -> void:
@@ -231,13 +229,13 @@ func _load_current_line() -> void:
 	text_editor.text = ""
 
 func _on_text_editor_gui_input(event: InputEvent) -> void:
-	if event is InputEventKey and event.pressed and not event.is_echo():
-		# Condición "Bloqueo de teclado": si hay una tecla inhabilitada
-		# por alguna ventana-puzzle abierta, no dejarla pasar.
-		if GameManager.is_key_blocked(event.keycode):
-			text_editor.accept_event()
-			return
+	# Condición "Bloqueo de teclado": va ANTES del filtro de eco; si no,
+	# dejando apretada la tecla bloqueada se escribe igual.
+	if event is InputEventKey and event.pressed and GameManager.is_key_blocked(event.keycode):
+		text_editor.accept_event()
+		return
 
+	if event is InputEventKey and event.pressed and not event.is_echo():
 		# Bloquear Tab
 		if event.keycode == KEY_TAB:
 			text_editor.accept_event()
@@ -275,6 +273,7 @@ func _on_text_editor_gui_input(event: InputEvent) -> void:
 					print("¡Texto completado! Tiempo detenido.")
 					$Victoria.show()
 					animation_player.play("Victory")
+					victory()
 				else:
 					# Quedan líneas: cargar la siguiente y reiniciar el temporizador
 					_load_current_line()
@@ -313,7 +312,8 @@ func _process(delta: float) -> void:
 		var extra_time: float = delta * (GameManager.time_speed_multiplier - 1.0)
 		_apply_time_penalty(extra_time)
 	
-	GameManager.game_time += delta
+	if not text_completed:
+		GameManager.game_time += delta
 	
 	var minutes := int(GameManager.game_time) / 60
 	var seconds := int(GameManager.game_time) % 60
@@ -321,10 +321,13 @@ func _process(delta: float) -> void:
 	
 	game_time_text.text = "%02d:%02d.%02d" % [minutes, seconds, miliseconds]
 	
-	var seconds_left = int(ceil(time.time_left))
+	var seconds_left: int = 0
+	if not text_completed and time.time_left > 0.0:
+	# floor en vez de ceil: así no muestra "01" cuando queda menos de 1s
+		seconds_left = int(floor(time.time_left))
 	time_text.text = "%02d" % seconds_left
 	
-	if not text_completed and time.time_left > 0:
+	if not text_completed and time.time_left > 0.0:
 		time_bar.value = (time.time_left / line_time_limit) * 100
 	
 	var expected = receiver.text
@@ -357,4 +360,15 @@ func _process(delta: float) -> void:
 func _on_time_timeout() -> void:
 	_close_active_puzzle_window()
 	print("¡Tiempo agotado!")
+	text_completed = true
+	# Forzamos el display a 00 porque _process ya no actualiza (text_completed == true)
+	time_text.text = "00"
+	time_bar.value = 0.0
 	$LooseScreen.show()
+
+# Deja correr la animación de victoria VICTORY_SHOW_TIME segundos y recién
+# después hace la transición a la escena ThankYou. Es una corrutina: se la
+# llama sin await y el resto del código del nivel sigue sin bloquearse.
+func victory() -> void:
+	await get_tree().create_timer(VICTORY_SHOW_TIME).timeout
+	SceneManage.change_scene(self, "ThankYou")

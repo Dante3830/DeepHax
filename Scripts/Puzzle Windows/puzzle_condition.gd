@@ -1,17 +1,6 @@
 class_name PuzzleCondition
 extends Resource
 
-## Clase base para las condiciones de las ventanas-puzzle (Bloqueo de
-## teclado, Acelerador, Desorden visual, Pérdida de hackoins, Trampa).
-##
-## IMPORTANTE: las condiciones concretas NO sobreescriben apply()/remove()
-## directamente - sobreescriben _on_apply()/_on_remove(). La clase base usa
-## apply()/remove() para registrar automáticamente la condición como
-## "activa" en el GameManager mientras está aplicada, así quien elija
-## condiciones al azar para una ventana nueva puede chequear
-## GameManager.is_condition_active(nombre) y evitar poner la misma
-## condición en dos ventanas a la vez.
-
 @export var icon: Texture2D
 @export var condition_name: String = ""
 

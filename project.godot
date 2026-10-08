@@ -19,6 +19,7 @@ config/windows_native_icon="res://deephaxicon.ico"
 [autoload]
 
 GameManager="*uid://xs4u22jn2ol4"
+SceneManage="*uid://byvl8ug5mi4wy"
 
 [display]
 
