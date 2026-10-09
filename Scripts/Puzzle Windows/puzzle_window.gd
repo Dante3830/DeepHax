@@ -7,7 +7,7 @@ signal closed(window: PuzzleWindow)
 
 @export var fail_time_penalty: float = 5.0
 @export var base_hackoin_reward: int = 10
-@export var emerge_duration: float = 0.25
+@export var emerge_duration: float = 0.25  # cuánto tarda en aparecer la ventana
 
 @export var condition_icon_size: float = 28.0
 
@@ -99,8 +99,6 @@ func _emerge() -> void:
 func enable_bounce(area: Rect2, speed: float) -> void:
 	_bounce_enabled = true
 	_bounce_area = area
-	# Dirección en diagonal: los ángulos casi horizontales o verticales
-	# rebotan siempre entre las mismas dos paredes y se ven aburridos.
 	var angle := deg_to_rad(randf_range(25.0, 65.0)) + randi_range(0, 3) * (PI / 2.0)
 	_bounce_velocity = Vector2.from_angle(angle) * speed
 
@@ -160,14 +158,16 @@ func get_footprint() -> Rect2:
 
 func _fit_condition_icon() -> void:
 	if condition_icon.texture == null:
-		#push_warning("PuzzleWindow: la condición '%s' no tiene ícono." % ...)
-		condition_icon.visible = false
+		push_warning("PuzzleWindow: la condición '%s' no tiene ícono. Asignale una textura en su .tres (propiedad Icon)." % String(condition.get_script().get_global_name()))
 		return
 	var texture_size: Vector2 = condition_icon.texture.get_size()
 	var longest_side: float = maxf(texture_size.x, texture_size.y)
 	if longest_side <= 0.0:
 		return
-	condition_icon.scale = Vector2.ONE * minf(1.0, condition_icon_size / longest_side)
+	var limit: float = condition_icon_size
+	if condition_panel.size.x > 0.0 and condition_panel.size.y > 0.0:
+		limit = minf(limit, minf(condition_panel.size.x, condition_panel.size.y))
+	condition_icon.scale = Vector2.ONE * minf(1.0, limit / longest_side)
 
 func set_condition_time_text(text: String) -> void:
 	condition_time_label.visible = true
