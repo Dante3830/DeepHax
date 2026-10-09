@@ -1,12 +1,6 @@
 class_name ThreeTimesThree
 extends PuzzleMinigame
 
-# Microjuego "ThreeTimesThree": arriba se muestra un patrón al azar de
-# celdas "prendidas" (Panel1-9), y el jugador tiene que tocar los botones
-# (Button1-9) hasta que su grilla combine exactamente con el patrón. No hay
-# fallo por error individual: puede corregir tantas veces como quiera hasta
-# que se acabe el tiempo de la ventana (PlayerTimer, en la base).
-
 @export_range(1, 9) var min_lit_cells: int = 3
 @export_range(1, 9) var max_lit_cells: int = 5
 @export var lit_color: Color = Color(0.2, 0.4, 1.0)
@@ -31,7 +25,6 @@ func _ready() -> void:
 	_generate_target_pattern()
 	_show_target_pattern()
 	
-	# Estado inicial aleatorio: todos encendidos o todos apagados
 	var start_all_pressed: bool = randf() < 0.5
 	for i in buttons.size():
 		buttons[i].button_pressed = start_all_pressed

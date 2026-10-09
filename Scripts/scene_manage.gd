@@ -2,10 +2,6 @@ extends CanvasLayer
 
 @onready var animation: AnimationPlayer = %Animation
 
-func _enter_tree() -> void:
-	var a := get_node_or_null("Animation")
-	print("DIAG cargado desde: '", scene_file_path, "' | hijos: ", get_children(), " | Animation con nombre unico: ", a.unique_name_in_owner if a else "no existe")
-
 var last_scene_name : String
 
 var scene_dir_path = "res://Scenes/"

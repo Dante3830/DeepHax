@@ -32,10 +32,9 @@ func show_hackoins():
 	hackoins_text.text = str(GameManager.hackoins)
 
 func _set_light_on(light: Panel, on: bool) -> void:
-	# Cambia solo el bg_color del StyleBoxFlat del panel, manteniendo el borde intacto
 	var style = light.get_theme_stylebox("panel")
 	if style is StyleBoxFlat:
 		style.bg_color = Color(0.0, 1.0, 0.0, 1.0) if on else Color(0, 0, 0, 1)
 
 func _on_start_hacking_button_pressed() -> void:
-	pass # Replace with function body.
+	pass
