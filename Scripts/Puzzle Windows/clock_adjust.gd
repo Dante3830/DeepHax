@@ -1,4 +1,4 @@
-class_name AjustarReloj
+class_name ClockAdjust
 extends PuzzleMinigame
 
 @onready var panel: Panel = $Panel
@@ -11,9 +11,9 @@ extends PuzzleMinigame
 @onready var minutes_text: Label = $HH_MM_SS/MinutesText
 @onready var seconds_text: Label = $HH_MM_SS/SecondsText
 
-var _target_hour: int = 1    # 1-12
-var _target_minute: int = 0  # 0-59
-var _target_second: int = 0  # 0-59
+var _target_hour: int = 1
+var _target_minute: int = 0
+var _target_second: int = 0
 
 var _dragging_needle: Node2D = null
 var _first_input: bool = true
@@ -101,7 +101,7 @@ func _check_solved() -> void:
 	var hour_index := _angle_to_index(hour_needle.rotation, 12)
 	var minute_index := _angle_to_index(minute_needle.rotation, 60)
 	var second_index := _angle_to_index(second_needle.rotation, 60)
-	var target_hour_index: int = _target_hour % 12  # 12 -> índice 0
+	var target_hour_index: int = _target_hour % 12
 	
 	if hour_index == target_hour_index and minute_index == _target_minute and second_index == _target_second:
 		_finished = true

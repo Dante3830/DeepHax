@@ -1,4 +1,4 @@
-class_name ConexionCables
+class_name CablesConnect
 extends PuzzleMinigame
 
 @export var forced_variation_index: int = -1
@@ -28,7 +28,6 @@ func _ready() -> void:
 	panel.gui_input.connect(_on_panel_gui_input)
 	
 	print("[ConexionCables] variación activa: ", variation_index, " | pares armados: ", _pairs.size())
-
 
 func _build_pairs(variation: Control) -> Array[Dictionary]:
 	var left_panels: Array[Panel] = []
