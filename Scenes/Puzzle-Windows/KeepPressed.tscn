@@ -58,7 +58,6 @@ offset_right = 208.00002
 offset_bottom = 208.00002
 theme_override_styles/background = SubResource("StyleBoxFlat_vgns1")
 theme_override_styles/fill = SubResource("StyleBoxFlat_hwjv2")
-value = 61.81
 fill_mode = 3
 show_percentage = false
 
@@ -83,3 +82,6 @@ theme_override_constants/outline_size = 4
 text = "MANTENÉ
 PULSADO"
 horizontal_alignment = 1
+
+[connection signal="button_down" from="HoldButton" to="." method="_on_hold_button_button_down"]
+[connection signal="button_up" from="HoldButton" to="." method="_on_hold_button_button_up"]

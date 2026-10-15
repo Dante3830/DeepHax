@@ -5,5 +5,5 @@ signal solved
 signal failed
 signal interacted
 
-func start() -> void:
+func start():
 	pass

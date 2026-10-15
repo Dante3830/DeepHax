@@ -97,13 +97,10 @@ size = Vector2(38, 38)
 [node name="CablesConnect" type="Control" unique_id=1270405932]
 layout_mode = 3
 anchors_preset = 0
-offset_left = -128.0
-offset_top = -128.0
-offset_right = -128.0
-offset_bottom = -128.0
 script = ExtResource("1_wcpy4")
 
 [node name="Panel" type="Panel" parent="." unique_id=78538593]
+visible = false
 layout_mode = 0
 offset_right = 256.0
 offset_bottom = 256.0

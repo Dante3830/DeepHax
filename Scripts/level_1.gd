@@ -1,5 +1,7 @@
 extends Node
 
+@export var success_time_get = 20.0
+
 @onready var receiver = $Receiver/Label
 @onready var inserter = $Inserter
 @onready var time_bar = $TimeBar
@@ -20,17 +22,17 @@ extends Node
 @onready var camera = $Camera2D
 
 # Zona rectangular donde aparecen las ventanas-puzzle
-@onready var random_area: CollisionShape2D = $RandomArea/CollisionShape2D
+@onready var random_area = $RandomArea/CollisionShape2D
 
 # Escena base de la ventana-puzzle
-const PUZZLE_WINDOW_SCENE: PackedScene = preload("res://Scenes/Puzzle-Windows/BaseVentanaPuzzle.tscn")
+const PUZZLE_WINDOW_SCENE = preload("res://Scenes/Puzzle-Windows/BaseVentanaPuzzle.tscn")
 
 # Microjuegos
-const KEEP_PRESSED_SCENE: PackedScene = preload("res://Scenes/Puzzle-Windows/KeepPressed.tscn")
-const SIMON_SAYS_SCENE: PackedScene = preload("res://Scenes/Puzzle-Windows/SimonSays.tscn")
-const THREE_TIMES_THREE_SCENE: PackedScene = preload("res://Scenes/Puzzle-Windows/ThreeTimesThree.tscn")
-const CLOCK_ADJUST_SCENE: PackedScene = preload("res://Scenes/Puzzle-Windows/ClockAdjust.tscn")
-const CABLES_CONNECT_SCENE: PackedScene = preload("res://Scenes/Puzzle-Windows/CablesConnect.tscn")
+const KEEP_PRESSED_SCENE = preload("res://Scenes/Puzzle-Windows/KeepPressed.tscn")
+const SIMON_SAYS_SCENE = preload("res://Scenes/Puzzle-Windows/SimonSays.tscn")
+const THREE_TIMES_THREE_SCENE = preload("res://Scenes/Puzzle-Windows/ThreeTimesThree.tscn")
+const CLOCK_ADJUST_SCENE = preload("res://Scenes/Puzzle-Windows/ClockAdjust.tscn")
+const CABLES_CONNECT_SCENE = preload("res://Scenes/Puzzle-Windows/CablesConnect.tscn")
 
 # Condicionadores
 const ACCELERATOR_CONDITION: PuzzleCondition = preload("res://Scenes/Window Conditions/Accelerator.tres")
@@ -44,14 +46,14 @@ var phase1_minigames: Array[Dictionary] = [
 	{ "scene": CABLES_CONNECT_SCENE, "time_limit": 10.0 }
 ]
 
-var phase1_conditions: Array[PuzzleCondition] = [null, KEYBOARD_LOCK_CONDITION, ACCELERATOR_CONDITION]
+var phase1_conditions = [null, KEYBOARD_LOCK_CONDITION, ACCELERATOR_CONDITION]
 
-const WINDOW_SPAWN_MIN: float = 8.0
-const WINDOW_SPAWN_MAX: float = 12.0
+const WINDOW_SPAWN_MIN = 8.0
+const WINDOW_SPAWN_MAX = 12.0
 
-const MOVING_WINDOW_CHANCE: float = 0.35
-const MOVING_WINDOW_SPEED_MIN: float = 70.0
-const MOVING_WINDOW_SPEED_MAX: float = 110.0
+const MOVING_WINDOW_CHANCE = 0.35
+const MOVING_WINDOW_SPEED_MIN = 70.0
+const MOVING_WINDOW_SPEED_MAX = 110.0
 
 var _current_puzzle_window: PuzzleWindow = null
 
@@ -67,15 +69,15 @@ var lines_pool = [
 	"cell.myData = [settings objectAtIndex:indexPath.row]",
 	"setFilter(std::vector<std::string> const &actionResults) {",
 	"unsigned char ProtectMyAdress[<street>, <number>, <apartment>];",
-	"goConnection = [[NSURLConnection alloc] initWithRequest::request delegate:self]",
+	"goConnection = [[NSURLConnection alloc]",
 	"UI Image *curIMG = (UIImage *)[files objectsAtIndex::QHX]",
 	"[request setHTTPBody::postData, set account::protected]",
 	"void checkAction(string const &theAction, int const &theRequests);",
 	"#include “accountProtector.h” #define “virusDeleter.h”",
 	"public: std::ostream& operator<<(std::ostream& in, std::ostream& out);",
-	"Protector protector_shapes[]{prot1(12.5, 43.2), prot2(3.14159, 2.71828)}",
+	"Protector protector_shapes[]{prot1(12.5, 43.2), prot2(3.14, 2.71)}",
 	"virtual void draw() const { std::cout << “Access denied” << std::endl; }",
-	"private: double get_incognitus_location() const { return incognitus_lctn; }",
+	"private: double get_incognitus_location()",
 	"bool informations = (hackers_identities < hackers_locations)",
 	"auto info_a = expose(hacker_id, hacker_lctn, hacker_creditcard)"
 ]
@@ -90,7 +92,8 @@ var text_completed = false
 var line_time_limit: float
 
 func _ready():
-	$TimeBar/MinusFive.visible = false
+	$TimeBar/GetTime.visible = false
+	$TimeBar/LoseTime.visible = false
 	randomize()
 	time.one_shot = true
 	GameManager.reset_conditions()
@@ -105,6 +108,52 @@ func _ready():
 	inserter.gui_input.connect(_on_text_editor_gui_input)
 	_load_current_line()
 	_schedule_next_puzzle_window()
+
+func _process(delta: float) -> void:
+	if text_completed == false:
+		GameManager.game_time += delta
+	
+	if GameManager.time_speed > 1.0 and not text_completed and time.time_left > 0:
+		var extra_time: float = delta * (GameManager.time_speed - 1.0)
+		_apply_time_penalty(extra_time)
+	
+	var minutes = float(GameManager.game_time) / 60
+	var seconds = int(GameManager.game_time) % 60
+	var miliseconds = int((GameManager.game_time - int(GameManager.game_time)) * 100)
+	
+	game_time_text.text = "%02d:%02d.%02d" % [minutes, seconds, miliseconds]
+	
+	if not text_completed:
+		time_text.text = "%02d" % int(ceil(time.time_left))
+		if time.time_left > 0:
+			time_bar.value = (time.time_left / line_time_limit) * 100
+	
+	var expected = receiver.text
+	var current = inserter.text
+	
+	if current == "":
+		inserter.add_theme_color_override("font_color", Color(1.0, 1.0, 1.0))
+		return
+	
+	if current == expected:
+		inserter.add_theme_color_override("font_color", Color(0.0, 1.0, 0.0))
+		return
+	
+	var has_error = false
+	var min_length = min(current.length(), expected.length())
+	
+	for i in range(min_length):
+		if current[i] != expected[i]:
+			has_error = true
+			break
+	
+	if current.length() > expected.length():
+		has_error = true
+	
+	if has_error:
+		inserter.add_theme_color_override("font_color", Color(1.0, 0.0, 0.0))
+	else:
+		inserter.add_theme_color_override("font_color", Color(1.0, 1.0, 1.0))
 
 func _schedule_next_puzzle_window() -> void:
 	if text_completed or time.time_left <= 0.0:
@@ -172,7 +221,7 @@ func _on_hackoins_changed(total: int, _delta: int) -> void:
 
 func _on_puzzle_window_failed(_window: PuzzleWindow, time_penalty: float) -> void:
 	_apply_time_penalty(time_penalty)
-	animation_player.play("MinusFive")
+	animation_player.play("LoseTime")
 	camera.trigger_shake_both_exes()
 
 func _on_puzzle_window_closed(_window: PuzzleWindow) -> void:
@@ -197,8 +246,6 @@ func _load_current_line() -> void:
 	inserter.text = ""
 
 func _on_text_editor_gui_input(event: InputEvent) -> void:
-	# Condición "Bloqueo de teclado": va ANTES del filtro de eco; si no,
-	# dejando apretada la tecla bloqueada se escribe igual.
 	if event is InputEventKey and event.pressed and GameManager.is_key_blocked(event.keycode):
 		inserter.accept_event()
 		return
@@ -219,12 +266,16 @@ func _on_text_editor_gui_input(event: InputEvent) -> void:
 			var expected = receiver.text
 			var current = inserter.text
 			
-			# Si la línea coincide con el Receiber
+			# Si la línea coincide
 			if current == expected:
 				completed_lines += 1
 				current_line_index += 1
 				GameManager.lines_combo += 1
 				combo_text.text = "x" + str(GameManager.lines_combo)
+				var new_time = time.time_left + success_time_get
+				time.stop()
+				time.start(new_time)
+				animation_player.play("GetTime")
 				
 				# Encender el indicador correspondiente a esta línea completada
 				if completed_lines - 1 < lights.size():
@@ -241,18 +292,15 @@ func _on_text_editor_gui_input(event: InputEvent) -> void:
 					animation_player.play("Victory")
 					victory()
 				else:
-					# Quedan líneas: cargar la siguiente y reiniciar el temporizador
+					# Cargar la siguiente línea
 					_load_current_line()
-					time.stop()
-					time.start(line_time_limit)
-			# Si la línea NO coincide con el Receiber
+			# Si la línea no coincide con el Recibidor
 			else:
-				print("Línea incorrecta. Penalización: -5 segundos.")
 				_apply_time_penalty(5.0)
 				GameManager.lines_combo = 0
 				camera.trigger_shake()
 				combo_text.text = "x" + str(GameManager.lines_combo)
-				animation_player.play("MinusFive")
+				animation_player.play("LoseTime")
 
 func _apply_time_penalty(seconds: float) -> void:
 	if text_completed:
@@ -265,52 +313,6 @@ func _apply_time_penalty(seconds: float) -> void:
 		_on_time_timeout()
 	else:
 		time.start(remaining)
-
-func _process(delta: float) -> void:
-	if text_completed == false:
-		GameManager.game_time += delta
-	
-	if GameManager.time_speed_multiplier > 1.0 and not text_completed and time.time_left > 0:
-		var extra_time: float = delta * (GameManager.time_speed_multiplier - 1.0)
-		_apply_time_penalty(extra_time)
-	
-	var minutes := int(GameManager.game_time) / 60
-	var seconds := int(GameManager.game_time) % 60
-	var miliseconds := int((GameManager.game_time - int(GameManager.game_time)) * 100)
-	
-	game_time_text.text = "%02d:%02d.%02d" % [minutes, seconds, miliseconds]
-	
-	if not text_completed:
-		time_text.text = "%02d" % int(ceil(time.time_left))
-		if time.time_left > 0:
-			time_bar.value = (time.time_left / line_time_limit) * 100
-	
-	var expected = receiver.text
-	var current = inserter.text
-	
-	if current == "":
-		inserter.add_theme_color_override("font_color", Color(1.0, 1.0, 1.0))
-		return
-	
-	if current == expected:
-		inserter.add_theme_color_override("font_color", Color(0.0, 1.0, 0.0))
-		return
-	
-	var has_error = false
-	var min_length = min(current.length(), expected.length())
-	
-	for i in range(min_length):
-		if current[i] != expected[i]:
-			has_error = true
-			break
-	
-	if current.length() > expected.length():
-		has_error = true
-	
-	if has_error:
-		inserter.add_theme_color_override("font_color", Color(1.0, 0.0, 0.0))
-	else:
-		inserter.add_theme_color_override("font_color", Color(1.0, 1.0, 1.0))
 
 func _end_phase() -> void:
 	text_completed = true

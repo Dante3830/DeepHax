@@ -1,33 +1,36 @@
 class_name CablesConnect
 extends PuzzleMinigame
 
-@export var forced_variation_index: int = -1
+class CablePair:
+	var start: Panel
+	var end: Panel
+	var line: Line2D
+	var connected := false
 
-@onready var panel: Panel = $Panel
-@onready var variations: Array[Control] = [$Variation1, $Variation2, $Variation3]
+@onready var variations = [$Variation1, $Variation2, $Variation3]
 
 var _pairs: Array[Dictionary] = []
 
-var _active_variation: Control = null
-var _dragging_index: int = -1
-var _first_input: bool = true
-var _finished: bool = false
+var active_variation: Control = null
+var dragging_index = -1
+var first_input = true
+var finished = false
 
-func _ready() -> void:
+func _ready():
 	set_process(false)
 	
-	var variation_index: int = forced_variation_index
+	var variation_index = -1
 	if variation_index < 0 or variation_index >= variations.size():
 		variation_index = randi() % variations.size()
 	
-	_active_variation = variations[variation_index]
+	active_variation = variations[variation_index]
 	for variation in variations:
-		variation.visible = (variation == _active_variation)
+		variation.visible = (variation == active_variation)
 	
-	_pairs = _build_pairs(_active_variation)
-	panel.gui_input.connect(_on_panel_gui_input)
-	
-	print("[ConexionCables] variación activa: ", variation_index, " | pares armados: ", _pairs.size())
+	_pairs = _build_pairs(active_variation)
+
+func start():
+	set_process(true)
 
 func _build_pairs(variation: Control) -> Array[Dictionary]:
 	var left_panels: Array[Panel] = []
@@ -36,9 +39,6 @@ func _build_pairs(variation: Control) -> Array[Dictionary]:
 	
 	for child in variation.get_children():
 		if child is Panel:
-			# Por default un Panel tiene mouse_filter = Stop y se come el
-			# click él solo, sin dejarlo pasar a nuestro Panel de fondo.
-			child.mouse_filter = Control.MOUSE_FILTER_IGNORE
 			if child.name.begins_with("PointA"):
 				left_panels.append(child)
 			elif child.name.begins_with("PointB"):
@@ -122,42 +122,40 @@ func _area_radius(area: Area2D) -> float:
 		return (collision.shape as CircleShape2D).radius
 	return 10.0
 
-func _on_panel_gui_input(event: InputEvent) -> void:
-	if _finished or _dragging_index != -1:
+func _process(_delta: float):
+	if finished:
 		return
 	
-	if event is InputEventMouseButton and event.pressed and event.button_index == MOUSE_BUTTON_LEFT:
-		var index: int = _find_pair_at(event.position, true)
-		print("[ConexionCables] click en ", event.position, " -> par detectado: ", index)
-		if index != -1 and not _pairs[index]["connected"]:
-			_start_drag(index)
-
-func _start_drag(index: int) -> void:
-	_dragging_index = index
-	set_process(true)
-	print("[ConexionCables] empezando arrastre del par ", index)
+	var local_mouse: Vector2 = $Panel.get_local_mouse_position()
 	
-	if _first_input:
-		_first_input = false
-		interacted.emit()
-
-func _process(_delta: float) -> void:
-	if _dragging_index == -1:
-		set_process(false)
+	if dragging_index == -1:
+		if Input.is_action_just_pressed("Click"):
+			_try_start_drag(local_mouse)
 		return
 	
-	var pair: Dictionary = _pairs[_dragging_index]
+	var pair = _pairs[dragging_index]
 	var line: Line2D = pair["line"]
 	var anchor_pos: Vector2 = pair["left_area_pos"]
-	var local_mouse: Vector2 = panel.get_local_mouse_position()
-	
 	line.set_point_position(1, local_mouse - anchor_pos)
 	
-	if not Input.is_mouse_button_pressed(MOUSE_BUTTON_LEFT):
+	if not Input.is_action_pressed("Click"):
 		_end_drag(local_mouse)
 
-func _end_drag(release_pos: Vector2) -> void:
-	var pair: Dictionary = _pairs[_dragging_index]
+func _try_start_drag(local_mouse: Vector2):
+	var index: int = _find_pair_at(local_mouse, true)
+	if index != -1 and not _pairs[index]["connected"]:
+		_start_drag(index)
+
+func _start_drag(index: int):
+	dragging_index = index
+	print("[ConexionCables] empezando arrastre del par ", index)
+	
+	if first_input:
+		first_input = false
+		interacted.emit()
+
+func _end_drag(release_pos: Vector2):
+	var pair: Dictionary = _pairs[dragging_index]
 	var line: Line2D = pair["line"]
 	var anchor_pos: Vector2 = pair["left_area_pos"]
 	var target_hit: Vector2 = pair["right_hit_pos"]
@@ -171,8 +169,7 @@ func _end_drag(release_pos: Vector2) -> void:
 	else:
 		line.set_point_position(1, line_origin)
 	
-	_dragging_index = -1
-	set_process(false)
+	dragging_index = -1
 	
 	if dropped_on_target:
 		_check_solved()
@@ -185,9 +182,13 @@ func _find_pair_at(local_pos: Vector2, left_side: bool) -> int:
 			return i
 	return -1
 
-func _check_solved() -> void:
+func _check_solved():
 	for pair in _pairs:
 		if not pair["connected"]:
 			return
-	_finished = true
+	finished = true
+	set_process(false)
 	solved.emit()
+
+func _is_mouse_over(point: Panel) -> bool:
+	return Rect2(Vector2.ZERO, point.size).has_point(point.get_local_mouse_position())

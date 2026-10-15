@@ -1,3 +1,4 @@
+# Todavía NO es usado
 class_name VisualDisorder
 extends PuzzleCondition
 
@@ -10,7 +11,7 @@ func _on_apply(_window: PuzzleWindow) -> void:
 	var label: CanvasItem = GameManager.receiver_label
 	if label == null:
 		return
-
+	
 	var material := ShaderMaterial.new()
 	material.shader = GLITCH_SHADER
 	material.set_shader_parameter("intensity", intensity)

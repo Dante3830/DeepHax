@@ -10,6 +10,7 @@
 [ext_resource type="PackedScene" uid="uid://cpp583uv45ray" path="res://Scenes/Puzzle-Windows/BaseVentanaPuzzle.tscn" id="9_nlqrh"]
 [ext_resource type="PackedScene" uid="uid://bsnqwtrg5ipng" path="res://Scenes/LooseScreen.tscn" id="9_o5ofx"]
 [ext_resource type="PackedScene" uid="uid://byvl8ug5mi4wy" path="res://Scenes/SceneManage.tscn" id="10_o5ofx"]
+[ext_resource type="PackedScene" uid="uid://cp4ires0jxc61" path="res://Scenes/PauseMenu.tscn" id="11_34y5i"]
 
 [sub_resource type="StyleBoxFlat" id="StyleBoxFlat_vnunq"]
 bg_color = Color(0, 0, 0, 1)
@@ -89,36 +90,36 @@ border_color = Color(0.96862745, 0.87058824, 0, 1)
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_ybqp2"]
 size = Vector2(1089.25, 612.625)
 
-[sub_resource type="Animation" id="Animation_ducwx"]
-resource_name = "MinusFive"
+[sub_resource type="Animation" id="Animation_34y5i"]
+resource_name = "GetTime"
 tracks/0/type = "value"
 tracks/0/imported = false
 tracks/0/enabled = true
-tracks/0/path = NodePath("TimeBar/MinusFive:visible")
+tracks/0/path = NodePath("TimeBar/GetTime:position")
 tracks/0/interp = 1
 tracks/0/loop_wrap = true
 tracks/0/keys = {
-"times": PackedFloat32Array(0, 1),
+"times": PackedFloat32Array(0.0009999999, 1),
 "transitions": PackedFloat32Array(1, 1),
-"update": 1,
-"values": [true, false]
+"update": 0,
+"values": [Vector2(217, -93), Vector2(147, -93)]
 }
 tracks/1/type = "value"
 tracks/1/imported = false
 tracks/1/enabled = true
-tracks/1/path = NodePath("TimeBar/MinusFive:theme_override_colors/font_color")
+tracks/1/path = NodePath("TimeBar/GetTime:visible")
 tracks/1/interp = 1
 tracks/1/loop_wrap = true
 tracks/1/keys = {
 "times": PackedFloat32Array(0, 1),
 "transitions": PackedFloat32Array(1, 1),
-"update": 0,
-"values": [Color(0, 1, 0, 1), Color(0, 0, 0, 1)]
+"update": 1,
+"values": [true, false]
 }
 tracks/2/type = "value"
 tracks/2/imported = false
 tracks/2/enabled = true
-tracks/2/path = NodePath("TimeBar/MinusFive:theme_override_colors/font_outline_color")
+tracks/2/path = NodePath("TimeBar/GetTime:theme_override_colors/font_color")
 tracks/2/interp = 1
 tracks/2/loop_wrap = true
 tracks/2/keys = {
@@ -130,7 +131,58 @@ tracks/2/keys = {
 tracks/3/type = "value"
 tracks/3/imported = false
 tracks/3/enabled = true
-tracks/3/path = NodePath("TimeBar/MinusFive:position")
+tracks/3/path = NodePath("TimeBar/GetTime:theme_override_colors/font_outline_color")
+tracks/3/interp = 1
+tracks/3/loop_wrap = true
+tracks/3/keys = {
+"times": PackedFloat32Array(0, 1),
+"transitions": PackedFloat32Array(1, 1),
+"update": 0,
+"values": [Color(0, 1, 0, 1), Color(0, 0, 0, 1)]
+}
+
+[sub_resource type="Animation" id="Animation_ducwx"]
+resource_name = "LoseTime"
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("TimeBar/LoseTime:visible")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0, 1),
+"transitions": PackedFloat32Array(1, 1),
+"update": 1,
+"values": [true, false]
+}
+tracks/1/type = "value"
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/path = NodePath("TimeBar/LoseTime:theme_override_colors/font_color")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/keys = {
+"times": PackedFloat32Array(0, 1),
+"transitions": PackedFloat32Array(1, 1),
+"update": 0,
+"values": [Color(0, 1, 0, 1), Color(0, 0, 0, 1)]
+}
+tracks/2/type = "value"
+tracks/2/imported = false
+tracks/2/enabled = true
+tracks/2/path = NodePath("TimeBar/LoseTime:theme_override_colors/font_outline_color")
+tracks/2/interp = 1
+tracks/2/loop_wrap = true
+tracks/2/keys = {
+"times": PackedFloat32Array(0, 1),
+"transitions": PackedFloat32Array(1, 1),
+"update": 0,
+"values": [Color(0, 1, 0, 1), Color(0, 0, 0, 1)]
+}
+tracks/3/type = "value"
+tracks/3/imported = false
+tracks/3/enabled = true
+tracks/3/path = NodePath("TimeBar/LoseTime:position")
 tracks/3/interp = 1
 tracks/3/loop_wrap = true
 tracks/3/keys = {
@@ -157,7 +209,7 @@ tracks/0/keys = {
 tracks/1/type = "value"
 tracks/1/imported = false
 tracks/1/enabled = true
-tracks/1/path = NodePath("TimeBar/MinusFive:visible")
+tracks/1/path = NodePath("TimeBar/LoseTime:visible")
 tracks/1/interp = 1
 tracks/1/loop_wrap = true
 tracks/1/keys = {
@@ -169,7 +221,7 @@ tracks/1/keys = {
 tracks/2/type = "value"
 tracks/2/imported = false
 tracks/2/enabled = true
-tracks/2/path = NodePath("TimeBar/MinusFive:theme_override_colors/font_color")
+tracks/2/path = NodePath("TimeBar/LoseTime:theme_override_colors/font_color")
 tracks/2/interp = 1
 tracks/2/loop_wrap = true
 tracks/2/keys = {
@@ -181,7 +233,7 @@ tracks/2/keys = {
 tracks/3/type = "value"
 tracks/3/imported = false
 tracks/3/enabled = true
-tracks/3/path = NodePath("TimeBar/MinusFive:theme_override_colors/font_outline_color")
+tracks/3/path = NodePath("TimeBar/LoseTime:theme_override_colors/font_outline_color")
 tracks/3/interp = 1
 tracks/3/loop_wrap = true
 tracks/3/keys = {
@@ -193,7 +245,7 @@ tracks/3/keys = {
 tracks/4/type = "value"
 tracks/4/imported = false
 tracks/4/enabled = true
-tracks/4/path = NodePath("TimeBar/MinusFive:position")
+tracks/4/path = NodePath("TimeBar/LoseTime:position")
 tracks/4/interp = 1
 tracks/4/loop_wrap = true
 tracks/4/keys = {
@@ -201,6 +253,54 @@ tracks/4/keys = {
 "transitions": PackedFloat32Array(1),
 "update": 0,
 "values": [Vector2(549, -95)]
+}
+tracks/5/type = "value"
+tracks/5/imported = false
+tracks/5/enabled = true
+tracks/5/path = NodePath("TimeBar/GetTime:position")
+tracks/5/interp = 1
+tracks/5/loop_wrap = true
+tracks/5/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [Vector2(217, -93)]
+}
+tracks/6/type = "value"
+tracks/6/imported = false
+tracks/6/enabled = true
+tracks/6/path = NodePath("TimeBar/GetTime:visible")
+tracks/6/interp = 1
+tracks/6/loop_wrap = true
+tracks/6/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 1,
+"values": [true]
+}
+tracks/7/type = "value"
+tracks/7/imported = false
+tracks/7/enabled = true
+tracks/7/path = NodePath("TimeBar/GetTime:theme_override_colors/font_color")
+tracks/7/interp = 1
+tracks/7/loop_wrap = true
+tracks/7/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [Color(0, 1, 0, 1)]
+}
+tracks/8/type = "value"
+tracks/8/imported = false
+tracks/8/enabled = true
+tracks/8/path = NodePath("TimeBar/GetTime:theme_override_colors/font_outline_color")
+tracks/8/interp = 1
+tracks/8/loop_wrap = true
+tracks/8/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [Color(0, 1, 0, 1)]
 }
 
 [sub_resource type="Animation" id="Animation_nw7js"]
@@ -222,7 +322,8 @@ tracks/0/keys = {
 
 [sub_resource type="AnimationLibrary" id="AnimationLibrary_nh7xm"]
 _data = {
-&"MinusFive": SubResource("Animation_ducwx"),
+&"GetTime": SubResource("Animation_34y5i"),
+&"LoseTime": SubResource("Animation_ducwx"),
 &"RESET": SubResource("Animation_vnunq"),
 &"Victory": SubResource("Animation_nw7js")
 }
@@ -259,17 +360,31 @@ theme_override_font_sizes/font_size = 44
 text = "60"
 horizontal_alignment = 1
 
-[node name="MinusFive" type="Label" parent="TimeBar" unique_id=802221644]
+[node name="LoseTime" type="Label" parent="TimeBar" unique_id=802221644]
 layout_mode = 0
 offset_left = 549.0
 offset_top = -95.0
-offset_right = 645.0
+offset_right = 645.0003
 theme_override_colors/font_color = Color(0, 1, 0, 1)
 theme_override_colors/font_outline_color = Color(0, 1, 0, 1)
 theme_override_constants/outline_size = 4
 theme_override_fonts/font = ExtResource("8_o5ofx")
 theme_override_font_sizes/font_size = 66
 text = "-5"
+horizontal_alignment = 1
+
+[node name="GetTime" type="Label" parent="TimeBar" unique_id=858494526]
+layout_mode = 0
+offset_left = 217.0
+offset_top = -93.0
+offset_right = 388.0005
+offset_bottom = 2.0
+theme_override_colors/font_color = Color(0, 1, 0, 1)
+theme_override_colors/font_outline_color = Color(0, 1, 0, 1)
+theme_override_constants/outline_size = 4
+theme_override_fonts/font = ExtResource("8_o5ofx")
+theme_override_font_sizes/font_size = 66
+text = "+20"
 horizontal_alignment = 1
 
 [node name="Receiver" type="Panel" parent="." unique_id=291228518]
@@ -406,7 +521,12 @@ theme_override_styles/normal = SubResource("StyleBoxFlat_aur7v")
 placeholder_text = "Escribí acá el código"
 context_menu_enabled = false
 emoji_menu_enabled = false
+shortcut_keys_enabled = false
 selecting_enabled = false
+deselect_on_focus_loss_enabled = false
+drag_and_drop_selection_enabled = false
+middle_mouse_paste_enabled = false
+empty_selection_clipboard_enabled = false
 
 [node name="Name" type="Label" parent="Inserter" unique_id=462289741]
 texture_filter = 1
@@ -498,6 +618,9 @@ script = ExtResource("9_hs11j")
 visible = false
 
 [node name="TestPuzzleWindow" parent="." unique_id=1270405932 instance=ExtResource("9_nlqrh")]
+visible = false
+
+[node name="PauseMenu" parent="." unique_id=131021418 instance=ExtResource("11_34y5i")]
 visible = false
 
 [node name="SceneManage" parent="." unique_id=1453041143 instance=ExtResource("10_o5ofx")]

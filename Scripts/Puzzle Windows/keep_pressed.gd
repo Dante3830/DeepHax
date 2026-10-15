@@ -5,48 +5,40 @@ extends PuzzleMinigame
 @onready var hold_button: Button = $HoldButton
 @onready var progress_bar: ProgressBar = $ProgressBar
 
-var _holding: bool = false
-var _elapsed: float = 0.0
-var _finished: bool = false
-var _first_press: bool = true
-
-func _ready() -> void:
-	$Label.text = "MANTENÉ\nPULSADO"
-	progress_bar.min_value = 0
-	progress_bar.max_value = 100
-	progress_bar.value = 0
-	hold_button.button_down.connect(_on_button_down)
-	hold_button.button_up.connect(_on_button_up)
+var start_press = true
+var holding = false
+var elapsed = 0.0
+var finished = false
 
 func _process(delta: float) -> void:
-	if _finished or not _holding:
+	if finished or !holding:
 		return
 	
-	_elapsed += delta
-	progress_bar.value = (_elapsed / hold_duration) * 100.0
+	elapsed += delta
+	progress_bar.value = (elapsed / hold_duration) * 100.0
 	
-	if _elapsed >= hold_duration:
-		_finish(true)
+	if elapsed >= hold_duration:
+		finish(true)
 
-func _on_button_down() -> void:
-	if _finished:
-		return
-	_holding = true
-	if _first_press:
-		_first_press = false
-		interacted.emit()
-
-func _on_button_up() -> void:
-	if _finished:
-		return
-	_holding = false
-	if _elapsed < hold_duration:
-		_finish(false)
-
-func _finish(success: bool) -> void:
-	_finished = true
+func finish(success: bool) -> void:
+	finished = true
 	set_process(false)
 	if success:
 		solved.emit()
 	else:
 		failed.emit()
+
+func _on_hold_button_button_down():
+	if finished:
+		return
+	holding = true
+	if start_press:
+		start_press = false
+		interacted.emit()
+
+func _on_hold_button_button_up():
+	if finished:
+		return
+	holding = false
+	if elapsed < hold_duration:
+		finish(false)

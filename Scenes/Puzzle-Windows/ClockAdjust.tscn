@@ -27,6 +27,7 @@ offset_bottom = 0.5200043
 script = ExtResource("1_c63cc")
 
 [node name="Panel" type="Panel" parent="." unique_id=1798305932]
+visible = false
 layout_mode = 0
 offset_right = 256.0
 offset_bottom = 256.0

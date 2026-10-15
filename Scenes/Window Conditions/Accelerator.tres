@@ -5,6 +5,6 @@
 
 [resource]
 script = ExtResource("1_adju3")
-icon = ExtResource("1_t5ug5")
+condition_icon = ExtResource("1_t5ug5")
 condition_name = "Accelerator"
 metadata/_custom_type_script = "uid://c48lwmcrylb0i"

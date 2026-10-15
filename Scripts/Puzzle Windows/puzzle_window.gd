@@ -43,7 +43,7 @@ var _bounce_area: Rect2 = Rect2()
 var _bounce_velocity: Vector2 = Vector2.ZERO
 var _footprint: Rect2 = Rect2()
 
-func _ready() -> void:
+func _ready():
 	condition_icon.visible = false
 	condition_time_label.visible = false
 	
@@ -62,7 +62,7 @@ func _ready() -> void:
 	scale = Vector2.ZERO
 	modulate.a = 0.0
 
-func setup(minigame_scene: PackedScene, condition_resource: PuzzleCondition = null, time_limit: float = 10.0) -> void:
+func setup(minigame_scene: PackedScene, condition_resource: PuzzleCondition = null, time_limit = 10.0):
 	minigame = minigame_scene.instantiate()
 	content_container.add_child(minigame)
 	minigame.solved.connect(_on_minigame_solved)
@@ -73,7 +73,7 @@ func setup(minigame_scene: PackedScene, condition_resource: PuzzleCondition = nu
 	if condition_resource:
 		condition = condition_resource.duplicate()
 		condition_icon.visible = true
-		condition_icon.texture = condition.icon
+		condition_icon.texture = condition.condition_icon
 		_fit_condition_icon()
 	
 	await _emerge()
@@ -88,7 +88,7 @@ func setup(minigame_scene: PackedScene, condition_resource: PuzzleCondition = nu
 	player_timer.start()
 	minigame.start()
 
-func _emerge() -> void:
+func _emerge():
 	var tween := create_tween()
 	tween.set_parallel(true)
 	tween.tween_property(self, "scale", Vector2.ONE, emerge_duration)\
@@ -96,20 +96,20 @@ func _emerge() -> void:
 	tween.tween_property(self, "modulate:a", 1.0, emerge_duration)
 	await tween.finished
 
-func enable_bounce(area: Rect2, speed: float) -> void:
+func enable_bounce(area: Rect2, speed: float):
 	_bounce_enabled = true
 	_bounce_area = area
 	var angle := deg_to_rad(randf_range(25.0, 65.0)) + randi_range(0, 3) * (PI / 2.0)
 	_bounce_velocity = Vector2.from_angle(angle) * speed
 
-func _process(delta: float) -> void:
+func _process(delta: float):
 	if not _active or _resolved:
 		return
 	_update_warning(delta)
 	if _bounce_enabled:
 		_update_bounce(delta)
 
-func _update_warning(delta: float) -> void:
+func _update_warning(delta: float):
 	if _panel_style == null or player_timer.is_stopped():
 		return
 	var time_left := player_timer.time_left
@@ -120,7 +120,7 @@ func _update_warning(delta: float) -> void:
 	var pulse := (1.0 - cos(_warning_phase * TAU)) * 0.5  # 0 (negro) .. 1 (rojo)
 	_panel_style.bg_color = _base_bg_color.lerp(warning_color, smoothstep(0.2, 0.8, pulse))
 
-func _update_bounce(delta: float) -> void:
+func _update_bounce(delta: float):
 	if _is_player_holding_click():
 		return
 	var min_pos := _bounce_area.position - _footprint.position
@@ -156,7 +156,7 @@ func get_footprint() -> Rect2:
 			first = false
 	return rect
 
-func _fit_condition_icon() -> void:
+func _fit_condition_icon():
 	if condition_icon.texture == null:
 		push_warning("PuzzleWindow: la condición '%s' no tiene ícono. Asignale una textura en su .tres (propiedad Icon)." % String(condition.get_script().get_global_name()))
 		return
@@ -169,17 +169,17 @@ func _fit_condition_icon() -> void:
 		limit = minf(limit, minf(condition_panel.size.x, condition_panel.size.y))
 	condition_icon.scale = Vector2.ONE * minf(1.0, limit / longest_side)
 
-func set_condition_time_text(text: String) -> void:
+func set_condition_time_text(text: String):
 	condition_time_label.visible = true
 	condition_time_label.text = text
 
-func hide_condition_time() -> void:
+func hide_condition_time():
 	condition_time_label.visible = false
 
-func _on_player_timer_timeout() -> void:
+func _on_player_timer_timeout():
 	_on_minigame_failed()
 
-func _on_minigame_solved() -> void:
+func _on_minigame_solved():
 	if _resolved:
 		return
 	_resolved = true
@@ -189,7 +189,7 @@ func _on_minigame_solved() -> void:
 	solved.emit(self, reward)
 	_close()
 
-func _on_minigame_failed() -> void:
+func _on_minigame_failed():
 	if _resolved:
 		return
 	_resolved = true
@@ -197,23 +197,23 @@ func _on_minigame_failed() -> void:
 	failed.emit(self, fail_time_penalty)
 	_close()
 
-func _on_minigame_interacted() -> void:
+func _on_minigame_interacted():
 	if condition:
-		condition.on_interaction(self)
+		condition.interaction(self)
 
 func _calculate_reward(elapsed_seconds: float) -> int:
 	var speed_bonus: float = clamp(1.0 - (elapsed_seconds / player_timer.wait_time), 0.0, 1.0)
 	return int(base_hackoin_reward * (1.0 + speed_bonus))
 
-func _close() -> void:
+func _close():
 	_release_condition()
 	closed.emit(self)
 	queue_free()
 
-func _exit_tree() -> void:
+func _exit_tree():
 	_release_condition()
 
-func _release_condition() -> void:
+func _release_condition():
 	if condition and _condition_applied:
 		_condition_applied = false
 		condition.remove(self)

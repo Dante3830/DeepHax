@@ -1,31 +1,30 @@
+# Todavía NO es usado
 class_name HackoinsLoose
 extends PuzzleCondition
 
-@export var time_to_lose: float = 10.0
+@export var hackoins_penalty = 10
+var active_windows: Dictionary = {}
 
-var _active_windows: Dictionary = {}
+func apply_cond(window: PuzzleWindow):
+	active_windows[window] = true
+	tick(window, int(ceil(hackoins_penalty)))
 
-func _on_apply(window: PuzzleWindow) -> void:
-	_active_windows[window] = true
-	_tick(window, int(ceil(time_to_lose)))
+func remove_cond(window: PuzzleWindow):
+	active_windows.erase(window)
 
-func _on_remove(window: PuzzleWindow) -> void:
-	_active_windows.erase(window)
-
-func on_interaction(window: PuzzleWindow) -> void:
-	# El jugador interactuó a tiempo: se cancela la pérdida.
-	_active_windows.erase(window)
+func interaction(window: PuzzleWindow):
+	active_windows.erase(window)
 	window.hide_condition_time()
 
-func _tick(window: PuzzleWindow, seconds_left: int) -> void:
-	if not _active_windows.get(window, false):
+func tick(window: PuzzleWindow, seconds_left: int):
+	if not active_windows.get(window, false):
 		return
 	
 	if seconds_left <= 0:
-		_active_windows.erase(window)
+		active_windows.erase(window)
 		GameManager.add_hackoins(-GameManager.hackoins)
 		return
 	
 	window.set_condition_time_text(str(seconds_left))
-	var timer: SceneTreeTimer = window.get_tree().create_timer(1.0)
-	timer.timeout.connect(_tick.bind(window, seconds_left - 1))
+	var timer = window.get_tree().create_timer(1.0)
+	timer.timeout.connect(tick.bind(window, seconds_left - 1))

@@ -1,16 +1,16 @@
 class_name KeyboardLock
 extends PuzzleCondition
 
-var _was_locked_by_me: bool = false
+var keyboard_is_locked = false
 
-func _on_apply(window: PuzzleWindow) -> void:
+func apply_cond(_window: PuzzleWindow) -> void:
 	if GameManager.is_keyboard_locked():
-		_was_locked_by_me = false
+		keyboard_is_locked = false
 	else:
 		GameManager.lock_keyboard()
-		_was_locked_by_me = true
+		keyboard_is_locked = true
 
-func _on_remove(_window: PuzzleWindow) -> void:
-	if _was_locked_by_me:
+func remove_cond(_window: PuzzleWindow) -> void:
+	if keyboard_is_locked:
 		GameManager.unlock_keyboard()
-		_was_locked_by_me = false
+		keyboard_is_locked = false

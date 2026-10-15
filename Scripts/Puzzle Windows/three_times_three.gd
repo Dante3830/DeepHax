@@ -1,67 +1,60 @@
 class_name ThreeTimesThree
 extends PuzzleMinigame
 
-@export_range(1, 9) var min_lit_cells: int = 3
-@export_range(1, 9) var max_lit_cells: int = 5
-@export var lit_color: Color = Color(0.2, 0.4, 1.0)
+@onready var target_panels: Array[Panel] = [ $Panel1, $Panel2, $Panel3, $Panel4, $Panel5, $Panel6, $Panel7, $Panel8, $Panel9 ]
+@onready var buttons: Array[Button] = [ $Button1, $Button2, $Button3, $Button4, $Button5, $Button6, $Button7, $Button8, $Button9 ]
 
-@onready var buttons: Array[Button] = [
-	$Button1, $Button2, $Button3,
-	$Button4, $Button5, $Button6,
-	$Button7, $Button8, $Button9,
-]
+@export var color1 = Color(0.2, 0.4, 1.0)
+@export var color2 = Color(1.0, 1.0, 1.0)
 
-@onready var target_panels: Array[Panel] = [
-	$Panel1, $Panel2, $Panel3,
-	$Panel4, $Panel5, $Panel6,
-	$Panel7, $Panel8, $Panel9,
-]
+@export_range(1, 9) var min_same_color_panels = 3
+@export_range(1, 9) var max_same_color_panels = 5
 
-var _target_pattern: Array[bool] = []
-var _first_input: bool = true
-var _finished: bool = false
+var target_grid: Array[bool] = []
+var first_input = true
+var finished = false
 
 func _ready() -> void:
-	_generate_target_pattern()
-	_show_target_pattern()
+	generate_target_grid()
+	show_target_grid()
 	
 	var start_all_pressed: bool = randf() < 0.5
-	for i in buttons.size():
-		buttons[i].button_pressed = start_all_pressed
-		buttons[i].toggled.connect(_on_button_toggled.bind(i))
+	for button in buttons:
+		button.button_pressed = start_all_pressed
+		button.toggled.connect(on_button_toggled)
 
-func _generate_target_pattern() -> void:
-	_target_pattern.resize(buttons.size())
-	_target_pattern.fill(false)
+func generate_target_grid() -> void:
+	target_grid.resize(buttons.size())
+	target_grid.fill(false)
 	
-	var lit_count: int = randi_range(min_lit_cells, max_lit_cells)
+	var lit_count: int = randi_range(min_same_color_panels, max_same_color_panels)
 	var indices: Array[int] = []
 	for i in buttons.size():
 		indices.append(i)
 	indices.shuffle()
 	for i in lit_count:
-		_target_pattern[indices[i]] = true
+		target_grid[indices[i]] = true
 
-func _show_target_pattern() -> void:
+func show_target_grid() -> void:
 	for i in target_panels.size():
-		target_panels[i].self_modulate = lit_color if _target_pattern[i] else Color.WHITE
+		target_panels[i].self_modulate = color1 if target_grid[i] else color2
 
-func _on_button_toggled(_pressed: bool, _index: int) -> void:
-	if _finished:
+func on_button_toggled(_pressed: bool):
+	if finished:
 		return
 	
-	if _first_input:
-		_first_input = false
+	if first_input:
+		first_input = false
 		interacted.emit()
 	
-	if _matches_target():
-		_finished = true
+	if matches_target():
+		finished = true
 		for button in buttons:
 			button.disabled = true
 		solved.emit()
 
-func _matches_target() -> bool:
+func matches_target() -> bool:
 	for i in buttons.size():
-		if buttons[i].button_pressed != _target_pattern[i]:
+		if buttons[i].button_pressed != target_grid[i]:
 			return false
 	return true
