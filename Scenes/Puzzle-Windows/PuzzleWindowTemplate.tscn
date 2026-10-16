@@ -1,6 +1,6 @@
 [gd_scene format=3 uid="uid://cpp583uv45ray"]
 
-[ext_resource type="Script" uid="uid://c1ufu0upfxucp" path="res://Scripts/Puzzle Windows/puzzle_window.gd" id="1_lu45j"]
+[ext_resource type="Script" uid="uid://c1ufu0upfxucp" path="res://Scripts/Puzzle Windows/puzzle_window.gd" id="1_s78y1"]
 
 [sub_resource type="StyleBoxFlat" id="StyleBoxFlat_lu45j"]
 bg_color = Color(0, 0, 0, 1)
@@ -10,14 +10,14 @@ border_width_right = 2
 border_width_bottom = 2
 border_color = Color(0, 1, 0, 1)
 
-[node name="BaseVentanaPuzzle" type="Control" unique_id=1270405932]
+[node name="PuzzleWindowTemplate" type="Control" unique_id=1270405932]
 layout_mode = 3
 anchors_preset = 0
 offset_left = -128.0
 offset_top = -128.0
 offset_right = -128.0
 offset_bottom = -128.0
-script = ExtResource("1_lu45j")
+script = ExtResource("1_s78y1")
 base_hackoin_reward = 7
 
 [node name="PlayerTimer" type="Timer" parent="." unique_id=1960595137]

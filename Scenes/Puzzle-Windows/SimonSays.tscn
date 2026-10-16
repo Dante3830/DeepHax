@@ -2,14 +2,6 @@
 
 [ext_resource type="Script" uid="uid://dinu5df5srn8i" path="res://Scripts/Puzzle Windows/simon_says.gd" id="1_seao0"]
 
-[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_yklot"]
-bg_color = Color(0, 0, 0, 1)
-border_width_left = 2
-border_width_top = 2
-border_width_right = 2
-border_width_bottom = 2
-border_color = Color(0, 1, 0, 1)
-
 [sub_resource type="StyleBoxFlat" id="StyleBoxFlat_seao0"]
 bg_color = Color(1, 0, 0, 1)
 border_width_left = 2
@@ -84,13 +76,6 @@ offset_top = 0.519989
 offset_right = 0.63998413
 offset_bottom = 0.519989
 script = ExtResource("1_seao0")
-
-[node name="Panel" type="Panel" parent="." unique_id=778746721]
-visible = false
-layout_mode = 0
-offset_right = 256.0
-offset_bottom = 256.0
-theme_override_styles/panel = SubResource("StyleBoxFlat_yklot")
 
 [node name="Red" type="Button" parent="." unique_id=1582387017]
 layout_mode = 0

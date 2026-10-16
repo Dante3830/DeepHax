@@ -7,7 +7,7 @@
 [ext_resource type="FontFile" uid="uid://djx8toqe17ynx" path="res://Assets/Fonts/Michroma-Regular.ttf" id="8_o5ofx"]
 [ext_resource type="Texture2D" uid="uid://dptce3hmit3di" path="res://Assets/Kenney Game Icons/checkmark.png" id="9_34y5i"]
 [ext_resource type="Script" uid="uid://ba44a2me1f0pu" path="res://Scripts/camera.gd" id="9_hs11j"]
-[ext_resource type="PackedScene" uid="uid://cpp583uv45ray" path="res://Scenes/Puzzle-Windows/BaseVentanaPuzzle.tscn" id="9_nlqrh"]
+[ext_resource type="PackedScene" uid="uid://cpp583uv45ray" path="res://Scenes/Puzzle-Windows/PuzzleWindowTemplate.tscn" id="9_nlqrh"]
 [ext_resource type="PackedScene" uid="uid://bsnqwtrg5ipng" path="res://Scenes/LooseScreen.tscn" id="9_o5ofx"]
 [ext_resource type="PackedScene" uid="uid://byvl8ug5mi4wy" path="res://Scenes/SceneManage.tscn" id="10_o5ofx"]
 [ext_resource type="PackedScene" uid="uid://cp4ires0jxc61" path="res://Scenes/PauseMenu.tscn" id="11_34y5i"]
@@ -384,7 +384,7 @@ theme_override_colors/font_outline_color = Color(0, 1, 0, 1)
 theme_override_constants/outline_size = 4
 theme_override_fonts/font = ExtResource("8_o5ofx")
 theme_override_font_sizes/font_size = 66
-text = "+20"
+text = "+30"
 horizontal_alignment = 1
 
 [node name="Receiver" type="Panel" parent="." unique_id=291228518]

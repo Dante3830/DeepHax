@@ -6,13 +6,7 @@
 [ext_resource type="Texture2D" uid="uid://bkx2djypoopw7" path="res://Assets/Aguja.png" id="3_p2p4g"]
 [ext_resource type="FontFile" uid="uid://2afyco5rkpvl" path="res://Assets/Fonts/Anta-Regular.ttf" id="4_enk4a"]
 
-[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_p2p4g"]
-bg_color = Color(0, 0, 0, 1)
-border_width_left = 2
-border_width_top = 2
-border_width_right = 2
-border_width_bottom = 2
-border_color = Color(0, 1, 0, 1)
+[sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_p2p4g"]
 
 [node name="ClockAdjust" type="Control" unique_id=1270405932]
 layout_mode = 3
@@ -27,11 +21,10 @@ offset_bottom = 0.5200043
 script = ExtResource("1_c63cc")
 
 [node name="Panel" type="Panel" parent="." unique_id=1798305932]
-visible = false
 layout_mode = 0
 offset_right = 256.0
 offset_bottom = 256.0
-theme_override_styles/panel = SubResource("StyleBoxFlat_p2p4g")
+theme_override_styles/panel = SubResource("StyleBoxEmpty_p2p4g")
 
 [node name="CircleA" type="Sprite2D" parent="." unique_id=74511984]
 position = Vector2(127.999985, 127.999985)

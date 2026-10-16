@@ -10,9 +10,8 @@ extends PuzzleMinigame
 @export_range(1, 9) var min_same_color_panels = 3
 @export_range(1, 9) var max_same_color_panels = 5
 
-var target_grid: Array[bool] = []
+var target_grid = []
 var first_input = true
-var finished = false
 
 func _ready() -> void:
 	generate_target_grid()
@@ -48,7 +47,6 @@ func on_button_toggled(_pressed: bool):
 		interacted.emit()
 	
 	if matches_target():
-		finished = true
 		for button in buttons:
 			button.disabled = true
 		solved.emit()

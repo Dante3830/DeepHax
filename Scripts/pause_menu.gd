@@ -1,10 +1,10 @@
 extends CanvasLayer
 
-func _ready() -> void:
+func _ready():
 	visible = false
 	get_tree().paused = false
 
-func _input(_event: InputEvent) -> void:
+func _input(_event: InputEvent):
 	if Input.is_action_just_pressed("Pause"):
 		if get_tree().paused:
 			visible = false
@@ -13,9 +13,9 @@ func _input(_event: InputEvent) -> void:
 			visible = true
 			get_tree().paused = true
 
-func _on_resume_button_pressed() -> void:
+func _on_resume_button_pressed():
 	visible = false
 	get_tree().paused = false
 
-func _on_exit_button_pressed() -> void:
+func _on_exit_button_pressed():
 	get_tree().quit()

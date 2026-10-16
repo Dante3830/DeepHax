@@ -1,22 +1,23 @@
 class_name ClockAdjust
 extends PuzzleMinigame
 
-@onready var panel: Panel = $Panel
+const HOUR_STEPS = 12
+const MINUTE_AND_SECOND_STEPS = 60
+
+var target_hour = 1
+var target_minute = 1
+var target_second = 1
+var dragged = null
+
 @onready var clock_sprite = $CircleA
 @onready var hour_needle = $Aguja1
 @onready var minute_needle = $Aguja2
 @onready var second_needle = $Aguja3
+@onready var needles = [hour_needle, minute_needle, second_needle]
+
 @onready var hours_text = $HH_MM_SS/HoursText
 @onready var minutes_text = $HH_MM_SS/MinutesText
 @onready var seconds_text = $HH_MM_SS/SecondsText
-
-var target_hour = 1
-var target_minute = 0
-var target_second = 0
-
-var dragging_needle = null
-var first_input = true
-var finished = false
 
 func start():
 	set_process(true)
@@ -24,70 +25,53 @@ func start():
 func _ready():
 	set_process(false)
 	
-	hour_needle.rotation = 0.0
 	minute_needle.rotation = TAU / 3.0
 	second_needle.rotation = 2.0 * TAU / 3.0
 	
-	target_hour = randi_range(1, 12)
+	target_hour = randi_range(1, HOUR_STEPS)
 	hours_text.text = "%02d" % target_hour
-	target_minute = randi_range(0, 59)
+	
+	target_minute = randi_range(0, MINUTE_AND_SECOND_STEPS - 1)
 	minutes_text.text = "%02d" % target_minute
-	target_second = randi_range(0, 59)
+	
+	target_second = randi_range(0, MINUTE_AND_SECOND_STEPS - 1)
 	seconds_text.text = "%02d" % target_second
 
 func _process(_delta: float):
-	if finished:
-		return
+	var mouse = $Panel.get_local_mouse_position()
 	
-	var local_mouse: Vector2 = panel.get_local_mouse_position()
-	
-	if dragging_needle == null:
-		var inside_clock := Rect2(Vector2.ZERO, panel.size).has_point(local_mouse)
+	if dragged == null:
+		var inside_clock := Rect2(Vector2.ZERO, $Panel.size).has_point(mouse)
 		if inside_clock and Input.is_action_just_pressed("Click"):
-			start_dragging(local_mouse)
+			_grab_needle(mouse)
 		return
 	
-	var needle_angle = angle_from_center(local_mouse)
-	var steps = 12 if dragging_needle == hour_needle else 60
-	dragging_needle.rotation = snappedf(needle_angle, TAU / steps)
+	var steps = HOUR_STEPS if dragged == hour_needle else MINUTE_AND_SECOND_STEPS
+	dragged.rotation = snappedf(_angle_from_center(mouse), TAU / steps)
 	
 	if not Input.is_action_pressed("Click"):
-		dragging_needle = null
-		check_solved()
+		dragged = null
+		_check_solved()
 
-func start_dragging(local_pos: Vector2):
-	var clock_angle := angle_from_center(local_pos)
-	var candidates: Array[Node2D] = [hour_needle, minute_needle, second_needle]
+func _grab_needle(mouse: Vector2):
+	var click_angle := _angle_from_center(mouse)
+	var smallest_diff := INF
+	for needle in needles:
+		var diff := absf(angle_difference(click_angle, needle.rotation))
+		if diff < smallest_diff:
+			smallest_diff = diff
+			dragged = needle
 	
-	var closest: Node2D = candidates[0]
-	var closest_diff: float = absf(angle_difference(clock_angle, closest.rotation))
-	for needle in candidates:
-		var diff = absf(angle_difference(clock_angle, needle.rotation))
-		if diff < closest_diff:
-			closest = needle
-			closest_diff = diff
-	
-	dragging_needle = closest
-	
-	if first_input:
-		first_input = false
-		interacted.emit()
+	notify_interaction()
 
-func check_solved():
-	var hour_index = angle_to_index(hour_needle.rotation, 12)
-	var minute_index = angle_to_index(minute_needle.rotation, 60)
-	var second_index = angle_to_index(second_needle.rotation, 60)
-	var target_hour_index = target_hour % 12
-	
-	if hour_index == target_hour_index and minute_index == target_minute and second_index == target_second:
-		finished = true
-		set_process(false)
-		solved.emit()
+func _check_solved():
+	if (_to_index(hour_needle, HOUR_STEPS) == target_hour % HOUR_STEPS
+			and _to_index(minute_needle, MINUTE_AND_SECOND_STEPS) == target_minute
+			and _to_index(second_needle, MINUTE_AND_SECOND_STEPS) == target_second):
+		finish(true)
 
-func angle_from_center(local_pos: Vector2) -> float:
-	var to_point : Vector2 = local_pos - clock_sprite.position
-	return fposmod(to_point.angle() + PI / 2.0, TAU)
+func _angle_from_center(point: Vector2) -> float:
+	return Vector2.UP.angle_to(point - clock_sprite.position)
 
-func angle_to_index(angle: float, steps: int) -> int:
-	var step_size: float = TAU / steps
-	return int(round(fposmod(angle, TAU) / step_size)) % steps
+func _to_index(needle: Node2D, steps: int) -> int:
+	return roundi(fposmod(needle.rotation, TAU) / (TAU / steps)) % steps

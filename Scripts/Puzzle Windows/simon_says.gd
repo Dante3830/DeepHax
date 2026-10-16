@@ -3,18 +3,15 @@ extends PuzzleMinigame
 
 @export var sequence_length = 2
 
-var flash_duration = 0.5
-var flashes_pause = 0.1
-
 @onready var buttons = [$Red, $Yellow, $Green, $Blue]
-
 @onready var button_lights = [$Red/RedLight, $Yellow/YellowLight, $Green/GreenLight, $Blue/BlueLight]
 
 var sequence = []
 var player_input = 0
 var enable_input = false
 var first_input = true
-var finished = false
+var flash_duration = 0.5
+var flashes_pause = 0.1
 
 func start():
 	await play_sequence()
@@ -83,7 +80,6 @@ func on_button_pressed(index: int):
 		finish(false)
 
 func finish(success: bool):
-	finished = true
 	enable_input = false
 	disable_buttons(true)
 	for light in button_lights:

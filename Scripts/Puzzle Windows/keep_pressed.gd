@@ -1,16 +1,15 @@
 class_name MantenerPulsado
 extends PuzzleMinigame
 
-@export var hold_duration: float = 3.0
-@onready var hold_button: Button = $HoldButton
-@onready var progress_bar: ProgressBar = $ProgressBar
+@export var hold_duration = 3.0
+@onready var hold_button = $HoldButton
+@onready var progress_bar = $ProgressBar
 
 var start_press = true
 var holding = false
 var elapsed = 0.0
-var finished = false
 
-func _process(delta: float) -> void:
+func _process(delta: float):
 	if finished or !holding:
 		return
 	
@@ -20,8 +19,7 @@ func _process(delta: float) -> void:
 	if elapsed >= hold_duration:
 		finish(true)
 
-func finish(success: bool) -> void:
-	finished = true
+func finish(success: bool):
 	set_process(false)
 	if success:
 		solved.emit()

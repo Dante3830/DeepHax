@@ -5,147 +5,96 @@ signal solved(window: PuzzleWindow, hackoin_reward: int)
 signal failed(window: PuzzleWindow, time_penalty: float)
 signal closed(window: PuzzleWindow)
 
-@export var fail_time_penalty: float = 5.0
-@export var base_hackoin_reward: int = 10
-@export var emerge_duration: float = 0.25  # cuánto tarda en aparecer la ventana
+const WARNING_HZ_START = 2.0
+const WARNING_HZ_END = 6.0
 
-@export var condition_icon_size: float = 28.0
+@export var fail_time_penalty = 5.0
+@export var base_hackoin_reward = 10
+@export var condition_icon_size = 28.0
+@export var warning_time = 5.0
 
-@export var warning_time: float = 5.0
-@export var warning_color: Color = Color(0.8, 0.0, 0.0)
+var emerge_duration = 0.25
 
-const WARNING_HZ_START: float = 2.0
-const WARNING_HZ_END: float = 6.0
+var minigame: PuzzleMinigame
+var condition: PuzzleCondition
 
-@onready var content_container: Control = %ContentContainer
+var _resolved = false
+var _condition_applied = false
+
+var _panel_style: StyleBoxFlat
+var _base_bg_color: Color
+var _warning_phase = 0.0
+
+var _bounce_enabled = false
+var _bounce_area: Rect2
+var _bounce_velocity: Vector2
+var _footprint: Rect2
+
+@onready var content_container: Control = %ContentContainers
 @onready var player_timer: Timer = $PlayerTimer
-@onready var panel: Panel = $Panel
-@onready var condition_panel: Panel = $ConditionPanel
+@onready var panel = $Panel
+@onready var condition_panel = $ConditionPanel
 @onready var condition_icon: Sprite2D = $ConditionPanel/Condition
-@onready var condition_time_label: Label = $ConditionPanel/Time
+@onready var condition_time_label = $ConditionPanel/Time
 
-var minigame: PuzzleMinigame = null
-var condition: PuzzleCondition = null
-
-var _resolved: bool = false
-
-var _condition_applied: bool = false
-
-# --- Titileo rojo ---
-var _panel_style: StyleBoxFlat = null
-var _base_bg_color: Color = Color.BLACK
-var _warning_phase: float = 0.0
-
-# --- Rebote en la pantalla ---
-var _active: bool = false
-var _bounce_enabled: bool = false
-var _bounce_area: Rect2 = Rect2()
-var _bounce_velocity: Vector2 = Vector2.ZERO
-var _footprint: Rect2 = Rect2()
-
+#region LIFECYCLE METHODS
 func _ready():
-	condition_icon.visible = false
+	set_process(false)
 	condition_time_label.visible = false
-	
-	player_timer.stop()
-	player_timer.one_shot = true
+	condition_icon.position = Vector2(5.0, 5.0)
 	
 	var base_style := panel.get_theme_stylebox("panel") as StyleBoxFlat
 	if base_style:
 		_panel_style = base_style.duplicate()
 		_base_bg_color = _panel_style.bg_color
 		panel.add_theme_stylebox_override("panel", _panel_style)
-	else:
-		push_warning("PuzzleWindow: el Panel no tiene un StyleBoxFlat; no habrá titileo rojo.")
 	
-	pivot_offset = size / 2.0
+	# La raíz mide 0x0, así que el centro se saca de lo que realmente se ve.
+	_footprint = get_footprint()
+	pivot_offset = _footprint.get_center()
 	scale = Vector2.ZERO
 	modulate.a = 0.0
 
+func _process(delta: float):
+	_update_warning(delta)
+	if _bounce_enabled:
+		_update_bounce(delta)
+
+func _exit_tree():
+	_release_condition()
+#endregion
+
+#region SETUP & CONFIGURATION
 func setup(minigame_scene: PackedScene, condition_resource: PuzzleCondition = null, time_limit = 10.0):
 	minigame = minigame_scene.instantiate()
 	content_container.add_child(minigame)
-	minigame.solved.connect(_on_minigame_solved)
-	minigame.failed.connect(_on_minigame_failed)
+	minigame.finished.connect(_resolve)
 	minigame.interacted.connect(_on_minigame_interacted)
 	
 	condition_panel.visible = condition_resource != null
 	if condition_resource:
 		condition = condition_resource.duplicate()
-		condition_icon.visible = true
 		condition_icon.texture = condition.condition_icon
 		_fit_condition_icon()
 	
 	await _emerge()
-	_footprint = get_footprint()
-	_active = true
 	
 	if condition:
 		condition.apply(self)
 		_condition_applied = true
 	
-	player_timer.wait_time = time_limit
-	player_timer.start()
+	player_timer.start(time_limit)
+	set_process(true)
 	minigame.start()
-
-func _emerge():
-	var tween := create_tween()
-	tween.set_parallel(true)
-	tween.tween_property(self, "scale", Vector2.ONE, emerge_duration)\
-		.set_trans(Tween.TRANS_BACK).set_ease(Tween.EASE_OUT)
-	tween.tween_property(self, "modulate:a", 1.0, emerge_duration)
-	await tween.finished
 
 func enable_bounce(area: Rect2, speed: float):
 	_bounce_enabled = true
 	_bounce_area = area
 	var angle := deg_to_rad(randf_range(25.0, 65.0)) + randi_range(0, 3) * (PI / 2.0)
 	_bounce_velocity = Vector2.from_angle(angle) * speed
+#endregion
 
-func _process(delta: float):
-	if not _active or _resolved:
-		return
-	_update_warning(delta)
-	if _bounce_enabled:
-		_update_bounce(delta)
-
-func _update_warning(delta: float):
-	if _panel_style == null or player_timer.is_stopped():
-		return
-	var time_left := player_timer.time_left
-	if time_left > warning_time:
-		return
-	var urgency := 1.0 - clampf(time_left / maxf(warning_time, 0.001), 0.0, 1.0)
-	_warning_phase += delta * lerpf(WARNING_HZ_START, WARNING_HZ_END, urgency)
-	var pulse := (1.0 - cos(_warning_phase * TAU)) * 0.5  # 0 (negro) .. 1 (rojo)
-	_panel_style.bg_color = _base_bg_color.lerp(warning_color, smoothstep(0.2, 0.8, pulse))
-
-func _update_bounce(delta: float):
-	if _is_player_holding_click():
-		return
-	var min_pos := _bounce_area.position - _footprint.position
-	var max_pos := (_bounce_area.end - _footprint.size - _footprint.position).max(min_pos)
-	var pos := global_position + _bounce_velocity * delta
-	if pos.x <= min_pos.x:
-		pos.x = min_pos.x
-		_bounce_velocity.x = absf(_bounce_velocity.x)
-	elif pos.x >= max_pos.x:
-		pos.x = max_pos.x
-		_bounce_velocity.x = -absf(_bounce_velocity.x)
-	if pos.y <= min_pos.y:
-		pos.y = min_pos.y
-		_bounce_velocity.y = absf(_bounce_velocity.y)
-	elif pos.y >= max_pos.y:
-		pos.y = max_pos.y
-		_bounce_velocity.y = -absf(_bounce_velocity.y)
-	global_position = pos
-
-func _is_player_holding_click() -> bool:
-	if not Input.is_mouse_button_pressed(MOUSE_BUTTON_LEFT):
-		return false
-	var rect := Rect2(global_position + _footprint.position, _footprint.size)
-	return rect.has_point(get_global_mouse_position())
-
+#region FOOTPRINT & GEOMETRY
 func get_footprint() -> Rect2:
 	var rect := Rect2()
 	var first := true
@@ -155,65 +104,107 @@ func get_footprint() -> Rect2:
 			rect = child_rect if first else rect.merge(child_rect)
 			first = false
 	return rect
+#endregion
 
-func _fit_condition_icon():
-	if condition_icon.texture == null:
-		push_warning("PuzzleWindow: la condición '%s' no tiene ícono. Asignale una textura en su .tres (propiedad Icon)." % String(condition.get_script().get_global_name()))
-		return
-	var texture_size: Vector2 = condition_icon.texture.get_size()
-	var longest_side: float = maxf(texture_size.x, texture_size.y)
-	if longest_side <= 0.0:
-		return
-	var limit: float = condition_icon_size
-	if condition_panel.size.x > 0.0 and condition_panel.size.y > 0.0:
-		limit = minf(limit, minf(condition_panel.size.x, condition_panel.size.y))
-	condition_icon.scale = Vector2.ONE * minf(1.0, limit / longest_side)
-
+#region CONDITION TIME UI
 func set_condition_time_text(text: String):
 	condition_time_label.visible = true
 	condition_time_label.text = text
 
 func hide_condition_time():
 	condition_time_label.visible = false
+#endregion
 
+#region EMERGE ANIMATION
+func _emerge():
+	var tween := create_tween().set_parallel()
+	tween.tween_property(self, "scale", Vector2.ONE, emerge_duration)\
+		.set_trans(Tween.TRANS_BACK).set_ease(Tween.EASE_OUT)
+	tween.tween_property(self, "modulate:a", 1.0, emerge_duration)
+	await tween.finished
+#endregion
+
+#region WARNING EFFECT
+func _update_warning(delta: float):
+	if _panel_style == null:
+		return
+	var time_left := player_timer.time_left
+	if time_left > warning_time:
+		return
+	var urgency := 1.0 - clampf(time_left / maxf(warning_time, 0.001), 0.0, 1.0)
+	_warning_phase += delta * lerpf(WARNING_HZ_START, WARNING_HZ_END, urgency)
+	var pulse := (1.0 - cos(_warning_phase * TAU)) * 0.5
+	_panel_style.bg_color = _base_bg_color.lerp(Color(0.75, 0.0, 0.0, 1.0), smoothstep(0.2, 0.8, pulse))
+#endregion
+
+#region BOUNCE MOVEMENT
+func _update_bounce(delta: float):
+	if _is_player_holding_click():
+		return
+	var min_pos := _bounce_area.position - _footprint.position
+	var max_pos := (_bounce_area.end - _footprint.size - _footprint.position).max(min_pos)
+	var pos := global_position + _bounce_velocity * delta
+	for axis in [Vector2.AXIS_X, Vector2.AXIS_Y]:
+		if pos[axis] <= min_pos[axis]:
+			pos[axis] = min_pos[axis]
+			_bounce_velocity[axis] = absf(_bounce_velocity[axis])
+		elif pos[axis] >= max_pos[axis]:
+			pos[axis] = max_pos[axis]
+			_bounce_velocity[axis] = -absf(_bounce_velocity[axis])
+	global_position = pos
+
+# Mantener el clic sobre la ventana la frena, para poder "atraparla".
+func _is_player_holding_click() -> bool:
+	return Input.is_action_pressed("Click") and _footprint.has_point(get_local_mouse_position())
+#endregion
+
+#region CONDITION ICON FITTING
+func _fit_condition_icon():
+	var texture := condition_icon.texture
+	if texture == null:
+		push_warning("PuzzleWindow: la condición '%s' no tiene ícono (Condition Icon)." % condition.registry_key())
+		return
+	var limit := minf(condition_icon_size, minf(condition_panel.size.x, condition_panel.size.y))
+	var longest_side := maxf(texture.get_size().x, texture.get_size().y)
+	condition_icon.scale = Vector2.ONE * minf(1.0, limit / longest_side)
+#endregion
+
+#region TIMER & INTERACTION CALLBACKS
 func _on_player_timer_timeout():
-	_on_minigame_failed()
-
-func _on_minigame_solved():
-	if _resolved:
-		return
-	_resolved = true
-	var elapsed := player_timer.wait_time - player_timer.time_left
-	player_timer.stop()
-	var reward := _calculate_reward(elapsed)
-	solved.emit(self, reward)
-	_close()
-
-func _on_minigame_failed():
-	if _resolved:
-		return
-	_resolved = true
-	player_timer.stop()
-	failed.emit(self, fail_time_penalty)
-	_close()
+	_resolve(false)
 
 func _on_minigame_interacted():
 	if condition:
 		condition.interaction(self)
+#endregion
 
-func _calculate_reward(elapsed_seconds: float) -> int:
-	var speed_bonus: float = clamp(1.0 - (elapsed_seconds / player_timer.wait_time), 0.0, 1.0)
-	return int(base_hackoin_reward * (1.0 + speed_bonus))
+#region RESOLUTION & REWARD
+func _resolve(success: bool):
+	if _resolved:
+		return
+	_resolved = true
+	set_process(false)
+	if success:
+		solved.emit(self, _calculate_reward())
+	else:
+		failed.emit(self, fail_time_penalty)
+	_close()
 
+# De 1x a 2x la recompensa base, según la fracción de tiempo que sobra.
+func _calculate_reward() -> int:
+	var time_fraction := player_timer.time_left / player_timer.wait_time
+	return int(base_hackoin_reward * (1.0 + time_fraction))
+#endregion
+
+#region CLOSE & CLEANUP
 func _close():
+	player_timer.stop()
 	_release_condition()
 	closed.emit(self)
 	queue_free()
 
-func _exit_tree():
-	_release_condition()
-
 func _release_condition():
-	if condition and _condition_applied:
+	if _condition_applied:
 		_condition_applied = false
 		condition.remove(self)
+#endregion
