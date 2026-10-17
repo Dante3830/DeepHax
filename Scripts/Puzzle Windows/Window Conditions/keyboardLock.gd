@@ -1,16 +1,16 @@
 class_name KeyboardLock
 extends PuzzleCondition
 
-var keyboard_is_locked = false
+var keyboardIsLocked = false
 
 func apply_cond(_window: PuzzleWindow) -> void:
 	if GameManager.is_keyboard_locked():
-		keyboard_is_locked = false
+		keyboardIsLocked = false
 	else:
 		GameManager.lock_keyboard()
-		keyboard_is_locked = true
+		keyboardIsLocked = true
 
 func remove_cond(_window: PuzzleWindow) -> void:
-	if keyboard_is_locked:
+	if keyboardIsLocked:
 		GameManager.unlock_keyboard()
-		keyboard_is_locked = false
+		keyboardIsLocked = false

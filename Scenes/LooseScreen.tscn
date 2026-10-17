@@ -1,7 +1,7 @@
 [gd_scene format=3 uid="uid://bsnqwtrg5ipng"]
 
 [ext_resource type="FontFile" uid="uid://djx8toqe17ynx" path="res://Assets/Fonts/Michroma-Regular.ttf" id="1_ktst8"]
-[ext_resource type="Script" uid="uid://d3nuumctpxwet" path="res://Scripts/loose_screen.gd" id="1_loy5t"]
+[ext_resource type="Script" uid="uid://d3nuumctpxwet" path="res://Scripts/looseScreen.gd" id="1_loy5t"]
 [ext_resource type="FontFile" uid="uid://2afyco5rkpvl" path="res://Assets/Fonts/Anta-Regular.ttf" id="2_imhnd"]
 [ext_resource type="FontFile" uid="uid://dkt6qdxklh4j6" path="res://Assets/Fonts/IBM_Plex_Mono/IBMPlexMono-Bold.ttf" id="2_subpc"]
 

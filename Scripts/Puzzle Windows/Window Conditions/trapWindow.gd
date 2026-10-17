@@ -1,30 +1,30 @@
-# Todavía NO es usado
+# Todavía NO lo voy a usar
 class_name TrapWindow
 extends PuzzleCondition
 
-@export var time_penalty: float = 20.0
-@export var window_duration: float = 5.0
+@export var timePenalty = 20.0
+@export var windowDuration = 5.0
 
-var windows_with_trap: Dictionary = {}
+var windowsWithTrap = {}
 
 func apply_cond(window: PuzzleWindow):
-	windows_with_trap[window] = true
-	tick(window, int(ceil(window_duration)))
+	windowsWithTrap[window] = true
+	tick(window, int(ceil(windowDuration)))
 
 func remove_cond(window: PuzzleWindow):
-	windows_with_trap.erase(window)
+	windowsWithTrap.erase(window)
 
 func punish(window: PuzzleWindow):
-	if windows_with_trap.get(window, false):
+	if windowsWithTrap.get(window, false):
 		pass
 		# Por acá pondré que, si el jugador interactúa, pierde segundos
 
 func tick(window: PuzzleWindow, seconds_left: float):
-	if not windows_with_trap.get(window, false):
+	if not windowsWithTrap.get(window, false):
 		return
 	
 	if seconds_left <= 0.0:
-		windows_with_trap.erase(window)
+		windowsWithTrap.erase(window)
 		window.hide_condition_time()
 		return
 	

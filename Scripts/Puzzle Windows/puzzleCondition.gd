@@ -1,14 +1,14 @@
 class_name PuzzleCondition
 extends Resource
 
-@export var condition_icon: Texture2D
-@export var condition_name = ""
+@export var conditionIcon: Texture2D
+@export var conditionName = ""
 
 func registry_key() -> String:
-	var global_name: StringName = get_script().get_global_name()
-	if global_name != &"":
-		return String(global_name)
-	return condition_name
+	var globalName: StringName = get_script().get_global_name()
+	if globalName != &"":
+		return String(globalName)
+	return conditionName
 
 func apply(window: PuzzleWindow):
 	GameManager.register_active_condition(registry_key())

@@ -1,6 +1,6 @@
 [gd_scene format=3 uid="uid://du5t2mojof51w"]
 
-[ext_resource type="Script" uid="uid://bvcy8jhjtn4sp" path="res://Scripts/Puzzle Windows/keep_pressed.gd" id="1_vgns1"]
+[ext_resource type="Script" uid="uid://bvcy8jhjtn4sp" path="res://Scripts/Puzzle Windows/keepPressed.gd" id="1_vgns1"]
 
 [sub_resource type="StyleBoxFlat" id="StyleBoxFlat_vgns1"]
 bg_color = Color(1, 0, 0, 1)

@@ -1,6 +1,6 @@
 [gd_scene format=3 uid="uid://cen1sik3y6o5s"]
 
-[ext_resource type="Script" uid="uid://dinu5df5srn8i" path="res://Scripts/Puzzle Windows/simon_says.gd" id="1_seao0"]
+[ext_resource type="Script" uid="uid://dinu5df5srn8i" path="res://Scripts/Puzzle Windows/simonSays.gd" id="1_seao0"]
 
 [sub_resource type="StyleBoxFlat" id="StyleBoxFlat_seao0"]
 bg_color = Color(1, 0, 0, 1)
@@ -16,7 +16,12 @@ border_width_top = 2
 border_width_right = 2
 border_width_bottom = 2
 
-[sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_e7g35"]
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_yklot"]
+bg_color = Color(0.28, 0, 0, 1)
+border_width_left = 2
+border_width_top = 2
+border_width_right = 2
+border_width_bottom = 2
 
 [sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_8ljn3"]
 
@@ -37,6 +42,13 @@ border_width_top = 2
 border_width_right = 2
 border_width_bottom = 2
 
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_uts7s"]
+bg_color = Color(0, 0.19607843, 0, 1)
+border_width_left = 2
+border_width_top = 2
+border_width_right = 2
+border_width_bottom = 2
+
 [sub_resource type="StyleBoxFlat" id="StyleBoxFlat_8ljn3"]
 bg_color = Color(0.98333335, 1, 0, 1)
 border_width_left = 2
@@ -51,6 +63,13 @@ border_width_top = 2
 border_width_right = 2
 border_width_bottom = 2
 
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_cx3tb"]
+bg_color = Color(0.24583334, 0.25, 0, 1)
+border_width_left = 2
+border_width_top = 2
+border_width_right = 2
+border_width_bottom = 2
+
 [sub_resource type="StyleBoxFlat" id="StyleBoxFlat_5fy4x"]
 bg_color = Color(0, 0, 1, 1)
 border_width_left = 2
@@ -60,6 +79,13 @@ border_width_bottom = 2
 
 [sub_resource type="StyleBoxFlat" id="StyleBoxFlat_ar4d7"]
 bg_color = Color(0.046863526, 0, 0.4227496, 1)
+border_width_left = 2
+border_width_top = 2
+border_width_right = 2
+border_width_bottom = 2
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_3fvji"]
+bg_color = Color(0.02800003, 0, 0.24, 1)
 border_width_left = 2
 border_width_top = 2
 border_width_right = 2
@@ -86,7 +112,7 @@ offset_bottom = 120.000015
 theme_override_styles/normal = SubResource("StyleBoxFlat_seao0")
 theme_override_styles/pressed = SubResource("StyleBoxFlat_fcw58")
 theme_override_styles/hover = SubResource("StyleBoxFlat_seao0")
-theme_override_styles/disabled = SubResource("StyleBoxEmpty_e7g35")
+theme_override_styles/disabled = SubResource("StyleBoxFlat_yklot")
 theme_override_styles/focus = SubResource("StyleBoxEmpty_8ljn3")
 
 [node name="RedLight" type="Panel" parent="Red" unique_id=1239424378]
@@ -105,7 +131,7 @@ offset_bottom = 176.00002
 theme_override_styles/normal = SubResource("StyleBoxFlat_4rqxq")
 theme_override_styles/pressed = SubResource("StyleBoxFlat_e7g35")
 theme_override_styles/hover = SubResource("StyleBoxFlat_4rqxq")
-theme_override_styles/disabled = SubResource("StyleBoxEmpty_e7g35")
+theme_override_styles/disabled = SubResource("StyleBoxFlat_uts7s")
 theme_override_styles/focus = SubResource("StyleBoxEmpty_8ljn3")
 
 [node name="GreenLight" type="Panel" parent="Green" unique_id=1980676472]
@@ -124,7 +150,7 @@ offset_bottom = 176.00002
 theme_override_styles/normal = SubResource("StyleBoxFlat_8ljn3")
 theme_override_styles/pressed = SubResource("StyleBoxFlat_8lofu")
 theme_override_styles/hover = SubResource("StyleBoxFlat_8ljn3")
-theme_override_styles/disabled = SubResource("StyleBoxEmpty_e7g35")
+theme_override_styles/disabled = SubResource("StyleBoxFlat_cx3tb")
 theme_override_styles/focus = SubResource("StyleBoxEmpty_8ljn3")
 
 [node name="YellowLight" type="Panel" parent="Yellow" unique_id=202979905]
@@ -143,7 +169,7 @@ offset_bottom = 232.00002
 theme_override_styles/normal = SubResource("StyleBoxFlat_5fy4x")
 theme_override_styles/pressed = SubResource("StyleBoxFlat_ar4d7")
 theme_override_styles/hover = SubResource("StyleBoxFlat_5fy4x")
-theme_override_styles/disabled = SubResource("StyleBoxEmpty_e7g35")
+theme_override_styles/disabled = SubResource("StyleBoxFlat_3fvji")
 theme_override_styles/focus = SubResource("StyleBoxEmpty_8ljn3")
 
 [node name="BlueLight" type="Panel" parent="Blue" unique_id=1266166730]

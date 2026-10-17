@@ -1,6 +1,6 @@
 [gd_scene format=3 uid="uid://cpp583uv45ray"]
 
-[ext_resource type="Script" uid="uid://c1ufu0upfxucp" path="res://Scripts/Puzzle Windows/puzzle_window.gd" id="1_s78y1"]
+[ext_resource type="Script" uid="uid://c1ufu0upfxucp" path="res://Scripts/Puzzle Windows/puzzleWindow.gd" id="1_s78y1"]
 
 [sub_resource type="StyleBoxFlat" id="StyleBoxFlat_lu45j"]
 bg_color = Color(0, 0, 0, 1)
@@ -18,7 +18,6 @@ offset_top = -128.0
 offset_right = -128.0
 offset_bottom = -128.0
 script = ExtResource("1_s78y1")
-base_hackoin_reward = 7
 
 [node name="PlayerTimer" type="Timer" parent="." unique_id=1960595137]
 wait_time = 10.0
@@ -37,11 +36,6 @@ offset_bottom = 32.0
 theme_override_styles/panel = SubResource("StyleBoxFlat_lu45j")
 
 [node name="Condition" type="Sprite2D" parent="ConditionPanel" unique_id=1497261455]
-
-[node name="Time" type="Label" parent="ConditionPanel" unique_id=414223357]
-layout_mode = 0
-offset_right = 40.0
-offset_bottom = 23.0
 
 [node name="ContentContainer" type="Control" parent="." unique_id=400895573]
 unique_name_in_owner = true

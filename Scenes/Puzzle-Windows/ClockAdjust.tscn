@@ -1,6 +1,6 @@
 [gd_scene format=3 uid="uid://ky6a80ty8iho"]
 
-[ext_resource type="Script" uid="uid://de1ykevhgqftj" path="res://Scripts/Puzzle Windows/clock_adjust.gd" id="1_c63cc"]
+[ext_resource type="Script" uid="uid://de1ykevhgqftj" path="res://Scripts/Puzzle Windows/clockAdjust.gd" id="1_c63cc"]
 [ext_resource type="FontFile" uid="uid://c3kf3eydfw551" path="res://Assets/Fonts/lcd_lcd_mono/LCDWinTT/LCD2B___.TTF" id="2_o83mr"]
 [ext_resource type="Texture2D" uid="uid://bs34a10w0rch0" path="res://Assets/Circulo.png" id="2_r26b5"]
 [ext_resource type="Texture2D" uid="uid://bkx2djypoopw7" path="res://Assets/Aguja.png" id="3_p2p4g"]
@@ -26,38 +26,38 @@ offset_right = 256.0
 offset_bottom = 256.0
 theme_override_styles/panel = SubResource("StyleBoxEmpty_p2p4g")
 
-[node name="CircleA" type="Sprite2D" parent="." unique_id=74511984]
+[node name="CircleBase" type="Sprite2D" parent="." unique_id=74511984]
 position = Vector2(127.999985, 127.999985)
 scale = Vector2(0.43142858, 0.43142858)
 texture = ExtResource("2_r26b5")
 
-[node name="Aguja1" type="RayCast2D" parent="." unique_id=231102474]
+[node name="HourNeedle" type="RayCast2D" parent="." unique_id=231102474]
 position = Vector2(128, 128)
 target_position = Vector2(0, -58)
 
-[node name="Sprite2D" type="Sprite2D" parent="Aguja1" unique_id=2022425973]
+[node name="Sprite2D" type="Sprite2D" parent="HourNeedle" unique_id=2022425973]
 modulate = Color(0, 0.83137256, 1, 1)
 texture_filter = 1
 position = Vector2(0, -29.5)
 scale = Vector2(0.038, 0.056481488)
 texture = ExtResource("3_p2p4g")
 
-[node name="Aguja2" type="RayCast2D" parent="." unique_id=1357483592]
+[node name="MinuteNeedle" type="RayCast2D" parent="." unique_id=1357483592]
 position = Vector2(128, 128)
 target_position = Vector2(0, -58)
 
-[node name="Sprite2D2" type="Sprite2D" parent="Aguja2" unique_id=972916398]
+[node name="Sprite2D2" type="Sprite2D" parent="MinuteNeedle" unique_id=972916398]
 modulate = Color(1, 0.9647059, 0, 1)
 texture_filter = 1
 position = Vector2(0, -29.5)
 scale = Vector2(0.038, 0.056481488)
 texture = ExtResource("3_p2p4g")
 
-[node name="Aguja3" type="RayCast2D" parent="." unique_id=1392155748]
+[node name="SecondNeedle" type="RayCast2D" parent="." unique_id=1392155748]
 position = Vector2(128, 128)
 target_position = Vector2(0, -58)
 
-[node name="Sprite2D3" type="Sprite2D" parent="Aguja3" unique_id=1801277380]
+[node name="Sprite2D3" type="Sprite2D" parent="SecondNeedle" unique_id=1801277380]
 modulate = Color(1, 0, 0, 1)
 texture_filter = 1
 position = Vector2(0, -29.5)

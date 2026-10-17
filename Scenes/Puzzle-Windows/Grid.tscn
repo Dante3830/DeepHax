@@ -1,6 +1,6 @@
 [gd_scene format=3 uid="uid://7x0x505pik5l"]
 
-[ext_resource type="Script" uid="uid://dvb21d0rxu23v" path="res://Scripts/Puzzle Windows/three_times_three.gd" id="1_w5ilg"]
+[ext_resource type="Script" uid="uid://dvb21d0rxu23v" path="res://Scripts/Puzzle Windows/grid.gd" id="1_bi507"]
 
 [sub_resource type="StyleBoxFlat" id="StyleBoxFlat_ixs4m"]
 bg_color = Color(0, 0, 0, 1)
@@ -19,7 +19,7 @@ bg_color = Color(0, 0, 1, 1)
 [sub_resource type="StyleBoxFlat" id="StyleBoxFlat_w5ilg"]
 bg_color = Color(1, 1, 1, 1)
 
-[node name="ThreeTimesThree" type="Control" unique_id=1270405932]
+[node name="Grid" type="Control" unique_id=1270405932]
 layout_mode = 3
 anchor_left = -0.067
 anchor_top = -0.119
@@ -29,7 +29,7 @@ offset_left = 0.6399994
 offset_top = 0.5200043
 offset_right = 0.6399994
 offset_bottom = 0.5200043
-script = ExtResource("1_w5ilg")
+script = ExtResource("1_bi507")
 
 [node name="Panel" type="Panel" parent="." unique_id=205638928]
 visible = false

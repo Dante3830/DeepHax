@@ -1,6 +1,6 @@
 [gd_scene format=3 uid="uid://ckyen1xvgrwjv"]
 
-[ext_resource type="Script" uid="uid://d1w5dwtik5d50" path="res://Scripts/transition_scene.gd" id="1_ml2rw"]
+[ext_resource type="Script" uid="uid://d1w5dwtik5d50" path="res://Scripts/transitionScene.gd" id="1_ml2rw"]
 [ext_resource type="Texture2D" uid="uid://6aghxvwe6hnn" path="res://Assets/Kenney Game Icons/up.png" id="2_rr8bd"]
 [ext_resource type="FontFile" uid="uid://2afyco5rkpvl" path="res://Assets/Fonts/Anta-Regular.ttf" id="3_1l5q3"]
 [ext_resource type="FontFile" uid="uid://djx8toqe17ynx" path="res://Assets/Fonts/Michroma-Regular.ttf" id="3_mh0y2"]

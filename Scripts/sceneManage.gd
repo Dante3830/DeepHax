@@ -2,14 +2,14 @@ extends CanvasLayer
 
 @onready var animation: AnimationPlayer = %Animation
 
-var last_scene_name : String
+var lastSceneName : String
 
-var scene_dir_path = "res://Scenes/"
+var sceneDirPath = "res://Scenes/"
 
-func change_scene(from: Node, to_scene_name: String):
-	var full_path = scene_dir_path + to_scene_name + ".tscn"
+func change_scene(from: Node, toSceneName: String):
+	var full_path = sceneDirPath + toSceneName + ".tscn"
 	
-	last_scene_name = from.name
+	lastSceneName = from.name
 	
 	animation.play("transition_out")
 	

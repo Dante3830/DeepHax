@@ -1,6 +1,6 @@
 [gd_scene format=3 uid="uid://byvl8ug5mi4wy"]
 
-[ext_resource type="Script" uid="uid://jn47k2tfm7l2" path="res://Scripts/scene_manage.gd" id="1_yueht"]
+[ext_resource type="Script" uid="uid://jn47k2tfm7l2" path="res://Scripts/sceneManage.gd" id="1_yueht"]
 
 [sub_resource type="Shader" id="Shader_yueht"]
 code = "shader_type canvas_item;

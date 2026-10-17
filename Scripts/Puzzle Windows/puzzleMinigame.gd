@@ -4,19 +4,19 @@ extends Control
 signal interacted
 signal finished(success: bool)
 
-var _has_interacted = false
-var _is_finished = false
+var hasInteracted = false
+var isFinished = false
 
 func start():
 	pass
 
 func notify_interaction():
-	if not _has_interacted:
-		_has_interacted = true
+	if !hasInteracted:
+		hasInteracted = true
 		interacted.emit()
 
 func finish(success: bool):
-	if not _is_finished:
-		_is_finished = true
+	if !isFinished:
+		isFinished = true
 		set_process(false)
 		finished.emit(success)

@@ -1,13 +1,13 @@
 class_name Accelerator
 extends PuzzleCondition
 
-@export var speed_margin = [1.5, 2.0]
+@export var speedMargin = [1.5, 2.0]
 
 func apply_cond(_window: PuzzleWindow):
 	var multiplier: float
-	if !speed_margin.is_empty():
-		multiplier = speed_margin.pick_random()
-	GameManager.time_speed = multiplier
+	if !speedMargin.is_empty():
+		multiplier = speedMargin.pick_random()
+	GameManager.timeSpeed = multiplier
 
 func remove_cond(_window: PuzzleWindow):
-	GameManager.time_speed = 1.0
+	GameManager.timeSpeed = 1.0

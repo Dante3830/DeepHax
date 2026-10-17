@@ -1,8 +1,10 @@
 [gd_resource type="Resource" script_class="KeyboardLock" format=3 uid="uid://cfyl6v8128a2s"]
 
-[ext_resource type="Script" uid="uid://cuvv6lojdqq6c" path="res://Scripts/Puzzle Windows/Window Conditions/keyboard_lock.gd" id="1_wwyxm"]
+[ext_resource type="Texture2D" uid="uid://bggri235l2ulr" path="res://Assets/Kenney Game Icons/locked.png" id="1_dymsh"]
+[ext_resource type="Script" uid="uid://cuvv6lojdqq6c" path="res://Scripts/Puzzle Windows/Window Conditions/keyboardLock.gd" id="2_dymsh"]
 
 [resource]
-script = ExtResource("1_wwyxm")
-condition_name = "KeyboardLock"
+script = ExtResource("2_dymsh")
+conditionIcon = ExtResource("1_dymsh")
+conditionName = "KeyboardLock"
 metadata/_custom_type_script = "uid://cuvv6lojdqq6c"

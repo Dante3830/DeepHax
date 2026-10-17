@@ -1,6 +1,6 @@
 [gd_scene format=3 uid="uid://cp4ires0jxc61"]
 
-[ext_resource type="Script" uid="uid://bl3wqqisn5uk5" path="res://Scripts/pause_menu.gd" id="1_5w4ur"]
+[ext_resource type="Script" uid="uid://bl3wqqisn5uk5" path="res://Scripts/pauseMenu.gd" id="1_5w4ur"]
 [ext_resource type="FontFile" uid="uid://djx8toqe17ynx" path="res://Assets/Fonts/Michroma-Regular.ttf" id="2_5w4ur"]
 [ext_resource type="FontFile" uid="uid://2afyco5rkpvl" path="res://Assets/Fonts/Anta-Regular.ttf" id="2_qwhev"]
 
