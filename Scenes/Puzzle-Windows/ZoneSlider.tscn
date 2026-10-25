@@ -1,0 +1,42 @@
+[gd_scene format=3 uid="uid://bbmumjrw44na0"]
+
+[ext_resource type="Script" uid="uid://qfvhui8h3nq6" path="res://Scripts/Puzzle Windows/zoneSlider.gd" id="1_jjfry"]
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_lu45j"]
+bg_color = Color(0.6, 0.6, 0.6, 0)
+border_width_left = 2
+border_width_top = 2
+border_width_right = 2
+border_width_bottom = 2
+border_color = Color(0, 1, 0, 1)
+
+[node name="ZoneSlider" type="Control" unique_id=1270405932]
+layout_mode = 3
+anchors_preset = 0
+offset_left = -128.0
+offset_top = -128.0
+offset_right = -128.0
+offset_bottom = -128.0
+script = ExtResource("1_jjfry")
+
+[node name="Panel" type="Panel" parent="." unique_id=1186984904]
+layout_mode = 0
+offset_right = 256.0
+offset_bottom = 256.0
+theme_override_styles/panel = SubResource("StyleBoxFlat_lu45j")
+
+[node name="Label" type="Label" parent="." unique_id=1527604521]
+layout_mode = 0
+offset_left = 94.0
+offset_top = 9.0
+offset_right = 273.0
+offset_bottom = 32.0
+text = "Detenelo en la zona"
+
+[node name="HSlider" type="HSlider" parent="." unique_id=1242197525]
+layout_mode = 0
+offset_left = 32.0
+offset_top = 120.0
+offset_right = 224.0
+offset_bottom = 149.0
+step = 0.1

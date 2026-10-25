@@ -11,9 +11,9 @@ const CABLES_CONNECT_SCENE = preload("res://Scenes/Puzzle-Windows/CablesConnect.
 const ACCELERATOR_CONDITION: PuzzleCondition = preload("res://Scenes/Window Conditions/Accelerator.tres")
 const KEYBOARD_LOCK_CONDITION: PuzzleCondition = preload("res://Scenes/Window Conditions/KeyboardLock.tres")
 
-const LINES_PER_PHASE = 5
+const ENTER_BLOCKED_COLOR = Color(1.0, 0.35, 0.35)
 
-var phase1Minigames = [
+var minigames = [
 	{ "scene": SIMON_SAYS_SCENE, "time_limit": 12.0 },
 	{ "scene": KEEP_PRESSED_SCENE, "time_limit": 10.0 },
 	{ "scene": GRID_SCENE, "time_limit": 10.0 },
@@ -21,7 +21,7 @@ var phase1Minigames = [
 	{ "scene": CABLES_CONNECT_SCENE, "time_limit": 10.0 }
 ]
 
-var phase1Conditions = [null, KEYBOARD_LOCK_CONDITION, ACCELERATOR_CONDITION]
+var conditions = [null, KEYBOARD_LOCK_CONDITION, ACCELERATOR_CONDITION]
 
 var linesPool = [
 	"void computerMove(char *spaces, char player, char computer);",
@@ -63,6 +63,8 @@ var linesPool = [
 @export var windowSpawnMin = 8.0
 @export var windowSpawnMax = 12.0
 @export var successTimeGet = 30.0
+@export var lineTime = 0.0
+@export var nextScene = "phase2"
 
 var linesToType = []
 var completedLines = 0
@@ -70,21 +72,25 @@ var phaseOver = false
 var lineTimeLimit: float
 
 var currentPuzzleWindow: PuzzleWindow = null
+var enterBlockedTween: Tween
 
 func _ready():
 	$TimeBar/GetTime.visible = false
 	$TimeBar/LoseTime.visible = false
 	time.one_shot = true
+	if lineTime > 0.0:
+		time.start(lineTime)
 	GameManager.reset_conditions()
 	GameManager.receiverLabel = receiver
 	for light in lights:
 		set_light_on(light, false)
 	lineTimeLimit = time.wait_time
 	on_hackoins_changed(GameManager.hackoins, 0)
+	set_combo(GameManager.linesCombo)
 	GameManager.hackoins_changed.connect(on_hackoins_changed)
 	var shuffled = linesPool.duplicate()
 	shuffled.shuffle()
-	linesToType = shuffled.slice(0, LINES_PER_PHASE)
+	linesToType = shuffled.slice(0, 5)
 	inserter.gui_input.connect(on_inserter_gui_input)
 	load_current_line()
 	_schedule_next_puzzle_window()
@@ -143,7 +149,7 @@ func spawn_puzzle_window():
 	currentPuzzleWindow = window
 	window.global_position = pick_window_position(window)
 	
-	var config: Dictionary = phase1Minigames.pick_random()
+	var config: Dictionary = minigames.pick_random()
 	var condition: PuzzleCondition = pick_window_condition()
 	
 	window.solved.connect(on_puzzle_window_solved)
@@ -171,7 +177,7 @@ func pick_window_position(window: PuzzleWindow) -> Vector2:
 	return topLeft - footprint.position
 
 func pick_window_condition() -> PuzzleCondition:
-	var available = phase1Conditions.filter(
+	var available = conditions.filter(
 		func(c): return c == null or not GameManager.is_condition_active(c.registry_key()))
 	return available.pick_random()
 
@@ -219,7 +225,20 @@ func on_inserter_gui_input(event: InputEvent):
 		inserter.accept_event()
 	elif event.keycode == KEY_ENTER:
 		inserter.accept_event()
-		submit_line()
+		if is_enter_blocked():
+			show_enter_blocked_feedback()
+		else:
+			submit_line()
+
+func is_enter_blocked() -> bool:
+	return is_instance_valid(currentPuzzleWindow)
+
+func show_enter_blocked_feedback():
+	if enterBlockedTween:
+		enterBlockedTween.kill()
+	inserter.modulate = ENTER_BLOCKED_COLOR
+	enterBlockedTween = create_tween()
+	enterBlockedTween.tween_property(inserter, "modulate", Color.WHITE, 0.3)
 
 func submit_line():
 	if phaseOver:
@@ -240,7 +259,8 @@ func submit_line():
 			$Victoria.show()
 			animationPlayer.play("Victory")
 			await get_tree().create_timer(3.0).timeout
-			SceneManage.change_scene(self, "ThankYou")
+			GameManager.phase = 2
+			SceneManage.change_scene(self, "Shop")
 		else:
 			load_current_line()
 	else:

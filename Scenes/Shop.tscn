@@ -1,9 +1,33 @@
 [gd_scene format=3 uid="uid://ckyen1xvgrwjv"]
 
-[ext_resource type="Script" uid="uid://d1w5dwtik5d50" path="res://Scripts/transitionScene.gd" id="1_ml2rw"]
-[ext_resource type="Texture2D" uid="uid://6aghxvwe6hnn" path="res://Assets/Kenney Game Icons/up.png" id="2_rr8bd"]
-[ext_resource type="FontFile" uid="uid://2afyco5rkpvl" path="res://Assets/Fonts/Anta-Regular.ttf" id="3_1l5q3"]
-[ext_resource type="FontFile" uid="uid://djx8toqe17ynx" path="res://Assets/Fonts/Michroma-Regular.ttf" id="3_mh0y2"]
+[ext_resource type="Script" uid="uid://d1w5dwtik5d50" path="res://Scripts/shop.gd" id="1_i4qx4"]
+[ext_resource type="Texture2D" uid="uid://6aghxvwe6hnn" path="res://Assets/Kenney Game Icons/up.png" id="2_e5ji4"]
+[ext_resource type="FontFile" uid="uid://djx8toqe17ynx" path="res://Assets/Fonts/Michroma-Regular.ttf" id="3_wndna"]
+[ext_resource type="FontFile" uid="uid://2afyco5rkpvl" path="res://Assets/Fonts/Anta-Regular.ttf" id="4_ckylj"]
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_i4qx4"]
+bg_color = Color(0, 0, 0, 1)
+border_width_left = 1
+border_width_top = 1
+border_width_right = 1
+border_width_bottom = 1
+border_color = Color(1, 1, 1, 1)
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_e5ji4"]
+bg_color = Color(0, 0, 0, 1)
+border_width_left = 1
+border_width_top = 1
+border_width_right = 1
+border_width_bottom = 1
+border_color = Color(1, 1, 1, 1)
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_wndna"]
+bg_color = Color(0, 0, 0, 1)
+border_width_left = 1
+border_width_top = 1
+border_width_right = 1
+border_width_bottom = 1
+border_color = Color(1, 1, 1, 1)
 
 [sub_resource type="StyleBoxFlat" id="StyleBoxFlat_sij6u"]
 bg_color = Color(0, 0, 0, 1)
@@ -26,6 +50,33 @@ tracks/0/keys = {
 "transitions": PackedFloat32Array(1),
 "update": 0,
 "values": [Vector2(786, 189)]
+}
+tracks/1/type = "value"
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/path = NodePath("Lights/Light1:theme_override_styles/panel:bg_color")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [Color(0, 0, 0, 1)]
+}
+
+[sub_resource type="Animation" id="Animation_i4qx4"]
+resource_name = "light_1_on"
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("Lights/Light1:theme_override_styles/panel:bg_color")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0, 0.26666668, 0.46666667, 0.7, 0.85, 1),
+"transitions": PackedFloat32Array(1, 1, 1, 1, 1, 1),
+"update": 1,
+"values": [Color(0, 0, 0, 1), Color(0, 1, 0, 1), Color(0, 0, 0, 1), Color(0, 1, 0, 1), Color(0, 0, 0, 1), Color(0, 1, 0, 1)]
 }
 
 [sub_resource type="Animation" id="Animation_mh0y2"]
@@ -143,6 +194,7 @@ tracks/0/keys = {
 [sub_resource type="AnimationLibrary" id="AnimationLibrary_g0jo3"]
 _data = {
 &"RESET": SubResource("Animation_1l5q3"),
+&"light_1_on": SubResource("Animation_i4qx4"),
 &"phase_1": SubResource("Animation_mh0y2"),
 &"phase_2": SubResource("Animation_274lt"),
 &"phase_3": SubResource("Animation_1j856"),
@@ -180,19 +232,19 @@ border_width_right = 6
 border_width_bottom = 6
 border_color = Color(0, 0.9098039, 0, 1)
 
-[node name="Transition" type="Control" unique_id=2043806579]
+[node name="Shop" type="Control" unique_id=2043806579]
 layout_mode = 3
 anchors_preset = 15
 anchor_right = 1.0
 anchor_bottom = 1.0
 grow_horizontal = 2
 grow_vertical = 2
-script = ExtResource("1_ml2rw")
+script = ExtResource("1_i4qx4")
 
 [node name="Indicator" type="Sprite2D" parent="." unique_id=1245925353]
 modulate = Color(0, 1, 0, 1)
 position = Vector2(786, 189)
-texture = ExtResource("2_rr8bd")
+texture = ExtResource("2_e5ji4")
 
 [node name="Percentage" type="Label" parent="." unique_id=1316871370]
 layout_mode = 0
@@ -203,7 +255,7 @@ offset_bottom = 77.0
 theme_override_colors/font_color = Color(1, 1, 1, 1)
 theme_override_colors/font_outline_color = Color(1, 1, 1, 1)
 theme_override_constants/outline_size = 4
-theme_override_fonts/font = ExtResource("3_mh0y2")
+theme_override_fonts/font = ExtResource("3_wndna")
 theme_override_font_sizes/font_size = 48
 text = "0% COMPLETADO"
 horizontal_alignment = 1
@@ -217,7 +269,7 @@ offset_bottom = 884.0
 theme_override_colors/font_color = Color(1, 1, 1, 1)
 theme_override_colors/font_outline_color = Color(1, 1, 1, 1)
 theme_override_constants/outline_size = 4
-theme_override_fonts/font = ExtResource("3_1l5q3")
+theme_override_fonts/font = ExtResource("4_ckylj")
 theme_override_font_sizes/font_size = 48
 text = "Hackoins conseguidas: 000"
 horizontal_alignment = 1
@@ -235,7 +287,7 @@ offset_left = 256.0
 offset_top = 64.0
 offset_right = 320.0
 offset_bottom = 128.0
-theme_override_styles/panel = SubResource("StyleBoxFlat_sij6u")
+theme_override_styles/panel = SubResource("StyleBoxFlat_i4qx4")
 
 [node name="Light2" type="Panel" parent="Lights" unique_id=2114037600]
 layout_mode = 0
@@ -243,7 +295,7 @@ offset_left = 384.0
 offset_top = 64.0
 offset_right = 448.0
 offset_bottom = 128.0
-theme_override_styles/panel = SubResource("StyleBoxFlat_sij6u")
+theme_override_styles/panel = SubResource("StyleBoxFlat_e5ji4")
 
 [node name="Light3" type="Panel" parent="Lights" unique_id=1279577682]
 layout_mode = 0
@@ -251,7 +303,7 @@ offset_left = 512.0
 offset_top = 64.0
 offset_right = 576.0
 offset_bottom = 128.0
-theme_override_styles/panel = SubResource("StyleBoxFlat_sij6u")
+theme_override_styles/panel = SubResource("StyleBoxFlat_wndna")
 
 [node name="Light4" type="Panel" parent="Lights" unique_id=739186262]
 layout_mode = 0
@@ -273,7 +325,7 @@ offset_bottom = 1019.0
 theme_override_colors/font_color = Color(0, 1, 0, 1)
 theme_override_colors/font_focus_color = Color(0.95, 0.95, 0.95, 1)
 theme_override_colors/font_pressed_color = Color(0, 0, 0, 1)
-theme_override_fonts/font = ExtResource("3_1l5q3")
+theme_override_fonts/font = ExtResource("4_ckylj")
 theme_override_font_sizes/font_size = 44
 theme_override_styles/normal = SubResource("StyleBoxFlat_mh0y2")
 theme_override_styles/pressed = SubResource("StyleBoxFlat_5f4v5")

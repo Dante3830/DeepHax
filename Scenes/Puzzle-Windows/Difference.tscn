@@ -1,0 +1,51 @@
+[gd_scene format=3 uid="uid://c48l1vndsuyj3"]
+
+[ext_resource type="Script" uid="uid://ducb20gomcxw7" path="res://Scripts/Puzzle Windows/difference.gd" id="1_uk6ur"]
+[ext_resource type="Texture2D" uid="uid://c4h42avyl3vku" path="res://Assets/Kenney Game Icons/arrowLeft.png" id="2_edoqe"]
+
+[node name="Difference" type="Control" unique_id=1270405932]
+layout_mode = 3
+anchors_preset = 0
+offset_left = -128.0
+offset_top = -128.0
+offset_right = -128.0
+offset_bottom = -128.0
+script = ExtResource("1_uk6ur")
+
+[node name="Label" type="Label" parent="." unique_id=1634751737]
+layout_mode = 0
+offset_left = 66.0
+offset_top = 13.0
+offset_right = 245.0
+offset_bottom = 36.0
+text = "Encuentra la diferencia"
+
+[node name="Label2" type="Label" parent="." unique_id=1637170359]
+layout_mode = 0
+offset_left = 37.0
+offset_top = 78.0
+offset_right = 224.0
+offset_bottom = 139.0
+theme_override_colors/font_color = Color(0, 1, 1, 1)
+theme_override_font_sizes/font_size = 44
+text = "ADJ7AU6"
+
+[node name="Label3" type="Label" parent="." unique_id=249955997]
+layout_mode = 0
+offset_left = 37.0
+offset_top = 134.0
+offset_right = 224.0
+offset_bottom = 195.0
+theme_override_font_sizes/font_size = 44
+text = "ADJTAU6"
+
+[node name="Sprite2D" type="Sprite2D" parent="." unique_id=266600301]
+position = Vector2(236, 166.00002)
+scale = Vector2(0.37, 0.37)
+texture = ExtResource("2_edoqe")
+
+[node name="Sprite2D2" type="Sprite2D" parent="." unique_id=1447457711]
+position = Vector2(22, 167.00002)
+rotation = 3.1414819
+scale = Vector2(0.37, 0.37)
+texture = ExtResource("2_edoqe")

@@ -1,16 +1,21 @@
 extends Control
 
-@onready var light_1 = $Lights/Light1
-@onready var light_2 = $Lights/Light1
-@onready var light_3 = $Lights/Light1
-@onready var light_4 = $Lights/Light1
+@onready var light1 = $Lights/Light1
+@onready var light2 = $Lights/Light2
+@onready var light3 = $Lights/Light3
+@onready var light4 = $Lights/Light4
 @onready var percentage = $Percentage.text
 @onready var hackoins_text = $Hackoins.text
-
 @onready var animation_player = $AnimationPlayer
 
-func _process(delta: float) -> void:
-	show_percentage()
+func _ready():
+	$Hackoins.visible = false
+	$StartHackingButton.visible = false
+
+func _process(delta: float):
+	await show_percentage()
+	show_hackoins()
+	$StartHackingButton.visible = true
 
 func show_percentage():
 	match GameManager.phase:
@@ -19,6 +24,8 @@ func show_percentage():
 			animation_player.play("phase_1")
 		2: 
 			$Percentage.text = "25% COMPLETADO"
+			await animation_player.play("light_1_on")
+			await animation_player.play("transition_1")
 			animation_player.play("phase_2")
 		3: 
 			$Percentage.text = "50% COMPLETADO"
@@ -29,12 +36,8 @@ func show_percentage():
 		5: $Percentage.text = "100% COMPLETADO"
 
 func show_hackoins():
+	$Hackoins.visible = false
 	hackoins_text.text = str(GameManager.hackoins)
 
-func _set_light_on(light: Panel, on: bool) -> void:
-	var style = light.get_theme_stylebox("panel")
-	if style is StyleBoxFlat:
-		style.bg_color = Color(0.0, 1.0, 0.0, 1.0) if on else Color(0, 0, 0, 1)
-
-func _on_start_hacking_button_pressed() -> void:
-	pass
+func _on_start_hacking_button_pressed():
+	SceneManage.change_scene(self, "Phase2")
