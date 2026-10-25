@@ -4,6 +4,7 @@
 [ext_resource type="Texture2D" uid="uid://6aghxvwe6hnn" path="res://Assets/Kenney Game Icons/up.png" id="2_e5ji4"]
 [ext_resource type="FontFile" uid="uid://djx8toqe17ynx" path="res://Assets/Fonts/Michroma-Regular.ttf" id="3_wndna"]
 [ext_resource type="FontFile" uid="uid://2afyco5rkpvl" path="res://Assets/Fonts/Anta-Regular.ttf" id="4_ckylj"]
+[ext_resource type="Texture2D" uid="uid://dptce3hmit3di" path="res://Assets/Kenney Game Icons/checkmark.png" id="5_e5ji4"]
 
 [sub_resource type="StyleBoxFlat" id="StyleBoxFlat_i4qx4"]
 bg_color = Color(0, 0, 0, 1)
@@ -334,28 +335,171 @@ theme_override_styles/disabled = SubResource("StyleBoxEmpty_g0jo3")
 theme_override_styles/focus = SubResource("StyleBoxEmpty_274lt")
 text = "  EMPEZAR HACKEO  "
 
-[node name="Item1" type="Panel" parent="." unique_id=1298787623]
-layout_mode = 0
-offset_left = 341.0
-offset_top = 311.0
-offset_right = 717.0
-offset_bottom = 670.0
-theme_override_styles/panel = SubResource("StyleBoxFlat_g0jo3")
+[node name="Upgrades" type="Control" parent="." unique_id=176956569]
+anchors_preset = 0
+offset_right = 40.0
+offset_bottom = 40.0
 
-[node name="Item2" type="Panel" parent="." unique_id=339344681]
+[node name="Item1" type="Button" parent="Upgrades" unique_id=801843321]
 layout_mode = 0
-offset_left = 766.0
-offset_top = 313.0
-offset_right = 1142.0
-offset_bottom = 672.0
-theme_override_styles/panel = SubResource("StyleBoxFlat_g0jo3")
+offset_left = 351.0
+offset_top = 315.0
+offset_right = 722.0
+offset_bottom = 671.0
+theme_override_styles/normal = SubResource("StyleBoxFlat_g0jo3")
 
-[node name="Item3" type="Panel" parent="." unique_id=1030095950]
+[node name="Name" type="Label" parent="Upgrades/Item1" unique_id=231390960]
 layout_mode = 0
-offset_left = 1186.0
-offset_top = 313.0
-offset_right = 1562.0
-offset_bottom = 672.0
-theme_override_styles/panel = SubResource("StyleBoxFlat_g0jo3")
+offset_left = 21.0
+offset_top = 18.0
+offset_right = 349.0
+offset_bottom = 57.0
+theme_override_colors/font_color = Color(0, 1, 0, 1)
+theme_override_font_sizes/font_size = 28
+text = "NOMBRE"
+horizontal_alignment = 1
 
-[connection signal="pressed" from="StartHackingButton" to="." method="_on_start_hacking_button_pressed"]
+[node name="Description" type="Label" parent="Upgrades/Item1" unique_id=1670080436]
+layout_mode = 0
+offset_left = 71.0
+offset_top = 126.0
+offset_right = 301.0
+offset_bottom = 204.0
+theme_override_font_sizes/font_size = 21
+text = "Descripción"
+horizontal_alignment = 1
+
+[node name="Price" type="Label" parent="Upgrades/Item1" unique_id=782217831]
+layout_mode = 0
+offset_left = 86.0
+offset_top = 303.0
+offset_right = 280.0
+offset_bottom = 340.0
+theme_override_font_sizes/font_size = 27
+text = "Precio"
+horizontal_alignment = 1
+
+[node name="Bought" type="Sprite2D" parent="Upgrades/Item1" unique_id=1279806724]
+visible = false
+position = Vector2(188, 270)
+texture = ExtResource("5_e5ji4")
+
+[node name="Price" type="Label" parent="Upgrades/Item1/Bought" unique_id=1863837889]
+offset_left = -100.0
+offset_top = 31.0
+offset_right = 94.0
+offset_bottom = 68.0
+theme_override_font_sizes/font_size = 27
+text = "Comprado"
+horizontal_alignment = 1
+metadata/_edit_use_anchors_ = true
+
+[node name="Item2" type="Button" parent="Upgrades" unique_id=1753364408]
+layout_mode = 0
+offset_left = 791.0
+offset_top = 316.0
+offset_right = 1169.0
+offset_bottom = 673.0
+theme_override_styles/normal = SubResource("StyleBoxFlat_g0jo3")
+
+[node name="Name" type="Label" parent="Upgrades/Item2" unique_id=1920858151]
+layout_mode = 0
+offset_left = 22.0
+offset_top = 20.0
+offset_right = 350.0
+offset_bottom = 59.0
+theme_override_colors/font_color = Color(0, 1, 0, 1)
+theme_override_font_sizes/font_size = 28
+text = "NOMBRE"
+horizontal_alignment = 1
+
+[node name="Description" type="Label" parent="Upgrades/Item2" unique_id=2020976148]
+layout_mode = 0
+offset_left = 72.0
+offset_top = 128.0
+offset_right = 302.0
+offset_bottom = 206.0
+theme_override_font_sizes/font_size = 21
+text = "Descripción"
+horizontal_alignment = 1
+
+[node name="Price" type="Label" parent="Upgrades/Item2" unique_id=125951381]
+layout_mode = 0
+offset_left = 87.0
+offset_top = 305.0
+offset_right = 281.0
+offset_bottom = 342.0
+theme_override_font_sizes/font_size = 27
+text = "Precio"
+horizontal_alignment = 1
+
+[node name="Bought" type="Sprite2D" parent="Upgrades/Item2" unique_id=1447340517]
+visible = false
+position = Vector2(186, 281)
+texture = ExtResource("5_e5ji4")
+
+[node name="Price" type="Label" parent="Upgrades/Item2/Bought" unique_id=71842584]
+offset_left = -100.0
+offset_top = 31.0
+offset_right = 94.0
+offset_bottom = 68.0
+theme_override_font_sizes/font_size = 27
+text = "Comprado"
+horizontal_alignment = 1
+metadata/_edit_use_anchors_ = true
+
+[node name="Item3" type="Button" parent="Upgrades" unique_id=1049145169]
+layout_mode = 0
+offset_left = 1230.0
+offset_top = 316.0
+offset_right = 1608.0
+offset_bottom = 673.0
+theme_override_styles/normal = SubResource("StyleBoxFlat_g0jo3")
+
+[node name="Name" type="Label" parent="Upgrades/Item3" unique_id=588874963]
+layout_mode = 0
+offset_left = 22.0
+offset_top = 20.0
+offset_right = 350.0
+offset_bottom = 59.0
+theme_override_colors/font_color = Color(0, 1, 0, 1)
+theme_override_font_sizes/font_size = 28
+text = "NOMBRE"
+horizontal_alignment = 1
+
+[node name="Description" type="Label" parent="Upgrades/Item3" unique_id=1585070060]
+layout_mode = 0
+offset_left = 72.0
+offset_top = 128.0
+offset_right = 302.0
+offset_bottom = 206.0
+theme_override_font_sizes/font_size = 21
+text = "Descripción"
+horizontal_alignment = 1
+
+[node name="Price" type="Label" parent="Upgrades/Item3" unique_id=1431015790]
+layout_mode = 0
+offset_left = 87.0
+offset_top = 305.0
+offset_right = 281.0
+offset_bottom = 342.0
+theme_override_font_sizes/font_size = 27
+text = "Precio"
+horizontal_alignment = 1
+
+[node name="Bought" type="Sprite2D" parent="Upgrades/Item3" unique_id=602791763]
+visible = false
+position = Vector2(186, 281)
+texture = ExtResource("5_e5ji4")
+
+[node name="Price" type="Label" parent="Upgrades/Item3/Bought" unique_id=372065678]
+offset_left = -100.0
+offset_top = 31.0
+offset_right = 94.0
+offset_bottom = 68.0
+theme_override_font_sizes/font_size = 27
+text = "Comprado"
+horizontal_alignment = 1
+metadata/_edit_use_anchors_ = true
+
+[connection signal="pressed" from="StartHackingButton" to="." method="on_start_hacking_button_pressed"]

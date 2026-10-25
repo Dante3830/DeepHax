@@ -1,43 +1,76 @@
 extends Control
 
-@onready var light1 = $Lights/Light1
-@onready var light2 = $Lights/Light2
-@onready var light3 = $Lights/Light3
-@onready var light4 = $Lights/Light4
-@onready var percentage = $Percentage.text
-@onready var hackoins_text = $Hackoins.text
-@onready var animation_player = $AnimationPlayer
+@onready var animationPlayer = $AnimationPlayer
+@onready var items = [$Upgrades/Item1, $Upgrades/Item2, $Upgrades/Item3]
+
+var offers = []
 
 func _ready():
 	$Hackoins.visible = false
 	$StartHackingButton.visible = false
-
-func _process(delta: float):
+	for item in items:
+		item.visible = false
+	
+	if GameManager.phase >= 2:
+		var ids = Upgrader.CATALOG.keys()
+		ids.shuffle()
+		offers = ids.slice(0, items.size())
+		for i in offers.size():
+			fill_item(i)
+	
 	await show_percentage()
-	show_hackoins()
+	
+	refresh()
+	$Hackoins.visible = true
 	$StartHackingButton.visible = true
+	for i in offers.size():
+		items[i].visible = true
 
 func show_percentage():
 	match GameManager.phase:
-		1: 
+		1:
 			$Percentage.text = "0% COMPLETADO"
-			animation_player.play("phase_1")
-		2: 
+			animationPlayer.play("phase_1")
+		2:
 			$Percentage.text = "25% COMPLETADO"
-			await animation_player.play("light_1_on")
-			await animation_player.play("transition_1")
-			animation_player.play("phase_2")
-		3: 
+			animationPlayer.play("light_1_on")
+			await animationPlayer.animation_finished
+			animationPlayer.play("transition_1")
+			await animationPlayer.animation_finished
+			animationPlayer.play("phase_2")
+		3:
 			$Percentage.text = "50% COMPLETADO"
-			animation_player.play("phase_3")
-		4: 
+			animationPlayer.play("phase_3")
+		4:
 			$Percentage.text = "75% COMPLETADO"
-			animation_player.play("phase_4")
-		5: $Percentage.text = "100% COMPLETADO"
+			animationPlayer.play("phase_4")
+		5:
+			$Percentage.text = "100% COMPLETADO"
 
-func show_hackoins():
-	$Hackoins.visible = false
-	hackoins_text.text = str(GameManager.hackoins)
+func fill_item(i: int):
+	var id = offers[i]
+	var data = Upgrader.CATALOG[id]
+	items[i].get_node("NameLabel").text = data["name"]
+	items[i].get_node("DescriptionLabel").text = data["description"]
+	items[i].get_node("CostLabel").text = "%d hackoins" % data["cost"]
+	items[i].get_node("BuyButton").pressed.connect(buy.bind(id))
 
-func _on_start_hacking_button_pressed():
-	SceneManage.change_scene(self, "Phase2")
+func buy(id: String):
+	GameManager.hackoins -= Upgrader.CATALOG[id]["cost"]
+	Upgrader.bought.append(id)
+	refresh()
+
+func refresh():
+	$Hackoins.text = "Hackoins: %03d" % GameManager.hackoins
+	for i in offers.size():
+		var id = offers[i]
+		var button = items[i].get_node("BuyButton")
+		if Upgrader.has(id):
+			button.text = "COMPRADO"
+			button.disabled = true
+		else:
+			button.text = "COMPRAR"
+			button.disabled = GameManager.hackoins < Upgrader.ITEMS[id]["cost"]
+
+func on_start_hacking_button_pressed() -> void:
+	SceneManage.change_scene(self, "Phase%d" % GameManager.phase)
