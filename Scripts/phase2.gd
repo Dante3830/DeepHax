@@ -84,11 +84,9 @@ func _ready():
 	time.one_shot = true
 	
 	var startTime = lineTime if lineTime > 0.0 else time.wait_time
-	var longCord = Upgrades.has("long_cord")
-	var extraTime = Upgrades.use("extra_time")
-	if longCord:
+	if Upgrades.has("long_cord"):
 		startTime += 15.0
-	if extraTime:
+	if Upgrades.use("extra_time"):
 		startTime += 10.0
 	
 	lineTimeLimit = startTime
