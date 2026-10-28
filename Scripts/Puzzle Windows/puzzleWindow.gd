@@ -9,7 +9,7 @@ const WARNING_START = 2.0
 const WARNING_END = 6.0
 
 @export var failTime = 5.0
-@export var baseHackoinReward = 10
+@export var baseHackoinReward = 5
 @export var warningTime = 5.0
 
 @onready var contentContainer = %ContentContainer
