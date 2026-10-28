@@ -7,10 +7,10 @@ var objects = []
 
 func _ready():
 	# Esto fue solo para probar la tienda, che
-	if get_tree().current_scene == self:
-		GameManager.phase = 2
-		GameManager.hackoins = 50
-		GameManager.linesCombo = 3
+	#if get_tree().current_scene == self:
+		#GameManager.phase = 2
+		#GameManager.hackoins = 50
+		#GameManager.linesCombo = 3
 	
 	$Hackoins.visible = false
 	$Combo.visible = false
