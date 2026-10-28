@@ -11,16 +11,16 @@ config_version=5
 [application]
 
 config/name="Deep Hax"
-run/main_scene="uid://b2pxktbvxss5i"
+run/main_scene="uid://domarxtrkyboj"
 config/features=PackedStringArray("4.6", "Forward Plus")
 config/icon="res://deephaxicon.ico"
 config/windows_native_icon="res://deephaxicon.ico"
 
 [autoload]
 
-SceneManage="*uid://byvl8ug5mi4wy"
 GameManager="*uid://xs4u22jn2ol4"
-Upgrader="*uid://dpwviiylbj1m2"
+Upgrades="*uid://dpwviiylbj1m2"
+SceneManager="*uid://byvl8ug5mi4wy"
 
 [display]
 

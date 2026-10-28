@@ -12,6 +12,7 @@ const DIFFERENCE_SCENE = preload("res://Scenes/Puzzle-Windows/Difference.tscn")
 
 const ACCELERATOR_CONDITION: PuzzleCondition = preload("res://Scenes/Window Conditions/Accelerator.tres")
 const KEYBOARD_LOCK_CONDITION: PuzzleCondition = preload("res://Scenes/Window Conditions/KeyboardLock.tres")
+const HACKOINS_LOOSE_CONDITION: PuzzleCondition = preload("res://Scenes/Window Conditions/HackoinsLoose.tres")
 
 var minigames = [
 	{ "scene": SIMON_SAYS_SCENE, "time_limit": 12.0 },
@@ -23,7 +24,7 @@ var minigames = [
 	{ "scene": DIFFERENCE_SCENE, "time_limit": 10.0 }
 ]
 
-var conditions = [null, KEYBOARD_LOCK_CONDITION, ACCELERATOR_CONDITION]
+var conditions = [null, KEYBOARD_LOCK_CONDITION, ACCELERATOR_CONDITION, HACKOINS_LOOSE_CONDITION]
 
 var linesPool = [
 	"void computerMove(char *spaces, char player, char computer);",
@@ -60,13 +61,12 @@ var linesPool = [
 @onready var animationPlayer: AnimationPlayer = $AnimationPlayer
 @onready var camera = $Camera2D
 @onready var randomArea: CollisionShape2D = $RandomArea/CollisionShape2D
+@onready var autocompleteHint = $AutocompleteHint
 
-@export var wrongLinePenalty = 5.0
 @export var windowSpawnMin = 8.0
 @export var windowSpawnMax = 12.0
 @export var successTimeGet = 30.0
 @export var lineTime = 0.0
-@export var nextScene = "phase2"
 
 var linesToType = []
 var completedLines = 0
@@ -75,18 +75,31 @@ var lineTimeLimit: float
 
 var currentPuzzleWindow: PuzzleWindow = null
 var enterBlockedTween: Tween
+var autocompleteReady = false
+var greedyBroken = false
 
 func _ready():
 	$TimeBar/GetTime.visible = false
 	$TimeBar/LoseTime.visible = false
 	time.one_shot = true
-	if lineTime > 0.0:
-		time.start(lineTime)
+	
+	var startTime = lineTime if lineTime > 0.0 else time.wait_time
+	var longCord = Upgrades.has("long_cord")
+	var extraTime = Upgrades.use("extra_time")
+	if longCord:
+		startTime += 15.0
+	if extraTime:
+		startTime += 10.0
+	
+	lineTimeLimit = startTime
+	
+	if !is_equal_approx(startTime, time.wait_time):
+		time.start(startTime)
+	
 	GameManager.reset_conditions()
 	GameManager.receiverLabel = receiver
 	for light in lights:
 		set_light_on(light, false)
-	lineTimeLimit = time.wait_time
 	on_hackoins_changed(GameManager.hackoins, 0)
 	set_combo(GameManager.linesCombo)
 	GameManager.hackoins_changed.connect(on_hackoins_changed)
@@ -146,6 +159,11 @@ func spawn_puzzle_window():
 	if !is_phase_running():
 		return
 	
+	if Upgrades.has("get_out") and randf() < 0.25:
+		var area = get_random_area_rect()
+		_schedule_next_puzzle_window()
+		return
+	
 	var window: PuzzleWindow = PUZZLE_WINDOW_TEMPLATE.instantiate()
 	add_child(window)
 	currentPuzzleWindow = window
@@ -183,13 +201,20 @@ func pick_window_condition() -> PuzzleCondition:
 		func(c): return c == null or not GameManager.is_condition_active(c.registry_key()))
 	return available.pick_random()
 
-func on_hackoins_changed(total: int, _delta: int):
+func on_hackoins_changed(total: int, delta: int):
 	hackoinsText.text = "x" + str(total)
 
 func on_puzzle_window_solved(_window: PuzzleWindow, hackoinReward: int):
+	if Upgrades.has("greedy"):
+		if greedyBroken:
+			return
+		hackoinReward *= 2
 	GameManager.add_hackoins(hackoinReward)
 
 func on_puzzle_window_failed(_window: PuzzleWindow, timePenalty: float):
+	if Upgrades.has("greedy") and !greedyBroken:
+		greedyBroken = true
+		GameManager.add_hackoins(-GameManager.hackoins)
 	apply_time_penalty(timePenalty)
 	animationPlayer.play("LoseTime")
 	camera.trigger_shake_both_exes()
@@ -207,6 +232,8 @@ func load_current_line():
 	if completedLines < linesToType.size():
 		receiver.text = linesToType[completedLines]
 	inserter.text = ""
+	autocompleteReady = Upgrades.has("auto_comp") and randf() < 0.25
+	autocompleteHint.visible = autocompleteReady
 
 func set_combo(lines: int):
 	GameManager.linesCombo = lines
@@ -225,6 +252,11 @@ func on_inserter_gui_input(event: InputEvent):
 	
 	if event.keycode == KEY_TAB:
 		inserter.accept_event()
+		if autocompleteReady:
+				autocompleteReady = false
+				autocompleteHint.visible = false
+				inserter.text = receiver.text
+				inserter.set_caret_column(inserter.text.length())
 	elif event.keycode == KEY_ENTER:
 		inserter.accept_event()
 		if is_enter_blocked():
@@ -242,6 +274,9 @@ func show_enter_blocked_feedback():
 	enterBlockedTween = create_tween()
 	enterBlockedTween.tween_property(inserter, "modulate", Color.WHITE, 0.3)
 
+func start_time(seconds: float):
+	time.start(min(seconds, lineTimeLimit))
+
 func submit_line():
 	if phaseOver:
 		return
@@ -249,7 +284,7 @@ func submit_line():
 	if inserter.text == receiver.text:
 		completedLines += 1
 		set_combo(GameManager.linesCombo + 1)
-		time.start(time.time_left + successTimeGet)
+		start_time(time.time_left + successTimeGet)
 		animationPlayer.play("GetTime")
 		
 		if completedLines - 1 < lights.size():
@@ -261,12 +296,15 @@ func submit_line():
 			$Victoria.show()
 			animationPlayer.play("Victory")
 			await get_tree().create_timer(3.0).timeout
-			SceneManage.change_scene(self, "ThankYou")
+			SceneManager.change_scene(self, "ThankYou")
 		else:
 			load_current_line()
 	else:
-		apply_time_penalty(wrongLinePenalty)
-		set_combo(0)
+		apply_time_penalty(5.0)
+		if Upgrades.use("protect_combo"):
+			pass
+		else:
+			set_combo(0)
 		camera.trigger_shake_both_exes()
 		animationPlayer.play("LoseTime")
 

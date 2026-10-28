@@ -1,0 +1,10 @@
+[gd_resource type="Resource" script_class="HackoinsLoose" format=3 uid="uid://dmske3unf6tah"]
+
+[ext_resource type="Texture2D" uid="uid://byxixjomnx0qt" path="res://Assets/Kenney Game Icons/contrast.png" id="1_5dr1h"]
+[ext_resource type="Script" uid="uid://dk3jgowptv21d" path="res://Scripts/Puzzle Windows/Window Conditions/hackoinsLoose.gd" id="1_h06jk"]
+
+[resource]
+script = ExtResource("1_h06jk")
+conditionIcon = ExtResource("1_5dr1h")
+conditionName = "HackoinsLoose"
+metadata/_custom_type_script = "uid://csatc8uxh0vn2"

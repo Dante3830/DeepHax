@@ -10,7 +10,7 @@
 [ext_resource type="PackedScene" uid="uid://bsnqwtrg5ipng" path="res://Scenes/LooseScreen.tscn" id="8_gayj3"]
 [ext_resource type="PackedScene" uid="uid://cpp583uv45ray" path="res://Scenes/Puzzle-Windows/PuzzleWindowTemplate.tscn" id="9_6cmlf"]
 [ext_resource type="PackedScene" uid="uid://cp4ires0jxc61" path="res://Scenes/PauseMenu.tscn" id="10_7hn2v"]
-[ext_resource type="PackedScene" uid="uid://byvl8ug5mi4wy" path="res://Scenes/SceneManage.tscn" id="11_ldn8x"]
+[ext_resource type="PackedScene" uid="uid://byvl8ug5mi4wy" path="res://Scenes/SceneManager.tscn" id="11_ldn8x"]
 
 [sub_resource type="StyleBoxFlat" id="StyleBoxFlat_vnunq"]
 bg_color = Color(0, 0, 0, 1)

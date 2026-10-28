@@ -10,7 +10,7 @@
 [ext_resource type="PackedScene" uid="uid://bsnqwtrg5ipng" path="res://Scenes/LooseScreen.tscn" id="8_xark5"]
 [ext_resource type="PackedScene" uid="uid://cpp583uv45ray" path="res://Scenes/Puzzle-Windows/PuzzleWindowTemplate.tscn" id="9_3cyis"]
 [ext_resource type="PackedScene" uid="uid://cp4ires0jxc61" path="res://Scenes/PauseMenu.tscn" id="10_lvwcr"]
-[ext_resource type="PackedScene" uid="uid://byvl8ug5mi4wy" path="res://Scenes/SceneManage.tscn" id="11_0qkme"]
+[ext_resource type="PackedScene" uid="uid://byvl8ug5mi4wy" path="res://Scenes/SceneManager.tscn" id="11_0qkme"]
 
 [sub_resource type="StyleBoxFlat" id="StyleBoxFlat_vnunq"]
 bg_color = Color(0, 0, 0, 1)
@@ -330,6 +330,8 @@ _data = {
 
 [node name="Phase 2" type="Node" unique_id=742101328]
 script = ExtResource("1_tf6n8")
+windowSpawnMin = 7.0
+windowSpawnMax = 11.0
 
 [node name="Time" type="Timer" parent="." unique_id=236611217]
 wait_time = 50.0
@@ -538,6 +540,16 @@ theme_override_colors/font_color = Color(1, 0.8980392, 0, 1)
 theme_override_fonts/font = ExtResource("2_b8jri")
 theme_override_font_sizes/font_size = 40
 text = "INSERTOR"
+
+[node name="AutocompleteHint" type="Label" parent="." unique_id=1993527517]
+offset_left = 465.0
+offset_top = 893.0
+offset_right = 931.0
+offset_bottom = 942.0
+theme_override_colors/font_color = Color(1, 1, 1, 1)
+theme_override_fonts/font = ExtResource("4_43354")
+theme_override_font_sizes/font_size = 37
+text = "[TAB] ¡Autocompletar!"
 
 [node name="RandomArea" type="Area2D" parent="." unique_id=202580248]
 position = Vector2(376, 224)

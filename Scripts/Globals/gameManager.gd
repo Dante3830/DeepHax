@@ -5,6 +5,7 @@ signal hackoins_changed(total: int, delta: int)
 var phase = 1
 var linesCombo = 0
 var hackoins = 0
+var totalHackoins = 0
 var gameTime = 0.0
 
 var timeSpeed = 1.0
@@ -27,6 +28,7 @@ func reset_conditions():
 # Hackoins
 func add_hackoins(amount: int):
 	hackoins += amount
+	totalHackoins += amount
 	hackoins_changed.emit(hackoins, amount)
 
 # Condiciones de las ventanas

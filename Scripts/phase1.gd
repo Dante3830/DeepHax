@@ -11,8 +11,6 @@ const CABLES_CONNECT_SCENE = preload("res://Scenes/Puzzle-Windows/CablesConnect.
 const ACCELERATOR_CONDITION: PuzzleCondition = preload("res://Scenes/Window Conditions/Accelerator.tres")
 const KEYBOARD_LOCK_CONDITION: PuzzleCondition = preload("res://Scenes/Window Conditions/KeyboardLock.tres")
 
-const ENTER_BLOCKED_COLOR = Color(1.0, 0.35, 0.35)
-
 var minigames = [
 	{ "scene": SIMON_SAYS_SCENE, "time_limit": 12.0 },
 	{ "scene": KEEP_PRESSED_SCENE, "time_limit": 10.0 },
@@ -59,12 +57,10 @@ var linesPool = [
 @onready var camera = $Camera2D
 @onready var randomArea: CollisionShape2D = $RandomArea/CollisionShape2D
 
-@export var wrongLinePenalty = 5.0
 @export var windowSpawnMin = 8.0
 @export var windowSpawnMax = 12.0
 @export var successTimeGet = 30.0
 @export var lineTime = 0.0
-@export var nextScene = "phase2"
 
 var linesToType = []
 var completedLines = 0
@@ -236,7 +232,7 @@ func is_enter_blocked() -> bool:
 func show_enter_blocked_feedback():
 	if enterBlockedTween:
 		enterBlockedTween.kill()
-	inserter.modulate = ENTER_BLOCKED_COLOR
+	inserter.modulate = Color(1.0, 0.35, 0.35)
 	enterBlockedTween = create_tween()
 	enterBlockedTween.tween_property(inserter, "modulate", Color.WHITE, 0.3)
 
@@ -260,11 +256,11 @@ func submit_line():
 			animationPlayer.play("Victory")
 			await get_tree().create_timer(3.0).timeout
 			GameManager.phase = 2
-			SceneManage.change_scene(self, "Shop")
+			SceneManager.change_scene(self, "Shop")
 		else:
 			load_current_line()
 	else:
-		apply_time_penalty(wrongLinePenalty)
+		apply_time_penalty(5.0)
 		set_combo(0)
 		camera.trigger_shake_both_exes()
 		animationPlayer.play("LoseTime")

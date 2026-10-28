@@ -2,7 +2,7 @@
 
 [ext_resource type="FontFile" uid="uid://dkt6qdxklh4j6" path="res://Assets/Fonts/IBM_Plex_Mono/IBMPlexMono-Bold.ttf" id="1_fmy8h"]
 
-[node name="Control" type="Control" unique_id=511657394]
+[node name="ThankYou" type="Control" unique_id=511657394]
 layout_mode = 3
 anchors_preset = 15
 anchor_right = 1.0
@@ -39,8 +39,8 @@ DE MUCHA AYUDA ;)"
 layout_mode = 0
 offset_left = 211.0
 offset_top = 838.0
-offset_right = 1464.0
-offset_bottom = 1114.0
+offset_right = 1579.0
+offset_bottom = 956.0
 theme_override_colors/font_color = Color(0, 1, 0, 1)
 theme_override_fonts/font = ExtResource("1_fmy8h")
 theme_override_font_sizes/font_size = 69

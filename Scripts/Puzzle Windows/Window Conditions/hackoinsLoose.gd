@@ -1,30 +1,22 @@
-# Todavía NO lo voy a usar
 class_name HackoinsLoose
 extends PuzzleCondition
 
-@export var hackoinsPenalty = 10
-var activeWindows = {}
+var waitingWindows = {}
 
 func apply_cond(window: PuzzleWindow):
-	activeWindows[window] = true
-	tick(window, int(ceil(hackoinsPenalty)))
+	waitingWindows[window] = true
+	window.closed.connect(on_window_closed)
+	window.tree_exiting.connect(on_window_exiting.bind(window))
 
-func remove_cond(window: PuzzleWindow):
-	activeWindows.erase(window)
+func remove_cond(_window: PuzzleWindow):
+	pass
 
 func interaction(window: PuzzleWindow):
-	activeWindows.erase(window)
-	window.hide_condition_time()
+	waitingWindows.erase(window)
 
-func tick(window: PuzzleWindow, secondsLeft: float):
-	if not activeWindows.get(window, false):
-		return
-	
-	if secondsLeft <= 0.0:
-		activeWindows.erase(window)
+func on_window_closed(window: PuzzleWindow):
+	if waitingWindows.erase(window):
 		GameManager.add_hackoins(-GameManager.hackoins)
-		return
-	
-	window.set_condition_time_text(str(secondsLeft))
-	var timer = window.get_tree().create_timer(1.0)
-	timer.timeout.connect(tick.bind(window, secondsLeft - 1))
+
+func on_window_exiting(window: PuzzleWindow):
+	waitingWindows.erase(window)

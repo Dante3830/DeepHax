@@ -233,6 +233,54 @@ border_width_right = 6
 border_width_bottom = 6
 border_color = Color(0, 0.9098039, 0, 1)
 
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_ckylj"]
+bg_color = Color(0.059688687, 0.059688687, 0.05968868, 1)
+border_width_left = 6
+border_width_top = 6
+border_width_right = 6
+border_width_bottom = 6
+border_color = Color(0, 0.9098039, 0, 1)
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_2aaoe"]
+bg_color = Color(0, 0, 0, 1)
+border_width_left = 6
+border_width_top = 6
+border_width_right = 6
+border_width_bottom = 6
+border_color = Color(1, 1, 1, 1)
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_ct2yw"]
+bg_color = Color(0.059688687, 0.059688687, 0.05968868, 1)
+border_width_left = 6
+border_width_top = 6
+border_width_right = 6
+border_width_bottom = 6
+border_color = Color(0, 0.9098039, 0, 1)
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_ccd4q"]
+bg_color = Color(0, 0, 0, 1)
+border_width_left = 6
+border_width_top = 6
+border_width_right = 6
+border_width_bottom = 6
+border_color = Color(1, 1, 1, 1)
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_1mgah"]
+bg_color = Color(0.059688687, 0.059688687, 0.05968868, 1)
+border_width_left = 6
+border_width_top = 6
+border_width_right = 6
+border_width_bottom = 6
+border_color = Color(0, 0.9098039, 0, 1)
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_r8bg4"]
+bg_color = Color(0, 0, 0, 1)
+border_width_left = 6
+border_width_top = 6
+border_width_right = 6
+border_width_bottom = 6
+border_color = Color(1, 1, 1, 1)
+
 [node name="Shop" type="Control" unique_id=2043806579]
 layout_mode = 3
 anchors_preset = 15
@@ -273,6 +321,20 @@ theme_override_constants/outline_size = 4
 theme_override_fonts/font = ExtResource("4_ckylj")
 theme_override_font_sizes/font_size = 48
 text = "Hackoins conseguidas: 000"
+horizontal_alignment = 1
+
+[node name="Combo" type="Label" parent="." unique_id=2116286735]
+layout_mode = 0
+offset_left = 1295.0
+offset_top = 790.0
+offset_right = 1430.0
+offset_bottom = 891.0
+theme_override_colors/font_color = Color(1, 0, 1, 1)
+theme_override_colors/font_outline_color = Color(1, 0, 1, 1)
+theme_override_constants/outline_size = 4
+theme_override_fonts/font = ExtResource("4_ckylj")
+theme_override_font_sizes/font_size = 82
+text = "x4"
 horizontal_alignment = 1
 
 [node name="Lights" type="Control" parent="." unique_id=1191766793]
@@ -347,6 +409,8 @@ offset_top = 315.0
 offset_right = 722.0
 offset_bottom = 671.0
 theme_override_styles/normal = SubResource("StyleBoxFlat_g0jo3")
+theme_override_styles/hover = SubResource("StyleBoxFlat_ckylj")
+theme_override_styles/disabled = SubResource("StyleBoxFlat_2aaoe")
 
 [node name="Name" type="Label" parent="Upgrades/Item1" unique_id=231390960]
 layout_mode = 0
@@ -401,6 +465,8 @@ offset_top = 316.0
 offset_right = 1169.0
 offset_bottom = 673.0
 theme_override_styles/normal = SubResource("StyleBoxFlat_g0jo3")
+theme_override_styles/hover = SubResource("StyleBoxFlat_ct2yw")
+theme_override_styles/disabled = SubResource("StyleBoxFlat_ccd4q")
 
 [node name="Name" type="Label" parent="Upgrades/Item2" unique_id=1920858151]
 layout_mode = 0
@@ -455,6 +521,8 @@ offset_top = 316.0
 offset_right = 1608.0
 offset_bottom = 673.0
 theme_override_styles/normal = SubResource("StyleBoxFlat_g0jo3")
+theme_override_styles/hover = SubResource("StyleBoxFlat_1mgah")
+theme_override_styles/disabled = SubResource("StyleBoxFlat_r8bg4")
 
 [node name="Name" type="Label" parent="Upgrades/Item3" unique_id=588874963]
 layout_mode = 0
